@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Factories;
+using UI;
 using UnityEngine;
 
 // скрипт висит на пустом объекте Main
@@ -10,18 +13,31 @@ public class Main : MonoBehaviour
     // точка входа в приложение
     void Start()
     {
-        CreateMainMenu(canvas);
+        CreateMainMenu();
 
         // подписываемся на кнопки из меню
     }
 
-    private void CreateMainMenu(Canvas canvas)
+    private void CreateMainMenu()
     {
-        // создаем меню из фабрики UI
+       MainMenuModelView menuModelView = UIFactory.CreateMainMenuModelView(canvas);
+       menuModelView.OnStart += HandleGameStarted;
+       menuModelView.OnExit += HandleExitGame;
     }
 
-    private void HandleGameStarted()
+    private void HandleGameStarted(object sender, EventArgs e)
     {
-        //создаем игру
+        Destroy(((MonoBehaviour)sender).gameObject);
+        StartGame();
+    }
+
+    private void HandleExitGame(object sender, EventArgs e)
+    {
+        Debug.Log("Exitting Game!");
+    }
+
+    private void StartGame()
+    {
+        Debug.Log("Game Started!");
     }
 }
