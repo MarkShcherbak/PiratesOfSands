@@ -9,7 +9,7 @@ using UnityEngine;
         
         private void Update()
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OnPause(this, EventArgs.Empty);
             }
