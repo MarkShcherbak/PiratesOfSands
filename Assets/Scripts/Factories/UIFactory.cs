@@ -1,8 +1,6 @@
-﻿using UI;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Factories
-{
+// фабрика UI, создает заранее подготовленные UI элементы из папки Recources
     public class UIFactory
     {
         public static MainMenuModelView CreateMainMenuModelView(Canvas canvas)
@@ -12,5 +10,12 @@ namespace Factories
                 .GetComponent<MainMenuModelView>();
             return modelView;
         }
+        
+        public static PauseMenuModelView CreatePauseMenuModelView(Canvas canvas)
+        {
+            GameObject pauseMenuPrefab = Resources.Load<GameObject>("Prefabs/UI/PauseMenuPanel");
+            PauseMenuModelView modelView = UnityEngine.Object.Instantiate(pauseMenuPrefab, canvas.transform)
+                .GetComponent<PauseMenuModelView>();
+            return modelView;
+        }
     }
-}

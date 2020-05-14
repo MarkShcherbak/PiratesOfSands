@@ -3,8 +3,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UI
-{
+    
+    // панель главного меню - скрипт висит на префабре в папке Resources
     public class MainMenuModelView : MonoBehaviour
     {
         public Button startButton;
@@ -25,4 +25,3 @@ namespace UI
             });
         }
     }
-}

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Factories;
-using UI;
 using UnityEngine;
 
 // скрипт висит на пустом объекте Main
@@ -21,13 +19,13 @@ public class Main : MonoBehaviour
     private void CreateMainMenu()
     {
        MainMenuModelView menuModelView = UIFactory.CreateMainMenuModelView(canvas);
-       menuModelView.OnStart += HandleGameStarted;
+       menuModelView.OnStart += HandleGameCreation;
        menuModelView.OnExit += HandleExitGame;
     }
 
-    private void HandleGameStarted(object sender, EventArgs e)
+    private void HandleGameCreation(object sender, EventArgs e)
     {
-        Destroy(((MonoBehaviour)sender).gameObject);
+        Destroy(((MonoBehaviour)sender).gameObject);  // удаляем sender, т.е в нашем случае это объект со скриптом menuModelView ( но можно было его кэшировать и не приводить тип sender'а)
         StartGame();
     }
 
@@ -38,6 +36,12 @@ public class Main : MonoBehaviour
 
     private void StartGame()
     {
-        Debug.Log("Game Started!");
+        GameController game = new GameController(canvas);
+        game.OnDestroyGame += HandleOnGameDestroy;
+    }
+
+    private void HandleOnGameDestroy(object sender, EventArgs e)
+    {
+        CreateMainMenu();
     }
 }
