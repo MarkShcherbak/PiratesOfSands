@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ship
   - Ground
+  - TrackPoint
   layers:
   - Default
   - TransparentFX
