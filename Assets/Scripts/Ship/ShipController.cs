@@ -27,7 +27,6 @@ public class ShipController
         //TODO реализовать нормальное управление!!!
         if(shipMV.Rigidbody.velocity.magnitude < 50f)
         shipMV.Rigidbody.AddForce(shipMV.transform.forward * input.z * 1000 * Time.fixedDeltaTime,ForceMode.Acceleration);
-        Debug.Log(shipMV.Rigidbody.velocity.magnitude);
 
         shipMV.transform.Rotate(0.0f, input.x * 2, 0.0f);
     }
