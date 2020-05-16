@@ -22,7 +22,7 @@ public class SimplePlayerShootingControl : MonoBehaviour
             {
                 if (slot.childCount != 0)
                 {
-                    slot.GetComponentInChildren<CannonModelView>().Shoot();
+                    slot.GetComponentInChildren<RKSYCannonModelView>().Fire();
                 }
 
                 else

@@ -16,14 +16,14 @@ public class ShipInventoryModelView : MonoBehaviour
             {
                 if (slot.childCount == 0)
                 {
-                    CannonFactory.CreateCannonModelView(slot, weaponOnHold);
+                    //CannonFactory.CreateCannonModelView(slot, weaponOnHold);
 
                     Debug.Log($"Placed {weaponOnHold.type} cannon at {slot.name}!");
                 }
 
                 else
                 {
-                    slot.GetComponentInChildren<CannonModelView>().cannonType = weaponOnHold;
+                   // slot.GetComponentInChildren<CannonModelView>().cannonType = weaponOnHold;
 
                     Debug.Log($"Replaced {slot.name} with {weaponOnHold.type} cannon!");
                 }

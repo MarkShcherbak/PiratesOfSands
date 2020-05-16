@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CannonModelView : MonoBehaviour
+public class RKSYCannonModelView : MonoBehaviour
 {
-    public Transform shotOrigin;
+    [SerializeField] private Transform shotOrigin;
     public WeaponData cannonType;
 
     private bool canShoot = true;
 
-    public void Shoot()
+    public void Fire()
     {
         if(canShoot)
         {

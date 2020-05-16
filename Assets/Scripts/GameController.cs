@@ -20,10 +20,14 @@ public class GameController
             trackMV =  TrackFactory.CreateTestTrackModelView(); // создаем трассу и добавляем в лист объектов в игре
             trackMV.OnPause += HandleGamePause; // подписываем обработчик паузы на событие паузы
             objectsInGame.Add(trackMV.gameObject);
-            // TODO создаем чекпоинты
 
-            // TODO создаем игрока
+        // TODO создаем корабль
+        ShipModelView shipMV = ShipFactory.CreateShipModelView();
+        ShipController shipController = ShipFactory.CreateShipController(shipMV);
 
+        // TODO создаем игрока
+        PlayerPilotModelView playerMV = PilotFactory.CreatePlayerPilotModelView();
+        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerMV, shipMV);
             // TODO создаем AI и корабли AI
         }
 

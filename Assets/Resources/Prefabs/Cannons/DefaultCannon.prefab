@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4904848387129657925}
   - component: {fileID: 4128256182283268211}
   - component: {fileID: 7671330334021389450}
-  - component: {fileID: 102229643854001420}
+  - component: {fileID: 8137271389374785457}
   m_Layer: 0
   m_Name: DefaultCannon
   m_TagString: Untagged
@@ -111,7 +111,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &102229643854001420
+--- !u!114 &8137271389374785457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,8 +120,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8235637070120630358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2979656bcde380428efd40f504a06b2, type: 3}
+  m_Script: {fileID: 11500000, guid: be60b9c9c82914768a9dfa4a2bd0f85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shotOrigin: {fileID: 102229644551854457}
-  inventory: {fileID: 0}
+  cannonType: {fileID: 0}
