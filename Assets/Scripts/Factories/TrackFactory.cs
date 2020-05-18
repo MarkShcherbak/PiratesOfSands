@@ -6,17 +6,17 @@ using UnityEngine;
     {
         public static TrackModelView CreateTestTrackModelView()
         {
-            GameObject testTrackPrefab = Resources.Load<GameObject>("Prefabs/Track/TestTrack");
+            GameObject testTrackPrefab = Resources.Load<GameObject>("Prefabs/Track/MarkTestTrack");
             TrackModelView modelView = UnityEngine.Object.Instantiate(testTrackPrefab)
                 .GetComponent<TrackModelView>();
             return modelView;
         }
 
-        
-        // генерация процедруной трассы к примеру через такой интерфейс
-        // TODO для Марка
-        public static TrackModelView CreateProceduralTrackModelView(int checkPointCount, int pickUpsCount)
+        public static TrackPath CreateTestTrackPath()
         {
-           throw new Exception("тут пока пусто");
+            GameObject testTrackPathPrefab = Resources.Load<GameObject>("Prefabs/Track/CheckpointsPath");
+            TrackPath path = UnityEngine.Object.Instantiate(testTrackPathPrefab)
+                .GetComponent<TrackPath>();
+            return path;
         }
     }

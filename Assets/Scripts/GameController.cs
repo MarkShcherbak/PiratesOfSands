@@ -13,22 +13,50 @@ public class GameController
     private List<GameObject> objectsInGame; // лист объектов (нужен для удаления при выходе в меню)
     
     
-        public GameController(Canvas mainCanvas) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
+        public GameController(Canvas mainCanvas, Camera mainCamera) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
         {
             objectsInGame = new List<GameObject>();
             canvas = mainCanvas;
             trackMV =  TrackFactory.CreateTestTrackModelView(); // создаем трассу и добавляем в лист объектов в игре
             trackMV.OnPause += HandleGamePause; // подписываем обработчик паузы на событие паузы
             objectsInGame.Add(trackMV.gameObject);
+            
+            
+        //создаем сеть чекпоинтов
+        TrackPath checkpointsPath = TrackFactory.CreateTestTrackPath();
+        objectsInGame.Add(checkpointsPath.gameObject);
+            
+        // создаем корабль игрока
+        ShipModelView playerShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(2,2,2)); //TODO сделать разброс появления на старте!
+        ShipController shipController = ShipFactory.CreateShipController(playerShipMV);
+        objectsInGame.Add(playerShipMV.gameObject);
 
-        // TODO создаем корабль
-        ShipModelView shipMV = ShipFactory.CreateShipModelView();
-        ShipController shipController = ShipFactory.CreateShipController(shipMV);
+        // создаем пилота игрока
+        PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
+        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
+        objectsInGame.Add(playerPilotMV.gameObject);
+        
+        // создаем риг камер
+        CameraModelView cameraMV = CameraFactory.CreateCameraRig(playerShipMV.transform);
+        MonoBehaviour.Destroy(mainCamera.gameObject); // удаляем основную камеру после появления рига
+        objectsInGame.Add(cameraMV.gameObject);
+        
+        // создаем корабль противника
+        ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(-10,2,-2));
+        ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV);
+        objectsInGame.Add(enemyShipMV.gameObject);
+        
+        // создаем пилота противника
+        EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
+        EnemyPilotController enemyPilotController =
+            PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
+        objectsInGame.Add(enemyPilotMV.gameObject);
 
-        // TODO создаем игрока
-        PlayerPilotModelView playerMV = PilotFactory.CreatePlayerPilotModelView();
-        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerMV, shipMV);
-            // TODO создаем AI и корабли AI
+
+
+
+
+        // TODO создаем AI и корабли AI и передаем им сеть чекпоинтов
         }
 
         

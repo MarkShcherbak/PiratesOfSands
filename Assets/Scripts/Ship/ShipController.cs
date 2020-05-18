@@ -25,7 +25,7 @@ public class ShipController
     private void HandleInput(object sender, Vector3 input)
     {
         //TODO реализовать нормальное управление!!!
-        if(shipMV.Rigidbody.velocity.magnitude < 50f)
+        if(shipMV.Rigidbody.velocity.magnitude < 8.0f)
         shipMV.Rigidbody.AddForce(shipMV.transform.forward * input.z * 1000 * Time.fixedDeltaTime,ForceMode.Acceleration);
 
         shipMV.transform.Rotate(0.0f, input.x * 2, 0.0f);

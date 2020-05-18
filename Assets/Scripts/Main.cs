@@ -7,6 +7,7 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     public Canvas canvas;
+    public Camera mainCamera;
 
     // точка входа в приложение
     void Start()
@@ -36,7 +37,7 @@ public class Main : MonoBehaviour
 
     private void StartGame()
     {
-        GameController game = new GameController(canvas);
+        GameController game = new GameController(canvas, mainCamera);
         game.OnDestroyGame += HandleOnGameDestroy;
     }
 
