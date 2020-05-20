@@ -45,19 +45,19 @@ public class EntityOnTrackCreator : MonoBehaviour
     {
         trackPath = GetComponent<TrackPath>();
         pointsAndCreations = new Dictionary<GameObject, GameObject>();
-        float entDist = trackPath.GetDistanceFromStart(trackPath.trackPoints[trackPath.trackPoints.Count-1]) / (countPointsToCreate+1);
-        float curDist = 0f;
+        float entitieDistance = trackPath.GetDistanceFromStart(trackPath.trackPoints[trackPath.trackPoints.Count-1]) / (countPointsToCreate+1);
+        float currentDistance = 0f;
 
         for (int i = 0; i < countPointsToCreate; i++)
         {
-            curDist += entDist;
+            currentDistance += entitieDistance;
 
-            KeyValuePair<Transform, float>  cKVP = trackPath.GetChekpointThrouDistance(curDist);
+            KeyValuePair<Transform, float>  cKVP = trackPath.GetChekpointThrouDistance(currentDistance);
 
             
             Vector3 curPoint = cKVP.Key.position;
             Vector3 nextPoint = trackPath.GetNextCheckPointPosition(cKVP.Key).position;
-            float m1 = curDist - cKVP.Value;
+            float m1 = currentDistance - cKVP.Value;
             float m2 = Vector3.Distance(curPoint, nextPoint)- m1;
 
             float x = (m2 * curPoint.x + m1 * nextPoint.x) / (m1 + m2);
@@ -69,11 +69,11 @@ public class EntityOnTrackCreator : MonoBehaviour
 
             Vector3 posToCreate = new Vector3(x+ xrnd, y+100f,z+ zrnd);
 
-            RaycastHit rch = new RaycastHit();
-            bool ff = Physics.Raycast(posToCreate, Vector3.down, out rch);
-            if (ff)
+            RaycastHit raycastHit = new RaycastHit();
+            bool wasTouch = Physics.Raycast(posToCreate, Vector3.down, out raycastHit);
+            if (wasTouch)
             {
-                pointsAndCreations.Add(Instantiate(pointCreator, rch.point, Quaternion.identity, gameObject.transform), default);
+                pointsAndCreations.Add(Instantiate(pointCreator, raycastHit.point, Quaternion.identity, gameObject.transform), default);
             }
 
         }
@@ -113,11 +113,11 @@ public class EntityOnTrackCreator : MonoBehaviour
         }
         foreach (GameObject item in listToCreate)
         {
-            GameObject newEnt = Instantiate(objsToCreate[Random.Range(0, objsToCreate.Count)], item.transform.position, Quaternion.identity, gameObject.transform);
-            EntitiyDeleter entdel = newEnt.AddComponent<EntitiyDeleter>();
-            entdel.SetParentCreator(this);
+            GameObject newEntity = Instantiate(objsToCreate[Random.Range(0, objsToCreate.Count)], item.transform.position, Quaternion.identity, gameObject.transform);
+            EntitiyDeleter entitiyDeleter = newEntity.AddComponent<EntitiyDeleter>();
+            entitiyDeleter.SetParentCreator(this);
 
-            pointsAndCreations[item] = newEnt;
+            pointsAndCreations[item] = newEntity;
         }
             
             

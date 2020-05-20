@@ -22,7 +22,7 @@ public class LevelGeneration : MonoBehaviour {
 
 	void Start() {
 
-		//GenerateMap ();
+		GenerateMap ();
 	}
 
 	public void GenerateMap() {
