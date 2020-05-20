@@ -12,10 +12,12 @@ public class GameController
     private Canvas canvas;
     private PauseMenuModelView pauseMV = null; // ссылка на UI окошко паузы
     private List<GameObject> objectsInGame; // лист объектов (нужен для удаления при выходе в меню)
+    private Camera mainCamera;
     
     
-        public GameController(Canvas mainCanvas, Camera mainCamera) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
+        public GameController(Canvas mainCanvas, Camera mainCam) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
         {
+            mainCamera = mainCam;
             objectsInGame = new List<GameObject>();
             canvas = mainCanvas;
             trackMV =  TrackFactory.CreateTestTrackModelView(); // создаем трассу и добавляем в лист объектов в игре
@@ -39,7 +41,7 @@ public class GameController
         
         // создаем риг камер
         CameraModelView cameraMV = CameraFactory.CreateCameraRig(playerShipMV.transform);
-        MonoBehaviour.Destroy(mainCamera.gameObject); // удаляем основную камеру после появления рига
+        mainCamera.gameObject.SetActive(false);  // отключаем основную камеру после появления рига
         objectsInGame.Add(cameraMV.gameObject);
         
         // создаем корабль противника
@@ -81,6 +83,7 @@ public class GameController
 
         private void HandleExitToMenu(object sender, EventArgs e)
         {
+            mainCamera.gameObject.SetActive(true);
             DestroyGame();
             Time.timeScale = 1;
         }
