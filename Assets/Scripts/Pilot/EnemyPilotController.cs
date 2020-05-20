@@ -30,7 +30,6 @@ public class EnemyPilotController
     {
         if (tag.Equals("TrackPoint"))
         {
-            Debug.Log("looking for next checkpoint");
             currentAim = checkpointsPath.GetNextCheckPointPosition(pilotModelView.transform); //?????
         }
     }

@@ -17,16 +17,21 @@ public class ShipModelView : MonoBehaviour
     private ICannonModelView[] frontCannons, backCannons, leftCannons, rightCannons;
 
     //ShipAbility
-    private IAbilityModelView abilitySlot;
+    private IAbility masterAbilitySlot;
 
     #endregion
 
     #region Accessors
     //Ability Accessor
-    public IAbilityModelView Ability
+    public IAbility MasterAbility
     {
-        get => abilitySlot;
-        set => abilitySlot.Add(value);
+        get => masterAbilitySlot;
+        set
+        {
+            if (masterAbilitySlot != null)
+                masterAbilitySlot.Add(value);
+            else masterAbilitySlot = value;
+        }
     }
 
     //Rotation Accessor

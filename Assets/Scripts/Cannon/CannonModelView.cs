@@ -6,11 +6,11 @@ public class CannonModelView : MonoBehaviour, ICannonModelView
 {
     [SerializeField] private Transform shotOrigin;
 
-    public IAbilityModelView LoadedAbility { get; set; }
+    public IAbility LoadedAbility { get; set; }
 
     public void Fire()
     {
-        Debug.Log("BOOM!");
+       LoadedAbility.Execute(shotOrigin);
     }
 
 
