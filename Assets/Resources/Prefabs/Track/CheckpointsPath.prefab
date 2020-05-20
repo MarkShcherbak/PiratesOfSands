@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8012190143268524261}
   - component: {fileID: 7297247985194232978}
+  - component: {fileID: 1361205114171282501}
   m_Layer: 0
   m_Name: CheckpointsPath
   m_TagString: Untagged
@@ -92,6 +93,26 @@ MonoBehaviour:
   - {fileID: 7255551380296106274}
   - {fileID: 7255551378697278334}
   isLooped: 0
+--- !u!114 &1361205114171282501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120215722535157784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed83657f6469694da576cac11fb080b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countPointsToCreate: 10
+  maxDistFromPath: 10
+  pointCreator: {fileID: 6116600525866705780, guid: ad9af387b30c8bf49bac676088bf8cfa,
+    type: 3}
+  generateConstantly: 1
+  objsToCreate:
+  - {fileID: 8692119015759457184, guid: c066f508e6479034bb4fb90c30db9393, type: 3}
+  timeToCorutineCreator: 5
 --- !u!1001 &9120397430138923727
 PrefabInstance:
   m_ObjectHideFlags: 0

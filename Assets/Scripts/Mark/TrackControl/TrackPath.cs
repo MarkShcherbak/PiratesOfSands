@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// Класс трек системы чекпоинтов
@@ -12,6 +13,8 @@ public class TrackPath : MonoBehaviour
 
     private bool isActive = false;
 
+    private List<KeyValuePair<Transform, float>> checkPointAndDistance;
+
     private void Awake()
     {
         if (trackPoints.Count > 1)
@@ -22,7 +25,20 @@ public class TrackPath : MonoBehaviour
         {
             isActive = false;
         }
+        checkPointAndDistance = new List<KeyValuePair<Transform, float>>();
+
+        checkPointAndDistance.Add(new KeyValuePair<Transform, float>(trackPoints[0], 0f));
+
+        float trackDist = 0f;
+        for (int i = 1; i < trackPoints.Count; i++)
+        {
+            trackDist += Vector3.Distance(trackPoints[i - 1].position, trackPoints[i].position);
+
+            checkPointAndDistance.Add(new KeyValuePair<Transform, float>(trackPoints[i], trackDist));
+        }
+
     }
+
 
     /// <summary>
     /// Визуальное отображение для редкатора сцены
@@ -31,8 +47,8 @@ public class TrackPath : MonoBehaviour
     {
         // Draw a yellow sphere at the transform's position
 
-        
-        if (trackPoints.Count>0)
+
+        if (trackPoints.Count > 0)
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(trackPoints[0].position, 0.5f);
@@ -40,8 +56,8 @@ public class TrackPath : MonoBehaviour
         Gizmos.color = Color.green;
         for (int i = 1; i < trackPoints.Count; i++)
         {
-           
-            if (i == trackPoints.Count-1 && !isLooped)
+
+            if (i == trackPoints.Count - 1 && !isLooped)
             {
                 Gizmos.color = Color.red;
                 Gizmos.DrawSphere(trackPoints[i].position, 0.5f);
@@ -50,14 +66,14 @@ public class TrackPath : MonoBehaviour
             {
                 Gizmos.DrawSphere(trackPoints[i].position, 0.3f);
             }
-            
+
 
             Gizmos.DrawLine(trackPoints[i - 1].position, trackPoints[i].position);
-            
+
 
         }
 
-        if (isLooped && trackPoints.Count > 1 )
+        if (isLooped && trackPoints.Count > 1)
         {
             Gizmos.DrawLine(trackPoints[trackPoints.Count - 1].position, trackPoints[0].position);
         }
@@ -102,7 +118,7 @@ public class TrackPath : MonoBehaviour
         {
             return default;
         }
-        
+
     }
 
     /// <summary>
@@ -115,7 +131,7 @@ public class TrackPath : MonoBehaviour
         if (isActive)
         {
             int findInd = trackPoints.FindIndex(x => x == lastCheckPoint);
-            if (findInd < trackPoints.Count-1)
+            if (findInd < trackPoints.Count - 1)
             {
                 return trackPoints[findInd + 1];
             }
@@ -135,11 +151,11 @@ public class TrackPath : MonoBehaviour
     }
 
     /// <summary>
-    /// Метод возвращает следующий чекпоинт к которому надо двигаться
+    /// Метод возвращает следующий чекпоинт к которому надо двигаться для указанного объекта
     /// </summary>
     /// <param name="gObj">Трансформ объекта который следует треку</param>
     /// <returns></returns>
-    public Transform GetNextCheckPointPosition(Transform gObj)
+    public Transform GetNextCheckPointPositionForGameObject(Transform gObj)
     {
         Transform curPoint = TrackPositionData.GetCurrentPointToObject(gObj);
         if (isActive && curPoint)
@@ -151,6 +167,26 @@ public class TrackPath : MonoBehaviour
         else
         {
             return default;
+        }
+    }
+
+    /// <summary>
+    ///  Метод возвращает следующий чекпоинт относительно указанного
+    ///  если чекпоинт последний возвращает его же
+    /// </summary>
+    /// <param name="gObj"></param>
+    /// <returns></returns>
+    public Transform GetNextCheckPointPosition(Transform curCheckPoint)
+    {
+        int curIndex = trackPoints.IndexOf(curCheckPoint) + 1;
+
+        if (curIndex < (trackPoints.Count - 1))
+        {
+            return trackPoints[curIndex];
+        }
+        else
+        {
+            return trackPoints[trackPoints.Count - 1];
         }
     }
 
@@ -169,6 +205,40 @@ public class TrackPath : MonoBehaviour
         {
             TrackPositionData.SetCurrentPointToObject(gObj, GetNearCheckPointPosition(gObj));
         }
+    }
+
+    /// <summary>
+    /// Возрващеает чекпоинта точки со старта
+    /// </summary>
+    /// <param name="curPoint"></param>
+    /// <returns></returns>
+    public float GetDistanceFromStart(Transform curPoint)
+    {
+        KeyValuePair<Transform, float> rv = checkPointAndDistance.FirstOrDefault(d => d.Key == curPoint);
+        return rv.Value;
+
+
+    }
+
+    /// <summary>
+    /// Возвращает пару - чекпоинт, который последним вошёл в указанную дистанцию с начала трассы
+    /// и расстояние от начала трассы
+    /// </summary>
+    /// <param name="dist"></param>
+    /// <returns></returns>
+    public KeyValuePair<Transform, float> GetChekpointThrouDistance(float dist)
+    {
+        List<KeyValuePair<Transform, float>> ll = checkPointAndDistance.Where(d => d.Value <= dist).ToList();
+
+        if (ll.Count > 0)
+        {
+            return ll[ll.Count - 1];
+        }
+        else
+        {
+            return default;
+        }
+
     }
 
 }

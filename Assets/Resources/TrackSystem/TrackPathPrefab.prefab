@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1270909376060818713}
   - component: {fileID: 2006108740945082734}
+  - component: {fileID: 694259867059007013}
   m_Layer: 0
   m_Name: TrackPathPrefab
   m_TagString: Untagged
@@ -44,3 +45,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackPoints: []
+  isLooped: 0
+--- !u!114 &694259867059007013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7205387577523803620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed83657f6469694da576cac11fb080b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countPointsToCreate: 10
+  maxDistFromPath: 10
+  pointCreator: {fileID: 6116600525866705780, guid: ad9af387b30c8bf49bac676088bf8cfa,
+    type: 3}
+  generateConstantly: 1
+  objsToCreate:
+  - {fileID: 8692119015759457184, guid: c066f508e6479034bb4fb90c30db9393, type: 3}
+  timeToCorutineCreator: 5
