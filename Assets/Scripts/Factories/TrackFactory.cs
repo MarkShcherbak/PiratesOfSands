@@ -21,10 +21,10 @@ using UnityEngine;
             return path;
         }
 
-        public static AbilityContainerModelView CreateAbilityContainer()
+        public static AbilityContainerModelView CreateAbilityContainer(Vector3 position)
         {
             GameObject containerPrefab = Resources.Load<GameObject>("Prefabs/Track/AbilityContainer");
-            AbilityContainerModelView modelView = UnityEngine.Object.Instantiate(containerPrefab)
+            AbilityContainerModelView modelView = UnityEngine.Object.Instantiate(containerPrefab,position,Quaternion.identity)
                 .GetComponent<AbilityContainerModelView>();
             return modelView;
         }
