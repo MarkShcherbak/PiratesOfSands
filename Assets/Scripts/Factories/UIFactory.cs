@@ -18,4 +18,12 @@
                 .GetComponent<PauseMenuModelView>();
             return modelView;
         }
+
+        public static PlayerAbilityUIModelView CreatePlayerAbilityUI(Canvas canvas)
+        {
+            GameObject abilityUIPrefab = Resources.Load<GameObject>("Prefabs/UI/PlayerAbilityUI");
+            PlayerAbilityUIModelView modelView = UnityEngine.Object.Instantiate(abilityUIPrefab, canvas.transform)
+                .GetComponent<PlayerAbilityUIModelView>();
+            return modelView;
+        }
     }

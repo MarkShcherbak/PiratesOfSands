@@ -17,6 +17,6 @@
 
         public void Execute(Transform position)
         {
-            //TODO AmmoFactory.CreateCannonballShot(position);
+        Debug.Log("Cannonball fired!");
         }
     }

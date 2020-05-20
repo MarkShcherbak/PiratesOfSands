@@ -1,10 +1,10 @@
 ﻿    using UnityEngine;
 
-    public class ShieldTireThreeAbility : IAbility
+    public class ShieldTierThreeAbility : IAbility
     {
         public Color AbilityColor { get; set; }
         
-        public ShieldTireThreeAbility()
+        public ShieldTierThreeAbility()
         {
             AbilityColor = Color.blue;
         }
@@ -17,6 +17,6 @@
 
         public void Execute(Transform position)
         {
-            throw new System.NotImplementedException();
+        Debug.Log("Shield tire 3 launched!");
         }
     }

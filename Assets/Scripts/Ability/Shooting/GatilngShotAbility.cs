@@ -17,6 +17,6 @@
 
         public void Execute(Transform position)
         {
-            throw new System.NotImplementedException();
-        }
+        Debug.Log("Gatling fired!");
+    }
     }

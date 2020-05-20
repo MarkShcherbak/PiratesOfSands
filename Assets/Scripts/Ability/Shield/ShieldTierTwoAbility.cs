@@ -11,12 +11,12 @@
 
         public IAbility Add(IAbility ability)
         {
-            if (ability is ShieldTierOneAbility) return new ShieldTireThreeAbility();
+            if (ability is ShieldTierOneAbility) return new ShieldTierThreeAbility();
             else return ability;
         }
 
         public void Execute(Transform position)
         {
-            throw new System.NotImplementedException();
+        Debug.Log("Shield tire 2 launched!");
         }
     }

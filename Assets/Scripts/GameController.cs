@@ -38,7 +38,11 @@ public class GameController
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
         objectsInGame.Add(playerPilotMV.gameObject);
-        
+
+        // TODO создаем UI отображение способностей (ТЕСТОВОЕ!!!)
+        PlayerAbilityUIModelView abilityUIMV = UIFactory.CreatePlayerAbilityUI(canvas);
+        objectsInGame.Add(abilityUIMV.gameObject);
+          
         // создаем риг камер
         CameraModelView cameraMV = CameraFactory.CreateCameraRig(playerShipMV.transform);
         mainCamera.gameObject.SetActive(false);  // отключаем основную камеру после появления рига
@@ -55,7 +59,7 @@ public class GameController
             PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
         objectsInGame.Add(enemyPilotMV.gameObject);
         
-        // создаем контейнер способности (ТЕСТОВЫЙ!!!)
+        // TODO создаем контейнер способности (ТЕСТОВЫЙ!!!)
         AbilityContainerModelView abilityContainerMV = TrackFactory.CreateAbilityContainer(checkpointsPath.trackPoints[1].position);
         objectsInGame.Add(abilityContainerMV.gameObject);
 

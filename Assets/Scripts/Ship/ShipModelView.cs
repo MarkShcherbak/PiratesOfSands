@@ -7,6 +7,7 @@ public class ShipModelView : MonoBehaviour
     #region fields
     //Events
     public event EventHandler<Vector3> OnInput = (sender, e) => { };
+    public event EventHandler OnAbilityChanged = (sender, e) => { };
     public event EventHandler<Vector3> OnAction = (sender, e) => { };
     public event EventHandler OnCollision = (other, e) => { };
     //Ship data
@@ -28,9 +29,14 @@ public class ShipModelView : MonoBehaviour
         get => masterAbilitySlot;
         set
         {
-            if (masterAbilitySlot != null)
-                masterAbilitySlot.Add(value);
-            else masterAbilitySlot = value;
+            if (value == null)
+                masterAbilitySlot = null;
+             else if (masterAbilitySlot != null)
+                masterAbilitySlot = masterAbilitySlot.Add(value);
+             else masterAbilitySlot = value;
+
+            if(masterAbilitySlot != null)
+            Debug.Log("ShipAbilitySlot now is: " + masterAbilitySlot);
         }
     }
 
@@ -98,23 +104,67 @@ public class ShipModelView : MonoBehaviour
             rightCannons[i] = CannonFactory.CreateCannonModelView(rightSlots[i]);
     }
 
-    public void Fire(Vector3 direction)
+
+
+    public void Action(Vector3 direction)
     {
         if (direction == Vector3.forward)
+        {
+            if(frontCannons[0].LoadedAbility != null)
             foreach (ICannonModelView cannon in frontCannons)
-                cannon.Fire();
+                { cannon.Fire(); cannon.LoadedAbility = null; }
+            else if(masterAbilitySlot != null)
+            {
+                foreach (ICannonModelView cannon in frontCannons)
+                    cannon.LoadedAbility = masterAbilitySlot;
+                Debug.Log(masterAbilitySlot + " is loaded to front cannon!");
+                    masterAbilitySlot = null;
+            }       
+        }
+            
 
         if (direction == Vector3.back)
-            foreach (ICannonModelView cannon in backCannons)
-                cannon.Fire();
+        {
+            if (backCannons[0].LoadedAbility != null)
+                foreach (ICannonModelView cannon in backCannons)
+                { cannon.Fire(); cannon.LoadedAbility = null; }
+            else if(masterAbilitySlot != null)
+            {
+                foreach (ICannonModelView cannon in backCannons)
+                    cannon.LoadedAbility = masterAbilitySlot;
+                Debug.Log(masterAbilitySlot + " is loaded to back cannon!");
+                MasterAbility = null;
+            }
+        }
 
         if (direction == Vector3.left)
-            foreach (ICannonModelView cannon in leftCannons)
-                cannon.Fire();
+        {
+            if (leftCannons[0].LoadedAbility != null)
+                foreach (ICannonModelView cannon in leftCannons)
+                { cannon.Fire(); cannon.LoadedAbility = null; }
+            else if (masterAbilitySlot != null)
+            {
+                foreach (ICannonModelView cannon in leftCannons)
+                    cannon.LoadedAbility = masterAbilitySlot;
+                Debug.Log(masterAbilitySlot + " is loaded to left cannon!");
+                MasterAbility = null;
+            }
+        }
+            
 
         if (direction == Vector3.right)
-            foreach (ICannonModelView cannon in rightCannons)
-                cannon.Fire();
+        {
+            if (rightCannons[0].LoadedAbility != null)
+                foreach (ICannonModelView cannon in rightCannons)
+                { cannon.Fire(); cannon.LoadedAbility = null; }
+            else if (masterAbilitySlot != null)
+            {
+                foreach (ICannonModelView cannon in rightCannons)
+                    cannon.LoadedAbility = masterAbilitySlot;
+                Debug.Log(masterAbilitySlot + " is loaded to right cannon!");
+                MasterAbility = null;
+            }
+        }
     }
 
 

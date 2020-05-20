@@ -12,14 +12,13 @@ public class ShipController
             shipMV = shipModelView;
             shipMV.OnInput += HandleInput;
             shipMV.OnAction += HandleAction;
+
+        //TODO подписаться на изменение Ability и добавить UI отображение!!
         }
 
     private void HandleAction(object sender, Vector3 direction)
     {
-        //todo реализовать действие
-
-        //if not loaded - load, if loaded - fire
-        shipMV.Fire(direction);
+        shipMV.Action(direction);
     }
 
     private void HandleInput(object sender, Vector3 input)
