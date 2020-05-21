@@ -35,7 +35,7 @@ public class ShipModelView : MonoBehaviour
                 masterAbilitySlot = masterAbilitySlot.Add(value);
              else masterAbilitySlot = value;
 
-            if(masterAbilitySlot != null)
+            if (masterAbilitySlot != null)
             OnAbilityChanged(this, masterAbilitySlot.Data.Icon);
             else OnAbilityChanged(this, null);
         }
