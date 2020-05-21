@@ -22,7 +22,7 @@ public class AbilityData : ScriptableObject
     
     //Материал контейнера на сцене
     [SerializeField] private Material containerMaterial;
-    public Material ContainerMaterial { get; set; }
+    public Material ContainerMaterial { get => containerMaterial; set => containerMaterial = value; }
     
     // Иконка способности
     [SerializeField] private Sprite icon;
