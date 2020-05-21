@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 1883292641101303369}
   - component: {fileID: 886709517607532763}
   - component: {fileID: 2791785171286841335}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TrackPointPrefab
   m_TagString: TrackPoint
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}

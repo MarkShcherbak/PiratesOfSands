@@ -25,44 +25,44 @@ public class GameController
             objectsInGame.Add(trackMV.gameObject);
             
             
-        //создаем сеть чекпоинтов
-        TrackPath checkpointsPath = TrackFactory.CreateTestTrackPath();
-        objectsInGame.Add(checkpointsPath.gameObject);
+            //создаем сеть чекпоинтов
+            TrackPath checkpointsPath = TrackFactory.CreateTestTrackPath();
+            objectsInGame.Add(checkpointsPath.gameObject);
             
-        // создаем корабль игрока
-        ShipModelView playerShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(2,2,2)); //TODO сделать разброс появления на старте!
-        ShipController shipController = ShipFactory.CreateShipController(playerShipMV);
-        objectsInGame.Add(playerShipMV.gameObject);
+            // создаем корабль игрока
+            ShipModelView playerShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(2,2,2)); //TODO сделать разброс появления на старте!
+            ShipController shipController = ShipFactory.CreateShipController(playerShipMV);
+            objectsInGame.Add(playerShipMV.gameObject);
 
-        // создаем пилота игрока
-        PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
-        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
-        objectsInGame.Add(playerPilotMV.gameObject);
+            // создаем пилота игрока
+            PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
+            PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
+            objectsInGame.Add(playerPilotMV.gameObject);
 
-        // TODO создаем HUD отображение способностей (ТЕСТОВОЕ!!!)
-        AbilityHUDModelView abilityHUDMV = UIFactory.CreatePlayerAbilityUI(canvas);
-        objectsInGame.Add(abilityHUDMV.gameObject);
-        AbilityHUDController abilityHUDController = new AbilityHUDController(abilityHUDMV, playerShipMV);
-          
-        // создаем риг камер
-        CameraModelView cameraMV = CameraFactory.CreateCameraRig(playerShipMV.transform);
-        mainCamera.gameObject.SetActive(false);  // отключаем основную камеру после появления рига
-        objectsInGame.Add(cameraMV.gameObject);
+            // TODO создаем HUD отображение способностей (ТЕСТОВОЕ!!!)
+            AbilityHUDModelView abilityHUDMV = UIFactory.CreatePlayerAbilityUI(canvas);
+            objectsInGame.Add(abilityHUDMV.gameObject);
+            AbilityHUDController abilityHUDController = new AbilityHUDController(abilityHUDMV, playerShipMV);
+
+            // создаем риг камер
+            CinemachineModelView cameraMV = CameraFactory.CreateCameraRig(playerShipMV.transform);
+            mainCamera.gameObject.SetActive(false);  // отключаем основную камеру после появления рига
+            objectsInGame.Add(cameraMV.gameObject);
         
-        // создаем корабль противника
-        ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(-10,2,-2));
-        ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV);
-        objectsInGame.Add(enemyShipMV.gameObject);
+            // создаем корабль противника
+            ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(-10,2,-2));
+            ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV);
+            objectsInGame.Add(enemyShipMV.gameObject);
         
-        // создаем пилота противника
-        EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
-        EnemyPilotController enemyPilotController =
-            PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
-        objectsInGame.Add(enemyPilotMV.gameObject);
+            // создаем пилота противника
+            EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
+            EnemyPilotController enemyPilotController =
+                PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
+            objectsInGame.Add(enemyPilotMV.gameObject);
         
-        // TODO создаем контейнер способности (ТЕСТОВЫЙ!!!)
-        AbilityContainerModelView abilityContainerMV = TrackFactory.CreateAbilityContainer(checkpointsPath.trackPoints[1].position);
-        objectsInGame.Add(abilityContainerMV.gameObject);
+            // TODO создаем контейнер способности (ТЕСТОВЫЙ!!!)
+            AbilityContainerModelView abilityContainerMV = TrackFactory.CreateAbilityContainer(checkpointsPath.trackPoints[1].position);
+            objectsInGame.Add(abilityContainerMV.gameObject);
 
 
 
