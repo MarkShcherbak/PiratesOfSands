@@ -19,14 +19,14 @@ public class AbilityData : ScriptableObject
 
     // Общие параметры способностей
     #region General properties
-    
-    //Материал контейнера на сцене
-    [SerializeField] private Material containerMaterial;
-    public Material ContainerMaterial { get => containerMaterial; set => containerMaterial = value; }
-    
+
     // Иконка способности
     [SerializeField] private Sprite icon;
     public Sprite Icon { get => icon; set => icon = value; }
+
+    //Материал контейнера на сцене
+    [SerializeField] private Material containerMaterial;
+    public Material ContainerMaterial { get => containerMaterial; set => containerMaterial = value; }
 
     // Префаб способности
     [SerializeField] private GameObject prefab;
@@ -59,6 +59,10 @@ public class AbilityData : ScriptableObject
     // Разброс снарядов
     [SerializeField] private float projectileScatter;
     public float ProjectileScatter { get => projectileScatter; set => projectileScatter = value; }
+
+    // Количество снарядов
+    [SerializeField] private float projectilesCount;
+    public float ProjectilesCount { get => projectilesCount; set => projectilesCount = value; }
 
     #endregion
 
@@ -118,13 +122,13 @@ public class AbilityDataEditor : Editor
         EditorGUILayout.PrefixLabel("Possible slots");
 
         EditorGUILayout.BeginHorizontal();
-            Data.EquippableFront = EditorGUILayout.ToggleLeft("Front", Data.EquippableFront, GUILayout.MaxWidth(100));
-            Data.EquippableLeft = EditorGUILayout.ToggleLeft("Left", Data.EquippableLeft, GUILayout.MaxWidth(100));
+        Data.EquippableFront = EditorGUILayout.ToggleLeft("Front", Data.EquippableFront, GUILayout.MaxWidth(100));
+        Data.EquippableLeft = EditorGUILayout.ToggleLeft("Left", Data.EquippableLeft, GUILayout.MaxWidth(100));
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-            Data.EquippableBack = EditorGUILayout.ToggleLeft("Back", Data.EquippableBack, GUILayout.MaxWidth(100));
-            Data.EquippableRight = EditorGUILayout.ToggleLeft("Right", Data.EquippableRight, GUILayout.MaxWidth(100));
+        Data.EquippableBack = EditorGUILayout.ToggleLeft("Back", Data.EquippableBack, GUILayout.MaxWidth(100));
+        Data.EquippableRight = EditorGUILayout.ToggleLeft("Right", Data.EquippableRight, GUILayout.MaxWidth(100));
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
@@ -140,6 +144,7 @@ public class AbilityDataEditor : Editor
                 Data.ProjectileDamage = EditorGUILayout.FloatField("Damage", Data.ProjectileDamage);
                 Data.ProjectileSpeed = EditorGUILayout.FloatField("Speed", Data.ProjectileSpeed);
                 Data.ProjectileScatter = EditorGUILayout.FloatField("Scatter", Data.ProjectileScatter);
+                Data.ProjectilesCount = EditorGUILayout.FloatField("Projectiles count", Data.ProjectilesCount);
                 EditorUtility.SetDirty(target);
                 break;
 

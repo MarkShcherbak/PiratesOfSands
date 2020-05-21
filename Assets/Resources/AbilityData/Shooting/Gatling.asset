@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eb402bbfaa7cd140a9392ea8958a8c3, type: 3}
-  m_Name: TestShield
+  m_Name: Gatling
   m_EditorClassIdentifier: 
-  abilityType: 2
-  containerMaterial: {fileID: 2100000, guid: 26815b7ecba469f4584dca84f26b719c, type: 2}
-  icon: {fileID: 21300000, guid: bca3fcbed06d440ef9d1e158c45c1032, type: 3}
-  prefab: {fileID: 0}
-  delay: 3
+  abilityType: 0
+  icon: {fileID: 0}
+  containerMaterial: {fileID: 2100000, guid: 35447764996648c4f882ba8f96731f62, type: 2}
+  prefab: {fileID: 4396129762280923121, guid: 3b055fb8d8510ae4892b83727e209a68, type: 3}
+  delay: 1
   equippableFront: 1
   equippableBack: 1
-  equippableLeft: 0
-  equippableRight: 0
-  projectileDamage: 0
-  projectileSpeed: 0
-  projectileScatter: 0
+  equippableLeft: 1
+  equippableRight: 1
+  projectileDamage: 5
+  projectileSpeed: 25
+  projectileScatter: 25
+  projectilesCount: 5
   hazardDamage: 0
-  shieldDuration: 7
+  shieldDuration: 0
   speedUpDuration: 0
   speedUpIntensity: 0

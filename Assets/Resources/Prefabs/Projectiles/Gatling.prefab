@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1735671742311023535}
   - component: {fileID: 8036751654556431037}
   - component: {fileID: 3972435585905032430}
-  - component: {fileID: -6789690665803156947}
+  - component: {fileID: 8757556897675008648}
   m_Layer: 8
-  m_Name: Grape
+  m_Name: Gatling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-6789690665803156947
+--- !u!114 &8757556897675008648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,6 +120,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4396129762280923121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7efa9980870fc914fb989fe6555403eb, type: 3}
+  m_Script: {fileID: 11500000, guid: be6239c32a3211d47990ef34843cf828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 3972435585905032430}
+  damage: 0
+  speed: 0

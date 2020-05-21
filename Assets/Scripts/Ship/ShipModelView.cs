@@ -122,10 +122,18 @@ public class ShipModelView : MonoBehaviour
                 { cannon.Fire(); cannon.LoadedAbility = null; }
             else if(masterAbilitySlot != null)
             {
-                foreach (ICannonModelView cannon in frontCannons)
-                    cannon.LoadedAbility = masterAbilitySlot;
-                Debug.Log(masterAbilitySlot + " is loaded to front cannon!");
+                if (masterAbilitySlot.Data.EquippableFront)
+                {
+                    foreach (ICannonModelView cannon in frontCannons)
+                        cannon.LoadedAbility = masterAbilitySlot;
+                    Debug.Log(masterAbilitySlot + " is loaded to front cannon!");
                     masterAbilitySlot = null;
+                }
+
+                else
+                {
+                    Debug.Log("Ability can't be loaded on front!");
+                }
             }       
         }
             
@@ -137,10 +145,18 @@ public class ShipModelView : MonoBehaviour
                 { cannon.Fire(); cannon.LoadedAbility = null; }
             else if(masterAbilitySlot != null)
             {
-                foreach (ICannonModelView cannon in backCannons)
+                if (masterAbilitySlot.Data.EquippableBack)
+                {
+                    foreach (ICannonModelView cannon in backCannons)
                     cannon.LoadedAbility = masterAbilitySlot;
                 Debug.Log(masterAbilitySlot + " is loaded to back cannon!");
                 MasterAbility = null;
+                }
+
+                else
+                {
+                    Debug.Log("Ability can't be loaded on back!");
+                }
             }
         }
 
@@ -151,10 +167,18 @@ public class ShipModelView : MonoBehaviour
                 { cannon.Fire(); cannon.LoadedAbility = null; }
             else if (masterAbilitySlot != null)
             {
-                foreach (ICannonModelView cannon in leftCannons)
-                    cannon.LoadedAbility = masterAbilitySlot;
-                Debug.Log(masterAbilitySlot + " is loaded to left cannon!");
-                MasterAbility = null;
+                if (masterAbilitySlot.Data.EquippableLeft)
+                {
+                    foreach (ICannonModelView cannon in leftCannons)
+                        cannon.LoadedAbility = masterAbilitySlot;
+                    Debug.Log(masterAbilitySlot + " is loaded to left cannon!");
+                    MasterAbility = null;
+                }
+
+                else
+                {
+                    Debug.Log("Ability can't be loaded on left!");
+                }
             }
         }
             
@@ -166,10 +190,18 @@ public class ShipModelView : MonoBehaviour
                 { cannon.Fire(); cannon.LoadedAbility = null; }
             else if (masterAbilitySlot != null)
             {
-                foreach (ICannonModelView cannon in rightCannons)
-                    cannon.LoadedAbility = masterAbilitySlot;
-                Debug.Log(masterAbilitySlot + " is loaded to right cannon!");
-                MasterAbility = null;
+                if (masterAbilitySlot.Data.EquippableLeft)
+                {
+                    foreach (ICannonModelView cannon in rightCannons)
+                        cannon.LoadedAbility = masterAbilitySlot;
+                    Debug.Log(masterAbilitySlot + " is loaded to right cannon!");
+                    MasterAbility = null;
+                }
+
+                else
+                {
+                    Debug.Log("Ability can't be loaded on right!");
+                }
             }
         }
 

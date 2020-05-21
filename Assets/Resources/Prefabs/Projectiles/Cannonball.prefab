@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6732131423314472154}
   - component: {fileID: 154723337112229947}
   - component: {fileID: 2053055612995290586}
-  - component: {fileID: -8754588853605694746}
+  - component: {fileID: -5524695713958739231}
   m_Layer: 8
-  m_Name: Round
+  m_Name: Cannonball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8754588853605694746
+--- !u!114 &-5524695713958739231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,6 +120,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4153465357934045856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7efa9980870fc914fb989fe6555403eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d00363ff56839a429194a5954d674e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 2053055612995290586}
+  damage: 0
+  speed: 0
