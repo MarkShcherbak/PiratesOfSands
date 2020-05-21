@@ -105,13 +105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed83657f6469694da576cac11fb080b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countPointsToCreate: 10
+  countPointsToCreate: 50
   maxDistFromPath: 10
   pointCreator: {fileID: 6116600525866705780, guid: ad9af387b30c8bf49bac676088bf8cfa,
     type: 3}
   generateConstantly: 1
   objsToCreate:
-  - {fileID: 8692119015759457184, guid: c066f508e6479034bb4fb90c30db9393, type: 3}
+  - {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7, type: 3}
   timeToCorutineCreator: 5
 --- !u!1001 &9120397430138923727
 PrefabInstance:

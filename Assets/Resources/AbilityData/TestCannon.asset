@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TestCannon
   m_EditorClassIdentifier: 
   abilityType: 0
+  containerMaterial: {fileID: 0}
   icon: {fileID: 0}
   prefab: {fileID: 4153465357934045856, guid: bf27222a898d473408d6204b67635f0c, type: 3}
   delay: 1

@@ -59,9 +59,6 @@ public class GameController
             PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
         objectsInGame.Add(enemyPilotMV.gameObject);
         
-        // TODO создаем контейнер способности (ТЕСТОВЫЙ!!!)
-        AbilityContainerModelView abilityContainerMV = TrackFactory.CreateAbilityContainer(checkpointsPath.trackPoints[1].position);
-        objectsInGame.Add(abilityContainerMV.gameObject);
 
 
 

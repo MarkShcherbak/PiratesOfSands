@@ -3,11 +3,10 @@
     public class GatilngShotAbility : IAbility
     {
         
-        public Color AbilityColor { get; set; }
-        
+        public AbilityData Data { get; set; }
         public GatilngShotAbility()
         {
-            AbilityColor = Color.red;
+            Data = Resources.Load<AbilityData>("AbilityData/TestCannon");
         }
         public IAbility Add(IAbility ability)
         {

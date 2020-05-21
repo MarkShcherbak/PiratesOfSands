@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: TestShield
   m_EditorClassIdentifier: 
   abilityType: 2
+  containerMaterial: {fileID: 0}
   icon: {fileID: 0}
   prefab: {fileID: 0}
   delay: 3
   equippableFront: 1
-  equippableBack: 0
+  equippableBack: 1
   equippableLeft: 0
   equippableRight: 0
   projectileDamage: 0

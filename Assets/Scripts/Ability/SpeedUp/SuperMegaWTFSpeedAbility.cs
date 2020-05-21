@@ -2,11 +2,10 @@
 
     public class SuperMegaWTFSpeedAbility : IAbility
     {
-        public Color AbilityColor { get; set; }
-        
+        public AbilityData Data { get; set; }
         public SuperMegaWTFSpeedAbility()
         {
-            AbilityColor = Color.green;
+            Data = Resources.Load<AbilityData>("AbilityData/TestSpeedUp");
         }
         public IAbility Add(IAbility ability)
         {

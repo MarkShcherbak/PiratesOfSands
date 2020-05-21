@@ -3,10 +3,11 @@
     public class CannonballShotAbility : IAbility
     {
         public Color AbilityColor { get; set; }
+        public AbilityData Data { get; set; }
         
         public CannonballShotAbility()
         {
-            AbilityColor = Color.red;
+            Data = Resources.Load<AbilityData>("AbilityData/TestCannon");
         }
 
         public IAbility Add(IAbility ability)

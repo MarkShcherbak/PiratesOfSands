@@ -19,10 +19,14 @@ public class AbilityData : ScriptableObject
 
     // Общие параметры способностей
     #region General properties
-
+    
+    //Материал контейнера на сцене
+    [SerializeField] private Material containerMaterial;
+    public Material ContainerMaterial { get; set; }
+    
     // Иконка способности
-    [SerializeField] private UnityEngine.Object icon;
-    public UnityEngine.Object Icon { get => icon; set => icon = value; }
+    [SerializeField] private Sprite icon;
+    public Sprite Icon { get => icon; set => icon = value; }
 
     // Префаб способности
     [SerializeField] private GameObject prefab;
@@ -103,12 +107,13 @@ public class AbilityDataEditor : Editor
     override public void OnInspectorGUI()
     {
         // Основные параметры SO - иконка, префаб и задержка перед применением
-        Data.Icon = EditorGUILayout.ObjectField("Icon", Data.Icon, typeof(Sprite), false);
+        Data.ContainerMaterial = (Material)EditorGUILayout.ObjectField("ContainerMaterial", Data.ContainerMaterial, typeof(Material), false);
+        Data.Icon = (Sprite)EditorGUILayout.ObjectField("Icon", Data.Icon, typeof(Sprite), false);
         Data.Prefab = (GameObject)EditorGUILayout.ObjectField("Prefab", Data.Prefab, typeof(GameObject), false);
         Data.Delay = EditorGUILayout.FloatField("Delay before using", Data.Delay);
 
         // Параметры, указывающие, в какой слот возможна загрузка способности
-        EditorGUILayout.Separator();
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
         EditorGUILayout.PrefixLabel("Possible slots");
 
@@ -122,7 +127,7 @@ public class AbilityDataEditor : Editor
             Data.EquippableRight = EditorGUILayout.ToggleLeft("Right", Data.EquippableRight, GUILayout.MaxWidth(100));
         EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.Separator();
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
         // Тип способности
         Data.AbilityType = (AbilityData.Ability)EditorGUILayout.EnumPopup("Ability type", Data.AbilityType);

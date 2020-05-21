@@ -2,11 +2,11 @@
 
     public class BombAbility : IAbility
     {
-        public Color AbilityColor { get;set;}
+        public AbilityData Data { get; set; }
 
         public BombAbility()
         {
-            AbilityColor = Color.yellow;
+            Data = Resources.Load<AbilityData>("AbilityData/TestHazard");
         }
 
         public IAbility Add(IAbility ability)

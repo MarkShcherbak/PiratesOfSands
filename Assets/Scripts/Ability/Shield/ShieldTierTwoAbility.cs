@@ -2,11 +2,10 @@
 
     public class ShieldTierTwoAbility : IAbility
     {
-        public Color AbilityColor { get; set; }
-        
+        public AbilityData Data { get; set; }
         public ShieldTierTwoAbility()
         {
-            AbilityColor = Color.blue;
+            Data = Resources.Load<AbilityData>("AbilityData/TestShield");
         }
 
         public IAbility Add(IAbility ability)

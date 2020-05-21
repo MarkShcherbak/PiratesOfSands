@@ -2,11 +2,10 @@
 
     public class OilAbility : IAbility
     {
-        public Color AbilityColor { get; set;}
-        
+        public AbilityData Data { get; set; }
         public OilAbility()
         {
-            AbilityColor = Color.yellow;
+            Data = Resources.Load<AbilityData>("AbilityData/TestHazard");
         }
 
         public IAbility Add(IAbility ability)
