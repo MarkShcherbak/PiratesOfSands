@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TestSpeedUp
   m_EditorClassIdentifier: 
   abilityType: 3
+  containerMaterial: {fileID: 2100000, guid: 595b0628a1d2b1348879253b29a0ddc1, type: 2}
   icon: {fileID: 0}
   containerMaterial: {fileID: 2100000, guid: 595b0628a1d2b1348879253b29a0ddc1, type: 2}
   prefab: {fileID: 0}

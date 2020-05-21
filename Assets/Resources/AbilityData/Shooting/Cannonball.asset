@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Cannonball
   m_EditorClassIdentifier: 
   abilityType: 0
+  containerMaterial: {fileID: 2100000, guid: 35447764996648c4f882ba8f96731f62, type: 2}
   icon: {fileID: 0}
   containerMaterial: {fileID: 2100000, guid: 35447764996648c4f882ba8f96731f62, type: 2}
   prefab: {fileID: 4153465357934045856, guid: bf27222a898d473408d6204b67635f0c, type: 3}

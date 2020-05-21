@@ -26,7 +26,7 @@ namespace Track
         private void CreateAbility()
         {
             Ability = AbilityFactory.CreateRandomAbility();
-            renderer.material.SetColor("_Color", Ability.AbilityColor);
+            renderer.material = Ability.Data.ContainerMaterial;
 
         }
         

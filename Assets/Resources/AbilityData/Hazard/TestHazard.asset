@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: TestHazard
   m_EditorClassIdentifier: 
   abilityType: 1
+  containerMaterial: {fileID: 2100000, guid: f277da795b725d54e98bb7498ffe024d, type: 2}
   icon: {fileID: 0}
   containerMaterial: {fileID: 2100000, guid: f277da795b725d54e98bb7498ffe024d, type: 2}
   prefab: {fileID: 0}
   delay: 2
-  equippableFront: 1
+  equippableFront: 0
   equippableBack: 1
   equippableLeft: 0
   equippableRight: 0
