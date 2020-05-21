@@ -19,11 +19,11 @@
             return modelView;
         }
 
-        public static AbilityHUDModelView CreatePlayerAbilityUI(Canvas canvas)
+        public static PlayerAbilityUIModelView CreatePlayerAbilityUI(Canvas canvas)
         {
-            GameObject abilityHUDPrefab = Resources.Load<GameObject>("Prefabs/UI/PlayerAbilityUI");
-            AbilityHUDModelView modelView = UnityEngine.Object.Instantiate(abilityHUDPrefab, canvas.transform)
-                .GetComponent<AbilityHUDModelView>();
+            GameObject abilityUIPrefab = Resources.Load<GameObject>("Prefabs/UI/PlayerAbilityUI");
+            PlayerAbilityUIModelView modelView = UnityEngine.Object.Instantiate(abilityUIPrefab, canvas.transform)
+                .GetComponent<PlayerAbilityUIModelView>();
             return modelView;
         }
     }

@@ -7,7 +7,7 @@ public class ShipModelView : MonoBehaviour
     #region fields
     //Events
     public event EventHandler<Vector3> OnInput = (sender, e) => { };
-    public event EventHandler<Sprite> OnAbilityChanged = (sender, e) => { };
+    public event EventHandler OnAbilityChanged = (sender, e) => { };
     public event EventHandler<Vector3> OnAction = (sender, e) => { };
     public event EventHandler OnCollision = (other, e) => { };
     //Ship data
@@ -36,16 +36,9 @@ public class ShipModelView : MonoBehaviour
              else masterAbilitySlot = value;
 
             if(masterAbilitySlot != null)
-            OnAbilityChanged(this, masterAbilitySlot.Data.Icon);
-            else OnAbilityChanged(this, null);
+            Debug.Log("ShipAbilitySlot now is: " + masterAbilitySlot);
         }
     }
-
-    //Cannons accessor
-    public ICannonModelView[] FrontCannons { get => frontCannons; }
-    public ICannonModelView[] BackCannons { get => backCannons; }
-    public ICannonModelView[] LeftCannons { get => leftCannons; }
-    public ICannonModelView[] RightCannons { get => rightCannons; }
 
     //Rotation Accessor
     public Quaternion Rotation
@@ -65,7 +58,7 @@ public class ShipModelView : MonoBehaviour
     #endregion
 
 
-    private void Awake()
+    private void Start()
     {
         CreateCannons();
     }
@@ -172,10 +165,6 @@ public class ShipModelView : MonoBehaviour
                 MasterAbility = null;
             }
         }
-
-        if (masterAbilitySlot != null)
-            OnAbilityChanged(this, masterAbilitySlot.Data.Icon);
-        else OnAbilityChanged(this, null);
     }
 
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityType: 1
   containerMaterial: {fileID: 2100000, guid: f277da795b725d54e98bb7498ffe024d, type: 2}
-  icon: {fileID: 21300000, guid: aa6b6bb1b71b54f1fb42bdda462746e4, type: 3}
+  icon: {fileID: 0}
   prefab: {fileID: 0}
   delay: 2
   equippableFront: 0

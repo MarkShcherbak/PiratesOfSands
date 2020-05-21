@@ -39,10 +39,9 @@ public class GameController
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
         objectsInGame.Add(playerPilotMV.gameObject);
 
-        // TODO создаем HUD отображение способностей (ТЕСТОВОЕ!!!)
-        AbilityHUDModelView abilityHUDMV = UIFactory.CreatePlayerAbilityUI(canvas);
-        objectsInGame.Add(abilityHUDMV.gameObject);
-        AbilityHUDController abilityHUDController = new AbilityHUDController(abilityHUDMV, playerShipMV);
+        // TODO создаем UI отображение способностей (ТЕСТОВОЕ!!!)
+        PlayerAbilityUIModelView abilityUIMV = UIFactory.CreatePlayerAbilityUI(canvas);
+        objectsInGame.Add(abilityUIMV.gameObject);
           
         // создаем риг камер
         CameraModelView cameraMV = CameraFactory.CreateCameraRig(playerShipMV.transform);
