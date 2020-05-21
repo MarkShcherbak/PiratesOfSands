@@ -1,23 +1,23 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 
-    public class GrapplingHookAbility : IAbility
+public class GrapplingHookAbility : IAbility
+{
+    public AbilityData Data { get; set; }
+
+    public GrapplingHookAbility()
     {
-        
-        public Color AbilityColor { get; set; }
-        
-        public GrapplingHookAbility()
-        {
-            AbilityColor = Color.red;
-        }
-        public IAbility Add(IAbility ability)
-        {
-            if (ability is CannonballShotAbility) return new ChainShotAbility();
-            else return ability;
-        }
+        Data = Resources.Load<AbilityData>("AbilityData/Shooting/GrapplingHook");
+    }
+    public IAbility Add(IAbility ability)
+    {
+        if (ability is CannonballShotAbility) return new ChainShotAbility();
+        else return ability;
+    }
 
-        public void Execute(Transform position)
-        {
+    public void Execute(Transform position)
+    {
         Debug.Log("Hook fired!");
+
+        AmmoFactory.CreateHookShot(position, Data);
     }
-        
-    }
+}

@@ -1,22 +1,22 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 
-    public class SpeedBigBoostAbility : IAbility
+public class SpeedBigBoostAbility : IAbility
+{
+
+    public AbilityData Data { get; set; }
+
+    public SpeedBigBoostAbility()
     {
-        
-        public Color AbilityColor { get; set; }
-        
-        public SpeedBigBoostAbility()
-        {
-            AbilityColor = Color.green;
-        }
-        public IAbility Add(IAbility ability)
-        {
-            if (ability is SpeedSmallBoostAbility) return new SpeedFlyingBoostAbility();
-            else return ability;
-        }
-
-        public void Execute(Transform position)
-        {
-        Debug.Log("Big Speed boost launched!");
-        }
+        Data = Resources.Load<AbilityData>("AbilityData/SpeedUp/TestSpeedUp");
     }
+    public IAbility Add(IAbility ability)
+    {
+        if (ability is SpeedSmallBoostAbility) return new SpeedFlyingBoostAbility();
+        else return ability;
+    }
+
+    public void Execute(Transform position)
+    {
+        Debug.Log("Big Speed boost launched!");
+    }
+}

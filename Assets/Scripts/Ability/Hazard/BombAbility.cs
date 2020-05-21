@@ -1,22 +1,22 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 
-    public class BombAbility : IAbility
+public class BombAbility : IAbility
+{
+    public AbilityData Data { get; set; }
+
+    public BombAbility()
     {
-        public Color AbilityColor { get;set;}
-
-        public BombAbility()
-        {
-            AbilityColor = Color.yellow;
-        }
-
-        public IAbility Add(IAbility ability)
-        {
-            if (ability is OilAbility) return new NapalmAbility();
-            else return ability;
-        }
-
-        public void Execute(Transform position)
-        {
-            Debug.Log("Bomb launched!");
-        }
+        Data = Resources.Load<AbilityData>("AbilityData/Hazard/TestHazard");
     }
+
+    public IAbility Add(IAbility ability)
+    {
+        if (ability is OilAbility) return new NapalmAbility();
+        else return ability;
+    }
+
+    public void Execute(Transform position)
+    {
+        Debug.Log("Bomb launched!");
+    }
+}

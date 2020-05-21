@@ -1,22 +1,22 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 
-    public class ShieldTierThreeAbility : IAbility
+public class ShieldTierThreeAbility : IAbility
+{
+    public AbilityData Data { get; set; }
+
+    public ShieldTierThreeAbility()
     {
-        public Color AbilityColor { get; set; }
-        
-        public ShieldTierThreeAbility()
-        {
-            AbilityColor = Color.blue;
-        }
-
-        public IAbility Add(IAbility ability)
-        {
-            if (ability is ShieldTierOneAbility) return new ShieldTierFourAbility();
-            else return ability;
-        }
-
-        public void Execute(Transform position)
-        {
-        Debug.Log("Shield tire 3 launched!");
-        }
+        Data = Resources.Load<AbilityData>("AbilityData/Shield/TestShield");
     }
+
+    public IAbility Add(IAbility ability)
+    {
+        if (ability is ShieldTierOneAbility) return new ShieldTierFourAbility();
+        else return ability;
+    }
+
+    public void Execute(Transform position)
+    {
+        Debug.Log("Shield tier 3 launched!");
+    }
+}
