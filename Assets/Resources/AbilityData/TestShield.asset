@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eb402bbfaa7cd140a9392ea8958a8c3, type: 3}
-  m_Name: DefaultAbility
+  m_Name: TestShield
   m_EditorClassIdentifier: 
-  type: 0
+  abilityType: 2
   icon: {fileID: 0}
   prefab: {fileID: 0}
   delay: 3
-  equippableOnFront: 0
-  equippableOnBack: 0
-  equippableOnLeft: 0
-  equippableOnRight: 0
+  equippableFront: 1
+  equippableBack: 0
+  equippableLeft: 0
+  equippableRight: 0
   projectileDamage: 0
   projectileSpeed: 0
   projectileScatter: 0
   hazardDamage: 0
-  shieldDuration: 0
+  shieldDuration: 7
   speedUpDuration: 0
   speedUpIntensity: 0
