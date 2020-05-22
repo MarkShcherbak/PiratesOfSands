@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CinemachineModelView : MonoBehaviour
+public class CinemachineModelView : Singleton<CinemachineModelView>
 {
     [SerializeField] private List<CinemachineVirtualCamera> virtCameras;
     [SerializeField] private CinemachineBrain cinemachineBrain;
     public Transform targetPosition = null;
+
+    private int currCam = 0;
 
     private void Start()
     {
@@ -16,12 +18,42 @@ public class CinemachineModelView : MonoBehaviour
             return;
         }
 
-        foreach (CinemachineVirtualCamera camera in virtCameras)
+        foreach (CinemachineVirtualCamera cam in virtCameras)
         {
-            camera.Follow = targetPosition;
-            camera.LookAt = targetPosition;
+            cam.Follow = targetPosition;
+            cam.LookAt = targetPosition;
         }
 
+        SetCurrentCamera();
+
+    }
+
+    public void NextCam()
+    {
+        currCam++;
+        if (currCam> virtCameras.Count-1)
+        {
+            currCam = 0;
+        }
+        SetCurrentCamera(currCam);
+
+
+    }
+
+    private void SetCurrentCamera(int camNum = 0)
+    {
+        for (int i = 0; i < virtCameras.Count; i++)
+        {
+
+            if (i == camNum)
+            {
+                virtCameras[i].Priority = 1;
+            }
+            else
+            {
+                virtCameras[i].Priority = 0;
+            }
+        }
     }
 
 
