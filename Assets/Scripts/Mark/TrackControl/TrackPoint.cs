@@ -5,5 +5,5 @@ using UnityEngine;
 //Класс чекпоинт
 public class TrackPoint : MonoBehaviour
 {
-   
+    
 }

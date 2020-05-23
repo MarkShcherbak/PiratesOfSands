@@ -15,6 +15,8 @@ public class TrackPath : MonoBehaviour
 
     private List<KeyValuePair<Transform, float>> checkPointAndDistance;
 
+    public List<Transform> gatePoints;
+
     private void Awake()
     {
         if (trackPoints.Count > 1)
@@ -47,35 +49,49 @@ public class TrackPath : MonoBehaviour
     {
         // Draw a yellow sphere at the transform's position
 
-
+        Color color;
         if (trackPoints.Count > 0)
         {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(trackPoints[0].position, 0.5f);
+            color = Color.blue;
+            color.a = 0.2f;
+            Gizmos.color = color;
+            Gizmos.DrawSphere(trackPoints[0].position, 20f);
         }
-        Gizmos.color = Color.green;
+        
+        color = Color.green;
+        color.a = 0.2f;
+        Gizmos.color = color;
         for (int i = 1; i < trackPoints.Count; i++)
         {
+            if (!trackPoints[i]|| !trackPoints[i-1])
+            {
+                continue;
+            }
 
             if (i == trackPoints.Count - 1 && !isLooped)
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(trackPoints[i].position, 0.5f);
+                color = Color.red;
+                color.a = 0.2f;
+                Gizmos.color = color;
+                Gizmos.DrawSphere(trackPoints[i].position, 20f);
             }
             else
             {
-                Gizmos.DrawSphere(trackPoints[i].position, 0.3f);
+                Gizmos.DrawSphere(trackPoints[i].position, 20f);
             }
 
 
             Gizmos.DrawLine(trackPoints[i - 1].position, trackPoints[i].position);
 
-
         }
 
         if (isLooped && trackPoints.Count > 1)
         {
-            Gizmos.DrawLine(trackPoints[trackPoints.Count - 1].position, trackPoints[0].position);
+            if (trackPoints[trackPoints.Count - 1] && trackPoints[0])
+            {
+                Gizmos.DrawLine(trackPoints[trackPoints.Count - 1].position, trackPoints[0].position);
+            }
+           
         }
     }
 
