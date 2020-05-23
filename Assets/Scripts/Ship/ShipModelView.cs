@@ -10,6 +10,9 @@ public class ShipModelView : MonoBehaviour
     public event EventHandler<Sprite> OnAbilityChanged = (sender, e) => { };
     public event EventHandler<Vector3> OnAction = (sender, e) => { };
     public event EventHandler OnCollision = (other, e) => { };
+
+    public event EventHandler<float> OnFlip = (sender, e) => { };
+
     //Ship data
     [SerializeField] private Rigidbody rb;
     //Cannon spots on the ship sides
@@ -19,6 +22,9 @@ public class ShipModelView : MonoBehaviour
 
     //ShipAbility
     private IAbility masterAbilitySlot;
+
+    // Скалярная величина наклона корабля
+    private float dotUp;
 
     #endregion
 
@@ -31,12 +37,12 @@ public class ShipModelView : MonoBehaviour
         {
             if (value == null)
                 masterAbilitySlot = null;
-             else if (masterAbilitySlot != null)
+            else if (masterAbilitySlot != null)
                 masterAbilitySlot = masterAbilitySlot.Add(value);
-             else masterAbilitySlot = value;
+            else masterAbilitySlot = value;
 
             if (masterAbilitySlot != null)
-            OnAbilityChanged(this, masterAbilitySlot.Data.Icon);
+                OnAbilityChanged(this, masterAbilitySlot.Data.Icon);
             else OnAbilityChanged(this, null);
         }
     }
@@ -53,7 +59,7 @@ public class ShipModelView : MonoBehaviour
         get => rb.rotation;
         set
         {
-            if(rb.rotation != value)
+            if (rb.rotation != value)
             {
                 rb.rotation = value;
             }
@@ -68,6 +74,9 @@ public class ShipModelView : MonoBehaviour
     private void Awake()
     {
         CreateCannons();
+
+        // Устанавливаем центр тяжести корабля
+        Rigidbody.centerOfMass = new Vector3(Rigidbody.centerOfMass.x, 0, Rigidbody.centerOfMass.z);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -117,10 +126,10 @@ public class ShipModelView : MonoBehaviour
     {
         if (direction == Vector3.forward)
         {
-            if(frontCannons[0].LoadedAbility != null)
-            foreach (ICannonModelView cannon in frontCannons)
+            if (frontCannons[0].LoadedAbility != null)
+                foreach (ICannonModelView cannon in frontCannons)
                 { cannon.Fire(); cannon.LoadedAbility = null; }
-            else if(masterAbilitySlot != null)
+            else if (masterAbilitySlot != null)
             {
                 if (masterAbilitySlot.Data.EquippableFront)
                 {
@@ -134,23 +143,23 @@ public class ShipModelView : MonoBehaviour
                 {
                     Debug.Log("Ability can't be loaded on front!");
                 }
-            }       
+            }
         }
-            
+
 
         if (direction == Vector3.back)
         {
             if (backCannons[0].LoadedAbility != null)
                 foreach (ICannonModelView cannon in backCannons)
                 { cannon.Fire(); cannon.LoadedAbility = null; }
-            else if(masterAbilitySlot != null)
+            else if (masterAbilitySlot != null)
             {
                 if (masterAbilitySlot.Data.EquippableBack)
                 {
                     foreach (ICannonModelView cannon in backCannons)
-                    cannon.LoadedAbility = masterAbilitySlot;
-                Debug.Log(masterAbilitySlot + " is loaded to back cannon!");
-                MasterAbility = null;
+                        cannon.LoadedAbility = masterAbilitySlot;
+                    Debug.Log(masterAbilitySlot + " is loaded to back cannon!");
+                    MasterAbility = null;
                 }
 
                 else
@@ -181,7 +190,7 @@ public class ShipModelView : MonoBehaviour
                 }
             }
         }
-            
+
 
         if (direction == Vector3.right)
         {
@@ -210,5 +219,14 @@ public class ShipModelView : MonoBehaviour
         else OnAbilityChanged(this, null);
     }
 
+    public void Update()
+    {
+        // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
+        dotUp = Vector3.Dot(transform.up, Vector3.down);
 
+        if (dotUp > -0.6f)
+        {
+            OnFlip(this, dotUp);
+        }
+    }
 }
