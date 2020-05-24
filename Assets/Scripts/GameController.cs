@@ -20,13 +20,15 @@ public class GameController
         mainCamera = mainCam;
         objectsInGame = new List<GameObject>();
         canvas = mainCanvas;
-        trackMV =  TrackFactory.CreateTestTrackModelView(); // создаем трассу и добавляем в лист объектов в игре
+        
+        //создаем трассу
+        trackMV =  TrackFactory.CreateBigTrackModelView(); // создаем трассу и добавляем в лист объектов в игре
         trackMV.OnPause += HandleGamePause; // подписываем обработчик паузы на событие паузы
         objectsInGame.Add(trackMV.gameObject);
             
             
         //создаем сеть чекпоинтов
-        TrackPath checkpointsPath = TrackFactory.CreateTestTrackPath();
+        TrackPath checkpointsPath = TrackFactory.CreateBigTrackPath();
         objectsInGame.Add(checkpointsPath.gameObject);
             
         // создаем корабль игрока
@@ -59,11 +61,6 @@ public class GameController
         EnemyPilotController enemyPilotController =
             PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
         objectsInGame.Add(enemyPilotMV.gameObject);
-        
-        // TODO создаем контейнер способности (ТЕСТОВЫЙ!!!)
-        AbilityContainerModelView abilityContainerMV = TrackFactory.CreateAbilityContainer(checkpointsPath.trackPoints[1].position);
-        objectsInGame.Add(abilityContainerMV.gameObject);
-
 
         //Создание синглтона Ввода данных от пользователя
         GameObject inputController = new GameObject();

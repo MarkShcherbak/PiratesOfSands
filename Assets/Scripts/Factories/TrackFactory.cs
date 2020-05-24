@@ -20,6 +20,22 @@ using UnityEngine;
                 .GetComponent<TrackPath>();
             return path;
         }
+        
+        public static TrackModelView CreateBigTrackModelView()
+        {
+            GameObject testTrackPrefab = Resources.Load<GameObject>("Prefabs/Track/BigTrack");
+            TrackModelView modelView = UnityEngine.Object.Instantiate(testTrackPrefab)
+                .GetComponent<TrackModelView>();
+            return modelView;
+        }
+
+        public static TrackPath CreateBigTrackPath()
+        {
+            GameObject testTrackPathPrefab = Resources.Load<GameObject>("Prefabs/Track/BigCheckpointsPath");
+            TrackPath path = UnityEngine.Object.Instantiate(testTrackPathPrefab)
+                .GetComponent<TrackPath>();
+            return path;
+        }
 
         public static AbilityContainerModelView CreateAbilityContainer(Vector3 position)
         {
