@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CannonballShotAbility : IAbility
+public class CannonballShotAbility : IAbility,IPrimary
 {
     public AbilityData Data { get; set; }
 

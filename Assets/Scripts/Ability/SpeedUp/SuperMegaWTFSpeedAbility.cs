@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SuperMegaWTFSpeedAbility : IAbility
+public class SuperMegaWTFSpeedAbility : IAbility,ISecondary
 {
     public AbilityData Data { get; set; }
 

@@ -35,10 +35,14 @@ namespace Track
         {
             if (isActive)
             {
-
                 if (other.TryGetComponent(out ShipModelView shipMV))
                 {
-                    shipMV.MasterAbility = Ability;
+                    if(Ability is IPrimary)
+                        shipMV.PrimaryAbility = Ability;
+
+                    if (Ability is ISecondary)
+                        shipMV.SecondaryAbility = Ability;
+                    
                     HideContainer();
                 }
             }

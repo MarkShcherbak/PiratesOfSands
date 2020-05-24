@@ -10,6 +10,11 @@ public class EnemyPilotController
 
     private Transform currentAim;
 
+    // Смещение от центра точки интереса
+    private Vector3 aimOffset;
+
+    private float aimInterest = 1.0f;
+
     public EnemyPilotController(EnemyPilotModelView enemyPilot, ShipModelView ship, TrackPath checkpoints)
     {
         pilotModelView = enemyPilot;
@@ -26,11 +31,17 @@ public class EnemyPilotController
 
     }
 
-    private void HandleTriggerCollision(object sender, Transform checkPointTransform)
+    private void HandleTriggerCollision(object sender, Transform checkpointTransform)
     {
-        if (checkPointTransform.CompareTag("TrackPoint"))
+        if (checkpointTransform.tag.Equals("TrackPoint"))
         {
-            currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkPointTransform); //?????
+            currentAim = checkpointsPath.GetNextCheckPointPositionForGameObject(pilotModelView.transform); //?????
+
+            // Получаем смещение в зависимости от размера коллайдера в самих воротах
+            aimOffset = new Vector3(UnityEngine.Random.Range(- checkpointTransform.GetComponentInChildren<BoxCollider>().size.x, checkpointTransform.GetComponentInChildren<BoxCollider>().size.x) * 0.3f, 0, 0);
+
+            // Получаем множитель скорости движения к следующей цели
+            aimInterest = UnityEngine.Random.Range(0.6f, 1f);
         }
     }
 

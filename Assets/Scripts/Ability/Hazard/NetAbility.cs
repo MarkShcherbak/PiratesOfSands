@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class NetAbility : IAbility
+public class NetAbility : IAbility, ISecondary
 {
     public AbilityData Data { get; set; }
 

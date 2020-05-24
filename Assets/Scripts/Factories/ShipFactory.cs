@@ -4,12 +4,11 @@ using UnityEngine;
 // Ship factory, creates different ships and their controllers
 public class ShipFactory
 {
-    public static ShipModelView CreateShipModelView(Vector3 position)
+    public static ShipModelView CreateShipModelView(Transform transform)
     {
             GameObject testShipPrefab = Resources.Load<GameObject>("Prefabs/Ship/TestShip");
-            ShipModelView modelView = UnityEngine.Object.Instantiate(testShipPrefab)
+            ShipModelView modelView = UnityEngine.Object.Instantiate(testShipPrefab, transform.position, transform.rotation)
                 .GetComponent<ShipModelView>();
-            modelView.transform.position = position;
             return modelView;
     }
 

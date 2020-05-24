@@ -17,7 +17,7 @@ public class PlayerPilotModelView : MonoBehaviour
 
         actionDirection = Vector3.zero;
         if (Input.GetKeyDown(KeyCode.UpArrow)) actionDirection = Vector3.forward;
-        if (Input.GetKeyDown(KeyCode.DownArrow)) actionDirection = Vector3.back;
+        if (Input.GetKeyDown(KeyCode.Space)) actionDirection = Vector3.back;
         if (Input.GetKeyDown(KeyCode.LeftArrow)) actionDirection = Vector3.left;
         if (Input.GetKeyDown(KeyCode.RightArrow)) actionDirection = Vector3.right;
 

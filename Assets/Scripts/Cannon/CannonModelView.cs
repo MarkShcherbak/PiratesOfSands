@@ -5,11 +5,10 @@ using UnityEngine;
 public class CannonModelView : MonoBehaviour, ICannonModelView
 {
     [SerializeField] private Transform shotOrigin;
+    
 
-    public IAbility LoadedAbility { get; set; }
-
-    public void Fire()
+    public void Fire(IAbility ability)
     {
-       LoadedAbility.Execute(shotOrigin);
+       ability.Execute(shotOrigin);
     }
 }
