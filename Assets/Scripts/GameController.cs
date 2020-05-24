@@ -38,6 +38,8 @@ public class GameController
         ShipController shipController = ShipFactory.CreateShipController(playerShipMV);
         objectsInGame.Add(playerShipMV.gameObject);
 
+        playerShipMV.name = "Player";
+
         // создаем пилота игрока
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
@@ -50,7 +52,9 @@ public class GameController
             ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(i));
             ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV);
             objectsInGame.Add(enemyShipMV.gameObject);
-        
+
+            enemyShipMV.name = $"Enemy {i}";
+
             // создаем пилота противника
             EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
             EnemyPilotController enemyPilotController =
