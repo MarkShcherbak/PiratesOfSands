@@ -91,6 +91,10 @@ public class TrackPath : MonoBehaviour
     void OnDrawGizmos()
     {
         // Draw a yellow sphere at the transform's position
+        if (trackPoints == null)
+        {
+            return;
+        }
 
         Color color;
         if (trackPoints.Count > 0)
