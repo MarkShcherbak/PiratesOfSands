@@ -40,23 +40,23 @@ public class ShipController
         shipMV.Rigidbody.AddRelativeTorque(0, 0, shipMV.Rigidbody.angularVelocity.z * -5f, ForceMode.Acceleration);
 
         // Если корабль вернулся в приемлемый угол наклона - сбрасываем угловую скорость по оси Z, чтобы корабль не качало слишком сильно
-        if (dotProduct < -0.8)
+        if (dotProduct < -0.8f)
         {
-            shipMV.Rigidbody.angularVelocity = new Vector3(0, 0, 0);
+            shipMV.Rigidbody.angularVelocity = new Vector3(0f, 0f, 0f);
         }
 
         // Вручную вращаем корабль до тех пор, пока он не сможет вернуться "на ноги"
         // По сути следующее условие "вытаскивает" корабль вместе с коллайдером паруса из-под земли, если он там каким-то образом застрял
         // TODO не очень хорошо работает с текущим пилотом противника - крутит не ту ось =\
 
-        if (dotProduct > 0.3)
+        if (dotProduct > 0.2f)
         {
             Debug.Log("Geez! Looks like a total flip!");
 
             Quaternion rotation = Quaternion.AngleAxis(shipMV.transform.rotation.z > 0 ? -5f : 5f, Vector3.forward);
             shipMV.Rigidbody.MoveRotation(shipMV.Rotation * rotation);
 
-            if (dotProduct > 0.8)
+            if (dotProduct > 0.9f)
             {
                 Debug.Log("Resetting...");
                 shipMV.Rotation = Quaternion.identity;  // TODO сброс только по оси Z
