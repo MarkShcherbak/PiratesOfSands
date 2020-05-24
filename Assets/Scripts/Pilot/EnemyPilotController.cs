@@ -43,7 +43,7 @@ public class EnemyPilotController
                 checkpointTransform.GetComponentInChildren<BoxCollider>().size.x) * 0.3f, 0, 0);
 
             // Получаем множитель скорости движения к следующей цели
-            aimInterest = UnityEngine.Random.Range(0.6f, 1f);
+            aimInterest = UnityEngine.Random.Range(0.25f, 1f);
         }
     }
 
@@ -60,7 +60,7 @@ public class EnemyPilotController
             float moveH = Vector3.SignedAngle(shipModelView.transform.forward,
                 (currentAim.position + aimOffset) - shipModelView.transform.position, Vector3.up); // + aimOffset - Добавляем смещение к конечной цели
 
-            Vector3 direction = new Vector3(moveH / 90, 0, aimInterest);
+            Vector3 direction = new Vector3(moveH / 30, 0, aimInterest);
             shipModelView.SteeringInput(direction);
 
             Debug.DrawLine(shipModelView.transform.position, currentAim.position + aimOffset);

@@ -22,7 +22,7 @@ MonoBehaviour:
   equippableLeft: 1
   equippableRight: 1
   projectileDamage: 5
-  projectileSpeed: 20
+  projectileSpeed: 25
   projectileScatter: 15
   projectilesCount: 2
   hazardDamage: 0
