@@ -25,14 +25,16 @@ public class GameController
         trackMV =  TrackFactory.CreateBigTrackModelView(); // создаем трассу и добавляем в лист объектов в игре
         trackMV.OnPause += HandleGamePause; // подписываем обработчик паузы на событие паузы
         objectsInGame.Add(trackMV.gameObject);
-            
-            
+        
         //создаем сеть чекпоинтов
         TrackPath checkpointsPath = TrackFactory.CreateBigTrackPath();
         objectsInGame.Add(checkpointsPath.gameObject);
             
+        // создаем объект размещения кораблей на трассе
+        StartPlacerModelView placerMV = TrackFactory.CreateStartPlacer(checkpointsPath.GetStartPosition());
+
         // создаем корабль игрока
-        ShipModelView playerShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(2,2,2)); //TODO сделать разброс появления на старте!
+        ShipModelView playerShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(0));
         ShipController shipController = ShipFactory.CreateShipController(playerShipMV);
         objectsInGame.Add(playerShipMV.gameObject);
 
@@ -40,6 +42,21 @@ public class GameController
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
         objectsInGame.Add(playerPilotMV.gameObject);
+
+        
+        for (int i = 1; i < 6; i++) //TODO поменять на бесконечное колво игроков? => изменить объект размещения
+        {
+            // создаем корабль противника
+            ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(i));
+            ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV);
+            objectsInGame.Add(enemyShipMV.gameObject);
+        
+            // создаем пилота противника
+            EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
+            EnemyPilotController enemyPilotController =
+                PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
+            objectsInGame.Add(enemyPilotMV.gameObject);
+        }
 
         // TODO создаем HUD отображение способностей (ТЕСТОВОЕ!!!)
         AbilityHUDModelView abilityHUDMV = UIFactory.CreatePlayerAbilityUI(canvas);
@@ -51,24 +68,14 @@ public class GameController
         mainCamera.gameObject.SetActive(false);  // отключаем основную камеру после появления рига
         objectsInGame.Add(cameraMV.gameObject);
         
-        // создаем корабль противника
-        ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(checkpointsPath.trackPoints[0].position + new Vector3(-10,2,-2));
-        ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV);
-        objectsInGame.Add(enemyShipMV.gameObject);
-        
-        // создаем пилота противника
-        EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
-        EnemyPilotController enemyPilotController =
-            PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
-        objectsInGame.Add(enemyPilotMV.gameObject);
+       
 
         //Создание синглтона Ввода данных от пользователя
         GameObject inputController = new GameObject();
         inputController.AddComponent<InputControl>();
         objectsInGame.Add(inputController);
 
-
-        // TODO создаем AI и корабли AI и передаем им сеть чекпоинтов
+        
     }
 
         
