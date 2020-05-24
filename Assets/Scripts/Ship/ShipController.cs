@@ -18,7 +18,9 @@ public class ShipController
 
     private void HandleAction(object sender, Vector3 direction)
     {
-        shipMV.Action(direction);
+        if(direction != Vector3.back)
+        shipMV.PrimaryAction(direction);
+        else shipMV.SecondatyAction();
     }
 
     private void HandleInput(object sender, Vector3 input)

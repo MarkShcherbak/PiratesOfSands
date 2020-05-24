@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class NapalmAbility : IAbility
+public class NapalmAbility : IAbility, ISecondary
 {
     public AbilityData Data { get; set; }
 

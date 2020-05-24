@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class OilAbility : IAbility
+public class OilAbility : IAbility, ISecondary
 {
     public AbilityData Data { get; set; }
 

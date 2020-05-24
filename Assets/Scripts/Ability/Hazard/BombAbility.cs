@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BombAbility : IAbility
+public class BombAbility : IAbility, ISecondary
 {
     public AbilityData Data { get; set; }
 

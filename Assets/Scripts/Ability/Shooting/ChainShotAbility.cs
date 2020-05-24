@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ChainShotAbility : IAbility
+public class ChainShotAbility : IAbility,IPrimary
 {
     public AbilityData Data { get; set; }
 

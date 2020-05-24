@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GrapplingHookAbility : IAbility
+public class GrapplingHookAbility : IAbility, IPrimary
 {
     public AbilityData Data { get; set; }
 

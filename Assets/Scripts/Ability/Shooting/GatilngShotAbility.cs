@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GatilngShotAbility : IAbility
+public class GatilngShotAbility : IAbility, IPrimary
 {
     public Color AbilityColor { get; set; }
     public AbilityData Data { get; set; }
