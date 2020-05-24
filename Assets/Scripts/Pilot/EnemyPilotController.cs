@@ -26,11 +26,11 @@ public class EnemyPilotController
 
     }
 
-    private void HandleTriggerCollision(object sender, string tag)
+    private void HandleTriggerCollision(object sender, Transform checkPointTransform)
     {
-        if (tag.Equals("TrackPoint"))
+        if (checkPointTransform.CompareTag("TrackPoint"))
         {
-            currentAim = checkpointsPath.GetNextCheckPointPositionForGameObject(pilotModelView.transform); //?????
+            currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkPointTransform); //?????
         }
     }
 

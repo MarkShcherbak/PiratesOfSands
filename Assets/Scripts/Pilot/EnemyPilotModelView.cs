@@ -7,7 +7,7 @@ public class EnemyPilotModelView : MonoBehaviour
 {
     public event EventHandler OnMovingInput = (sender, e) => { };
     public event EventHandler<Vector3> OnActionInput = (sender, e) => { };
-    public event EventHandler<String> OnTriggerCollision = (sender, tag) => { };
+    public event EventHandler<Transform> OnTriggerCollision = (sender, checkPointTransform) => { };
 
     private float moveH, moveV;
     private Vector3 actionDirection;
@@ -21,6 +21,6 @@ public class EnemyPilotModelView : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnTriggerCollision(this, other.tag);
+        OnTriggerCollision(this, other.transform);
     }
 }
