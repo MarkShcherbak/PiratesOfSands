@@ -10,8 +10,11 @@ public class EnemyPilotController
     private readonly TrackPath checkpointsPath;
 
     private Transform currentAim;
+
+    // Точка финальной цели для пилота корабля с уже добавленным разбросом
     private Vector3 aimOffset;
 
+    // "Шум" скорости передвижения
     private float aimInterest = 1.0f;
 
     public EnemyPilotController(EnemyPilotModelView enemyPilot, ShipModelView ship, TrackPath checkpoints)
@@ -36,12 +39,20 @@ public class EnemyPilotController
         {
             currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkpointTransform); //?????
 
-            // Получаем смещение в зависимости от размера коллайдера в самих воротах
-            aimOffset = new Vector3(UnityEngine.Random.Range(- checkpointTransform.GetComponentInChildren<BoxCollider>().size.x, 
-                checkpointTransform.GetComponentInChildren<BoxCollider>().size.x) * 0.3f, 0, 0);
-            
+            // Получаем компонент коллайдера, описывающего расстояние между столбами ворот
+            BoxCollider collider = currentAim.GetComponentInChildren<BoxCollider>();
+
+            // Получаем случайную точку исходя из размеров коллайдера
+            aimOffset = new Vector3(
+                x: UnityEngine.Random.Range(collider.bounds.min.x, collider.bounds.max.x), 
+                y: collider.bounds.max.y, 
+                z: UnityEngine.Random.Range(collider.bounds.min.z, collider.bounds.max.z));
+
+            // и размещаем эту точку внутри коллайдера (т.е. возвращаем ближайшую соответствующую полученным координатам точку в пространстве коллайдера)
+            aimOffset = collider.ClosestPoint(aimOffset);
+
             // Получаем множитель скорости движения к следующей цели
-            aimInterest = UnityEngine.Random.Range(0.25f, 1f);
+            aimInterest = UnityEngine.Random.Range(0.4f, 1f);
         }
     }
 
@@ -56,12 +67,12 @@ public class EnemyPilotController
         if (currentAim != null)
         {
             float moveH = Vector3.SignedAngle(shipModelView.transform.forward,
-                (currentAim.position + aimOffset) - shipModelView.transform.position, Vector3.up); // + aimOffset - Добавляем смещение к конечной цели
+                aimOffset - shipModelView.transform.position, Vector3.up);
 
             Vector3 direction = new Vector3(moveH / 30, 0, aimInterest);
             shipModelView.SteeringInput(direction);
 
-            Debug.DrawLine(shipModelView.transform.position, currentAim.position + aimOffset);
+            Debug.DrawLine(shipModelView.transform.position, aimOffset);
         }
     }
 }
