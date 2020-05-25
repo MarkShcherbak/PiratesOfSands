@@ -11,7 +11,7 @@ public class ShipModelView : MonoBehaviour
     public event EventHandler<Vector3> OnAction = (sender, e) => { }; 
     public event EventHandler<Sprite> OnPrimaryAbilityChanged = (sender, e) => { };
     public event EventHandler<Sprite> OnSecondaryAbilityChanged = (sender, e) => { };
-    public event EventHandler OnCollision = (other, e) => { };
+    public event EventHandler<GameObject> OnCollision = (sender, e) => { };
 
     public event EventHandler<float> OnFlip = (sender, e) => { };
 
@@ -29,9 +29,19 @@ public class ShipModelView : MonoBehaviour
     // Скалярная величина наклона корабля
     private float dotUp;
 
+    private int health = 100;
+    private bool isAlive = true;
+
     #endregion
 
     #region Accessors
+    //IsAlive Accessor
+    public bool IsAlive { get => isAlive; set => isAlive = value; }
+    //Health Accessor
+    public int Health
+    {
+        get => health; set => health = value;
+    }
     //Ability Accessor
     public IAbility PrimaryAbility
     {
@@ -101,7 +111,7 @@ public class ShipModelView : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        OnCollision(collision.gameObject, EventArgs.Empty);
+        OnCollision(this, collision.gameObject);
     }
 
     #region input
@@ -109,13 +119,15 @@ public class ShipModelView : MonoBehaviour
     //dispatching input vector to the ship controller
     public void SteeringInput(Vector3 input)
     {
+        if(isAlive)
         OnInput(this, input);
     }
 
     //dispatching action vector to the ship controller
     public void ActionInput(Vector3 input)
     {
-        OnAction(this, input);
+        if (isAlive)
+            OnAction(this, input);
     }
     
 

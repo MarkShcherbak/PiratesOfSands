@@ -12,8 +12,8 @@ public class ShipFactory
             return modelView;
     }
 
-    public static ShipController CreateShipController(ShipModelView shipMV)
+    public static ShipController CreateShipController(ShipModelView shipMV, HitpointsCanvasModelView shipHP)
     {
-        return new ShipController(shipMV);
+        return new ShipController(shipMV, shipHP);
     }
 }

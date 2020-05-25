@@ -5,15 +5,33 @@ using UnityEngine;
 public class ShipController
 {
     private readonly ShipModelView shipMV;
+    private readonly HitpointsCanvasModelView shipHPMV;
 
-
-    public ShipController(ShipModelView shipModelView)
+    public ShipController(ShipModelView shipModelView, HitpointsCanvasModelView shipHPModelView)
     {
+        shipHPMV = shipHPModelView;
         shipMV = shipModelView;
         shipMV.OnInput += HandleInput;
         shipMV.OnAction += HandleAction;
+        shipMV.OnCollision += HandleCollision;
 
         shipMV.OnFlip += HandleFlip;
+    }
+
+    private void HandleCollision(object sender, GameObject e)
+    {
+        if(shipHPMV != null && shipMV.IsAlive)
+        if (e.tag == "Projectile")
+        {
+            shipMV.Health -= 20; //TODO реализовать урон от проджектайла
+
+            shipHPMV.GreenBarFill = (float)shipMV.Health/100;
+            shipHPMV.HPAmount.text = $"{shipMV.Health}%";
+
+                if (shipMV.Health <= 0) shipMV.IsAlive = false;
+
+                MonoBehaviour.Destroy(e); //TODO корабль не должен удалять проджектайл!!
+        }
     }
 
     private void HandleAction(object sender, Vector3 direction)

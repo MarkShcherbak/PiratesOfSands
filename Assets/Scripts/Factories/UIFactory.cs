@@ -26,4 +26,12 @@
                 .GetComponent<AbilityHUDModelView>();
             return modelView;
         }
+
+        public static HitpointsCanvasModelView CreateShipHealthBar(Transform shipTransform)
+        {
+            GameObject hpCanvasPrefab = Resources.Load<GameObject>("Prefabs/UI/HitpointsCanvas");
+            HitpointsCanvasModelView modelView = UnityEngine.Object.Instantiate(hpCanvasPrefab, shipTransform)
+                .GetComponent<HitpointsCanvasModelView>();
+            return modelView;
+        }
     }

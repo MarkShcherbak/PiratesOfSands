@@ -35,7 +35,7 @@ public class GameController
 
         // создаем корабль игрока
         ShipModelView playerShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(0));
-        ShipController shipController = ShipFactory.CreateShipController(playerShipMV);
+        ShipController shipController = ShipFactory.CreateShipController(playerShipMV, null);
         objectsInGame.Add(playerShipMV.gameObject);
 
         playerShipMV.name = "Player";
@@ -50,10 +50,17 @@ public class GameController
         {
             // создаем корабль противника
             ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(i));
-            ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV);
             objectsInGame.Add(enemyShipMV.gameObject);
 
             enemyShipMV.name = $"Enemy {i}";
+
+            // создаем показатель хитпоинтов корабля противника
+            HitpointsCanvasModelView enemyHp = UIFactory.CreateShipHealthBar(enemyShipMV.transform);
+            if (enemyHp == null) Debug.Log("HP NOT CREATED!!");
+            objectsInGame.Add(enemyHp.gameObject);
+
+            // создаем контроллер корабля противника
+            ShipController enemyShipController = ShipFactory.CreateShipController(enemyShipMV,enemyHp);
 
             // создаем пилота противника
             EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
