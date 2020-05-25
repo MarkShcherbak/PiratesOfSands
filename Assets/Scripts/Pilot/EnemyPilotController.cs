@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -9,8 +10,6 @@ public class EnemyPilotController
     private readonly TrackPath checkpointsPath;
 
     private Transform currentAim;
-
-    // Смещение от центра точки интереса
     private Vector3 aimOffset;
 
     private float aimInterest = 1.0f;
@@ -38,10 +37,9 @@ public class EnemyPilotController
             currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkpointTransform); //?????
 
             // Получаем смещение в зависимости от размера коллайдера в самих воротах
-            aimOffset = new Vector3(UnityEngine.Random.Range(
-                checkpointTransform.GetComponentInChildren<BoxCollider>().size.x * -1, 
+            aimOffset = new Vector3(UnityEngine.Random.Range(- checkpointTransform.GetComponentInChildren<BoxCollider>().size.x, 
                 checkpointTransform.GetComponentInChildren<BoxCollider>().size.x) * 0.3f, 0, 0);
-
+            
             // Получаем множитель скорости движения к следующей цели
             aimInterest = UnityEngine.Random.Range(0.25f, 1f);
         }
