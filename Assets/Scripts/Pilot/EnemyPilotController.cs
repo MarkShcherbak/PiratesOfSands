@@ -10,9 +10,6 @@ public class EnemyPilotController
 
     private Transform currentAim;
 
-    // Смещение от центра точки интереса
-    private Vector3 aimOffset;
-
     private float aimInterest = 1.0f;
 
     public EnemyPilotController(EnemyPilotModelView enemyPilot, ShipModelView ship, TrackPath checkpoints)
@@ -38,7 +35,7 @@ public class EnemyPilotController
             currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkpointTransform); //?????
 
             // Получаем смещение в зависимости от размера коллайдера в самих воротах
-            aimOffset = new Vector3(UnityEngine.Random.Range(
+            currentAim.position += new Vector3(UnityEngine.Random.Range(
                 checkpointTransform.GetComponentInChildren<BoxCollider>().size.x * -1, 
                 checkpointTransform.GetComponentInChildren<BoxCollider>().size.x) * 0.3f, 0, 0);
 
@@ -58,12 +55,12 @@ public class EnemyPilotController
         if (currentAim != null)
         {
             float moveH = Vector3.SignedAngle(shipModelView.transform.forward,
-                (currentAim.position + aimOffset) - shipModelView.transform.position, Vector3.up); // + aimOffset - Добавляем смещение к конечной цели
+                (currentAim.position) - shipModelView.transform.position, Vector3.up); // + aimOffset - Добавляем смещение к конечной цели
 
             Vector3 direction = new Vector3(moveH / 30, 0, aimInterest);
             shipModelView.SteeringInput(direction);
 
-            Debug.DrawLine(shipModelView.transform.position, currentAim.position + aimOffset);
+            Debug.DrawLine(shipModelView.transform.position, currentAim.position);
         }
     }
 }
