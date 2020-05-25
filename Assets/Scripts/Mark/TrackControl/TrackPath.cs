@@ -65,7 +65,15 @@ public class TrackPath : MonoBehaviour
 
     }
 
- 
+    private void OnGUI()
+    {
+        
+        foreach (string item in GetFinishTrackLeaderBoard())
+        {
+            GUILayout.Label(item);
+        }
+
+    }
 
     /// <summary>
     /// Метод устанавливает связь чекпоинт - дистанция от начала прохождения в list checkPointAndDistance
@@ -357,6 +365,7 @@ public class TrackPath : MonoBehaviour
         
         //trackLeaderBoard.Add(gateNumber, trackLeaderTableStruct);
         trackLeaderBoard.Add(new KeyValuePair<int, TrackLeaderTableStruct>(gateNumber, trackLeaderTableStruct));
+
     }
 
 
