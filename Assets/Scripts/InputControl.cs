@@ -81,7 +81,7 @@ public class InputControl : Singleton<InputControl>
         }
         if (InputParams.LeftFireButtonDown)
         {
-            OnActionInput(this, Vector3.down);
+            OnActionInput(this, Vector3.left);
         }
         if (InputParams.RightFireButtonDown)
         {
