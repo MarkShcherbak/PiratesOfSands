@@ -5,14 +5,16 @@ public class PlayerPilotController
 {
     private readonly PlayerPilotModelView playerModelView;
     private readonly ShipModelView shipModelView;
+   
 
     public PlayerPilotController(PlayerPilotModelView player, ShipModelView ship)
     {
         playerModelView = player;
         shipModelView = ship;
 
+
         playerModelView.OnMovingInput += HandleMovingInput;
-        playerModelView.OnActionInput += HandleActionInput;
+        InputControl.Instance.OnActionInput += HandleActionInput;
 
     }
 
