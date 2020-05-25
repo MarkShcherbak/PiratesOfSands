@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -9,6 +10,7 @@ public class EnemyPilotController
     private readonly TrackPath checkpointsPath;
 
     private Transform currentAim;
+    private Vector3 aimOffset;
 
     private float aimInterest = 1.0f;
 
@@ -35,10 +37,9 @@ public class EnemyPilotController
             currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkpointTransform); //?????
 
             // Получаем смещение в зависимости от размера коллайдера в самих воротах
-            currentAim.position += new Vector3(UnityEngine.Random.Range(
-                checkpointTransform.GetComponentInChildren<BoxCollider>().size.x * -1, 
+            aimOffset = new Vector3(UnityEngine.Random.Range(- checkpointTransform.GetComponentInChildren<BoxCollider>().size.x, 
                 checkpointTransform.GetComponentInChildren<BoxCollider>().size.x) * 0.3f, 0, 0);
-
+            
             // Получаем множитель скорости движения к следующей цели
             aimInterest = UnityEngine.Random.Range(0.25f, 1f);
         }
@@ -55,12 +56,12 @@ public class EnemyPilotController
         if (currentAim != null)
         {
             float moveH = Vector3.SignedAngle(shipModelView.transform.forward,
-                (currentAim.position) - shipModelView.transform.position, Vector3.up); // + aimOffset - Добавляем смещение к конечной цели
+                (currentAim.position + aimOffset) - shipModelView.transform.position, Vector3.up); // + aimOffset - Добавляем смещение к конечной цели
 
             Vector3 direction = new Vector3(moveH / 30, 0, aimInterest);
             shipModelView.SteeringInput(direction);
 
-            Debug.DrawLine(shipModelView.transform.position, currentAim.position);
+            Debug.DrawLine(shipModelView.transform.position, currentAim.position + aimOffset);
         }
     }
 }
