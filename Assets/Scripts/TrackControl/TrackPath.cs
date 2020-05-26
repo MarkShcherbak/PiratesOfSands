@@ -6,7 +6,10 @@ using System;
 
 //[Serializable]
 /// <summary>
-/// Класс трек системы чекпоинтов
+/// Класс трек системы чекпоинтов.
+/// Следит за контролем прохождения АИ объектов через навигационные чекпоинты.
+/// Контроль прохождения объектов через видимые чекпоинты и регистрации на них, 
+/// для составления таблицы лидеров
 /// </summary>
 public class TrackPath : MonoBehaviour
 {
@@ -43,6 +46,10 @@ public class TrackPath : MonoBehaviour
     /// </summary>
     private Dictionary<Transform, bool> hasPilotFinished;
 
+    public event EventHandler OnFinish = (sender, e) => { };
+
+    public bool isWin = false;
+
     private void Awake()
     {
         if (trackPoints.Count > 1)
@@ -65,15 +72,12 @@ public class TrackPath : MonoBehaviour
 
     }
 
-    private void OnGUI()
-    {
+    //private void Start()
+    //{
+    //    TimeFollowController.Instance.DoubleTimeScale();
+    //    TimeFollowController.Instance.DoubleTimeScale();
         
-        foreach (string item in GetFinishTrackLeaderBoard())
-        {
-            GUILayout.Label(item);
-        }
-
-    }
+    //}
 
     /// <summary>
     /// Метод устанавливает связь чекпоинт - дистанция от начала прохождения в list checkPointAndDistance
@@ -339,16 +343,20 @@ public class TrackPath : MonoBehaviour
     {
         if (hasPilotFinished.ContainsKey(pilot) && hasPilotFinished[pilot])
         {
-            GetFinishTrackLeaderBoard();
             return;
-           
         }
 
         if (isFinish)
         {
             hasPilotFinished[pilot] = true;
+            if (pilot.CompareTag("Player")|| pilot.GetComponent<PlayerPilotModelView>()!=null)
+            {
+                //Finish
+                SetWin();
+                OnFinish(this, EventArgs.Empty);
+            }
         }
-
+        
         TrackLeaderTableStruct trackLeaderTableStruct = new TrackLeaderTableStruct
         {
             pilot = pilot,
@@ -363,11 +371,31 @@ public class TrackPath : MonoBehaviour
             trackLeaderTableStruct.gateTransform = gatePointsFollow[gateNumber];
         }
         
-        //trackLeaderBoard.Add(gateNumber, trackLeaderTableStruct);
         trackLeaderBoard.Add(new KeyValuePair<int, TrackLeaderTableStruct>(gateNumber, trackLeaderTableStruct));
 
     }
 
+    /// <summary>
+    /// Определяет победителя гонки, запускать один раз
+    /// победа, если на момет чека проехавших финиш только игрок
+    /// </summary>
+    /// <returns></returns>
+    public void SetWin()
+    {
+        List<KeyValuePair<string, DateTime>> leaderList = new List<KeyValuePair<string, DateTime>>();
+        foreach (KeyValuePair<int, TrackLeaderTableStruct> item in trackLeaderBoard)
+        {
+            if (item.Key == gatePointsFollow.Count)
+            {
+                leaderList.Add(new KeyValuePair<string, DateTime>(item.Value.pilot.name, item.Value.dateTime));
+            }
+        }
+
+        if (leaderList.Count==0)
+        {
+            isWin = true;
+        }
+    }
 
     /// <summary>
     ///  Метод возвращает следующий чекпоинт относительно указанного
@@ -448,8 +476,6 @@ public class TrackPath : MonoBehaviour
    /// <returns></returns>
     public List<string> GetFinishTrackLeaderBoard()
     {
-        List<KeyValuePair<int, TrackLeaderTableStruct>> LODFadesdaMode = trackLeaderBoard;
-
         List<KeyValuePair<string, DateTime>> leaderList = new List<KeyValuePair<string, DateTime>>();
         foreach (KeyValuePair<int, TrackLeaderTableStruct> item in trackLeaderBoard)
         {
@@ -458,7 +484,7 @@ public class TrackPath : MonoBehaviour
                 leaderList.Add(new KeyValuePair<string, DateTime>(item.Value.pilot.name, item.Value.dateTime));
             }
         }
-        leaderList.OrderBy(o => o.Value);
+        //leaderList.OrderBy(o => o.Value);
         List<string> leaderListString = new List<string>();
         foreach (KeyValuePair<string, DateTime> item in leaderList)
         {

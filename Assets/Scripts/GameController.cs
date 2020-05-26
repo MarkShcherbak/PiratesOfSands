@@ -11,10 +11,12 @@ public class GameController
     private TrackModelView trackMV;  // ссылка на трек trackModelView;
     private Canvas canvas;
     private PauseMenuModelView pauseMV = null; // ссылка на UI окошко паузы
+    private TrackFinishMenuModelView trackFinishMenuModel = null; // ссылка на UI окошко паузы
     private List<GameObject> objectsInGame; // лист объектов (нужен для удаления при выходе в меню)
     private Camera mainCamera;
-    
-    
+    private TrackPath checkpointsPath;
+
+
     public GameController(Canvas mainCanvas, Camera mainCam) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
     {
         mainCamera = mainCam;
@@ -27,7 +29,8 @@ public class GameController
         objectsInGame.Add(trackMV.gameObject);
         
         //создаем сеть чекпоинтов
-        TrackPath checkpointsPath = TrackFactory.CreateBigTrackPath();
+        checkpointsPath = TrackFactory.CreateBigTrackPath();
+        checkpointsPath.OnFinish += HandleTrackFinish; 
         objectsInGame.Add(checkpointsPath.gameObject);
             
         // создаем объект размещения кораблей на трассе
@@ -42,7 +45,7 @@ public class GameController
 
         // создаем пилота игрока
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
-        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV);
+        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV, checkpointsPath);
         objectsInGame.Add(playerPilotMV.gameObject);
 
         
@@ -86,7 +89,11 @@ public class GameController
         inputController.AddComponent<InputControl>();
         objectsInGame.Add(inputController);
 
-        
+        //Создание синглтона контроля за TimeScale
+        GameObject timeFollowController = new GameObject();
+        timeFollowController.AddComponent<TimeFollowController>();
+        objectsInGame.Add(timeFollowController);
+
     }
 
         
@@ -102,6 +109,19 @@ public class GameController
         }
         else HandleResumeGame(null, EventArgs.Empty); // позволяет отключить меню паузы, нажав esc еще раз
             
+    }
+
+
+    /// <summary>
+    /// Меню финиша игрока в гонке
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void HandleTrackFinish(object sender, EventArgs e) 
+    {
+        trackFinishMenuModel = UIFactory.CreateTrackFinishMenuModelView(canvas);
+        trackFinishMenuModel.trackPath = checkpointsPath;
+        objectsInGame.Add(trackFinishMenuModel.gameObject);
     }
 
     private void HandleExitToMenu(object sender, EventArgs e)
