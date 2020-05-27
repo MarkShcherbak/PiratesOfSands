@@ -8,17 +8,17 @@ using UnityEngine;
 public class TimeFollowController: Singleton<TimeFollowController>
 {
     /// <summary>
-    /// пауза
+    /// пауза коэф для движущихся объектов.
     /// </summary>
-    public void Pause()
+    public void PauseMove()
     {
-        Time.timeScale = 0f;
+        InputParams.moveTimeScale = 0f;
     }
     /// <summary>
     /// пауза с обратным отсчетом
     /// </summary>
     /// <param name="timer"></param>
-    public void Pause(float timer = 5f)
+    public void Pause(float timer)
     {
         StartCoroutine(TimerPause(timer));
     }
@@ -26,9 +26,9 @@ public class TimeFollowController: Singleton<TimeFollowController>
     /// <summary>
     /// возобновление игры
     /// </summary>
-    public void Resume()
+    public void ResumeMove()
     {
-        Time.timeScale = 1f;
+        InputParams.moveTimeScale = 1f;
     }
 
     /// <summary>
@@ -50,11 +50,26 @@ public class TimeFollowController: Singleton<TimeFollowController>
 
     private IEnumerator TimerPause(float timer)
     {
-        Pause();
+        Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(timer);
-        Resume();
+        Time.timeScale = 1f;
     }
 
+
+    private void Awake()
+    {
+        InputParams.moveTimeScale = 1f;
+    }
+
+    public void SpeedUp()
+    {
+        Time.timeScale += 0.5f;
+    }
+
+    public void SpeedDown()
+    {
+        Time.timeScale -= 0.5f;
+    }
 }
 
 

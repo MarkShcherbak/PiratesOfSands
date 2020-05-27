@@ -15,6 +15,7 @@ public class GameController
     private List<GameObject> objectsInGame; // лист объектов (нужен для удаления при выходе в меню)
     private Camera mainCamera;
     private TrackPath checkpointsPath;
+    private AlertsModelView alertsModelView = null;
 
 
     public GameController(Canvas mainCanvas, Camera mainCam) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
@@ -94,6 +95,10 @@ public class GameController
         timeFollowController.AddComponent<TimeFollowController>();
         objectsInGame.Add(timeFollowController);
 
+        // создаем окно оповещений
+        alertsModelView = UIFactory.CreateAlertsModelView(canvas);
+        objectsInGame.Add(alertsModelView.gameObject);
+        
     }
 
         
@@ -122,6 +127,7 @@ public class GameController
         trackFinishMenuModel = UIFactory.CreateTrackFinishMenuModelView(canvas);
         trackFinishMenuModel.trackPath = checkpointsPath;
         objectsInGame.Add(trackFinishMenuModel.gameObject);
+        CinemachineModelView.Instance.CountdownPause();
     }
 
     private void HandleExitToMenu(object sender, EventArgs e)
@@ -145,5 +151,14 @@ public class GameController
             MonoBehaviour.Destroy(obj);
         }
         OnDestroyGame(this, EventArgs.Empty); // вызываем событие, на которое подписан Main
+    }
+
+    /// <summary>
+    /// Стартовый отсчет с паузой
+    /// </summary>
+    public void CountdownPause()
+    {
+        CinemachineModelView.Instance.CountdownPause();
+        alertsModelView.ShowCountDown();
     }
 }

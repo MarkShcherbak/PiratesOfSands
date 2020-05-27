@@ -38,6 +38,7 @@ public class Main : MonoBehaviour
     private void StartGame()
     {
         GameController game = new GameController(canvas, mainCamera);
+        game.CountdownPause();
         game.OnDestroyGame += HandleOnGameDestroy;
     }
 

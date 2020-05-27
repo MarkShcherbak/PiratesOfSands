@@ -42,4 +42,13 @@ public class UIFactory
             .GetComponent<TrackFinishMenuModelView>();
         return modelView;
     }
+
+    public static AlertsModelView CreateAlertsModelView(Canvas canvas)
+    {
+        GameObject alertsModelViewPrefab = Resources.Load<GameObject>("Prefabs/UI/AlertsCanvas");
+        AlertsModelView modelView = UnityEngine.Object.Instantiate(alertsModelViewPrefab, canvas.transform)
+            .GetComponent<AlertsModelView>();
+        return modelView;
+    }
+    
 }

@@ -13,10 +13,12 @@ public class InputControl : Singleton<InputControl>
     const string leftFire   = "leftFire";
     const string rightFire  = "rightFire";
     const string downFire   = "downFire";
+    const string speedUp    = "speedUp";
+    const string speedDown  = "speedDown";
 
     public event EventHandler<Vector3> OnActionInput = (sender, e) => { };
 
-
+    
     private void Start()
     {
         cinemachineModelView = CinemachineModelView.Instance;
@@ -56,6 +58,14 @@ public class InputControl : Singleton<InputControl>
         if ((Input.GetButtonDown(downFire)))
         {
             InputParams.DownFireButtonDown = true;
+        }
+        if ((Input.GetButtonDown(speedUp)))
+        {
+            TimeFollowController.Instance.SpeedUp();
+        }
+        if ((Input.GetButtonDown(speedDown)))
+        {
+            TimeFollowController.Instance.SpeedDown();
         }
 
 
@@ -105,6 +115,7 @@ public class InputControl : Singleton<InputControl>
 
 public static class InputParams
 {
+    public static float moveTimeScale;
     private static float zAxis;
     private static float xAxis;
     private static bool changeCamButtonDown;
@@ -227,4 +238,5 @@ public static class InputParams
         set => downFireButtonDown = value;
     }
 
+    
 }
