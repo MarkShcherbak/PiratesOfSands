@@ -48,7 +48,8 @@ public class TrackPath : MonoBehaviour
 
     public event EventHandler OnFinish = (sender, e) => { };
 
-    public bool isWin = false;
+
+    [HideInInspector] public bool isWin = false;
 
     private void Awake()
     {
@@ -76,7 +77,7 @@ public class TrackPath : MonoBehaviour
     //{
     //    TimeFollowController.Instance.DoubleTimeScale();
     //    TimeFollowController.Instance.DoubleTimeScale();
-        
+
     //}
 
     /// <summary>
@@ -92,6 +93,13 @@ public class TrackPath : MonoBehaviour
             trackDist += Vector3.Distance(trackPoints[i - 1].position, trackPoints[i].position);
 
             checkPointAndDistance.Add(new KeyValuePair<Transform, float>(trackPoints[i], trackDist));
+        }
+
+        //для кольцевой последнюю дистанцию добавляем в ручном режиме
+        if (isLooped && trackPoints.Count > 1)
+        {
+            trackDist += Vector3.Distance(trackPoints[trackPoints.Count - 1].position, trackPoints[0].position);
+            checkPointAndDistance.Add(new KeyValuePair<Transform, float>(trackPoints[0], trackDist));
         }
 
     }
@@ -399,7 +407,8 @@ public class TrackPath : MonoBehaviour
 
     /// <summary>
     ///  Метод возвращает следующий чекпоинт относительно указанного
-    ///  если чекпоинт последний возвращает его же
+    ///  если трасса кольцевая и чекпоинт последний, возвращает первый чекпоинт
+    ///  если чекпоинт последний и трасса не кольцевая возвращает последний чекпоинт
     /// </summary>
     /// <param name="gObj"></param>
     /// <returns></returns>
@@ -407,9 +416,13 @@ public class TrackPath : MonoBehaviour
     {
         int curIndex = trackPoints.IndexOf(curCheckPoint) + 1;
 
-        if (curIndex < (trackPoints.Count - 1))
+        if (curIndex < (trackPoints.Count))
         {
             return trackPoints[curIndex];
+        }
+        else if (isLooped)
+        {
+            return trackPoints[0];
         }
         else
         {
@@ -445,8 +458,16 @@ public class TrackPath : MonoBehaviour
     {
         KeyValuePair<Transform, float> rv = checkPointAndDistance.FirstOrDefault(d => d.Key == curPoint);
         return rv.Value;
+        
+    }
 
-
+    /// <summary>
+    /// Возвращаяет длину трассы
+    /// </summary>
+    /// <returns></returns>
+    public float GetTrackDistance()
+    {
+        return checkPointAndDistance[checkPointAndDistance.Count - 1].Value;
     }
 
     /// <summary>

@@ -45,7 +45,7 @@ public class EntityOnTrackCreator : MonoBehaviour
     {
         trackPath = GetComponent<TrackPath>();
         pointsAndCreations = new Dictionary<GameObject, GameObject>();
-        float entitieDistance = trackPath.GetDistanceFromStart(trackPath.trackPoints[trackPath.trackPoints.Count-1]) / (countPointsToCreate+1);
+        float entitieDistance = trackPath.GetTrackDistance() / (countPointsToCreate+1);
         float currentDistance = 0f;
 
         for (int i = 0; i < countPointsToCreate; i++)
