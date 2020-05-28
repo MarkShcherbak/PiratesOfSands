@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System.Linq;
 using System.Data;
@@ -48,8 +49,13 @@ public class TrackPath : MonoBehaviour
 
     public event EventHandler OnFinish = (sender, e) => { };
 
-
+    /// <summary>
+    /// Победа в гонке
+    /// </summary>
     [HideInInspector] public bool isWin = false;
+
+    [SerializeField] private GameObject checkPointHightLight;
+    private GameObject checkPointHightLightInstce;
 
     private void Awake()
     {
@@ -69,7 +75,17 @@ public class TrackPath : MonoBehaviour
         SetCheckpointDistance();
         MakeGateFollow();
 
-  
+        checkPointHightLightInstce = Instantiate(checkPointHightLight);
+        
+        if (gatePointsFollow.Count>0)
+        {
+            checkPointHightLightInstce.transform.position = gatePointsFollow[0].position;
+        }
+        else
+        {
+            checkPointHightLightInstce.transform.position = trackPoints[0].position;
+        }
+        
 
     }
 
@@ -277,6 +293,7 @@ public class TrackPath : MonoBehaviour
                 Transform newPoint = GetNextPosition(curPoint);
                 TrackPositionData.SetCurrentPointToObject(pilot, newPoint);
                 TrySetPilotNextGatePointAndCheckInTable(pilot, curPoint);
+                MakeHighLightNextGate(pilot);
 
                 return newPoint;
             }
@@ -319,7 +336,7 @@ public class TrackPath : MonoBehaviour
                 AddRowToLeaderTable(pilot, nextGatePointID);
                 
             }
-            
+              
         }
         
     }
@@ -546,4 +563,44 @@ public class TrackPath : MonoBehaviour
             return gatePointsFollow[0];
         }
     }
+
+    /// <summary>
+    /// подсветка следующего чекпоинта для игрока
+    /// </summary>
+    /// <param name="pilot"></param>
+    public void MakeHighLightNextGate(Transform pilot)
+    {
+        if (pilot.CompareTag("Player") || pilot.GetComponent<PlayerPilotModelView>() != null)
+        {
+            if (checkPointHightLightInstce==null)
+            {
+                checkPointHightLightInstce = Instantiate(checkPointHightLight);
+            }
+            StartCoroutine(TranslateGateHighLight(GetNextGatePoint(pilot).position));
+        }
+    }
+    
+    private IEnumerator TranslateGateHighLight(Vector3 position)
+    {
+        Vector3 startPosition = checkPointHightLightInstce.transform.position;
+        float startTime = Time.time;
+        // Calculate the journey length.
+        float journeyLength = Vector3.Distance(checkPointHightLightInstce.transform.position, position);
+
+        
+
+        position.y +=10f;
+        while (checkPointHightLightInstce.transform.position!= position)
+        {
+
+            float distCovered = (Time.time - startTime) * 100f;
+            float fractionOfJourney = distCovered / journeyLength;
+
+            checkPointHightLightInstce.transform.position = Vector3.Lerp(startPosition, position, fractionOfJourney);
+            yield return null;
+        }
+    }
+
+    
+    
 }

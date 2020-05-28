@@ -46,6 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackPoints: []
   isLooped: 0
+  countOfLaps: 1
+  gatePoints: []
+  isWin: 0
+  checkPointHightLight: {fileID: 5359795418257256080, guid: 53aeddc5110eca24190f21bdfa73c2de,
+    type: 3}
 --- !u!114 &694259867059007013
 MonoBehaviour:
   m_ObjectHideFlags: 0
