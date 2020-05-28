@@ -93,6 +93,10 @@ MonoBehaviour:
   - {fileID: 7255551380296106274}
   - {fileID: 7255551378697278334}
   isLooped: 0
+  countOfLaps: 1
+  gatePoints: []
+  isWin: 0
+  checkPointHightLight: {fileID: 0}
 --- !u!114 &1361205114171282501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +116,10 @@ MonoBehaviour:
   generateConstantly: 1
   objsToCreate:
   - {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7, type: 3}
+  - {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7, type: 3}
+  - {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7, type: 3}
+  - {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7, type: 3}
+  - {fileID: 5359795418257256080, guid: 8183852ae8e0a364b900f76e89cabb09, type: 3}
   timeToCorutineCreator: 5
 --- !u!1001 &9120397430138923727
 PrefabInstance:

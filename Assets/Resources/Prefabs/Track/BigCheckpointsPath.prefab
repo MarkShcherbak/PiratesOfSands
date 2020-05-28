@@ -1155,6 +1155,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
         type: 3}
+      propertyPath: objsToCreate.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
       propertyPath: objsToCreate.Array.data[0]
       value: 
       objectReference: {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7,
@@ -1174,6 +1179,30 @@ PrefabInstance:
       propertyPath: generateConstantly
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: objsToCreate.Array.data[1]
+      value: 
+      objectReference: {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7,
+        type: 3}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: objsToCreate.Array.data[2]
+      value: 
+      objectReference: {fileID: 5732712036764626069, guid: e329032302564ba4783706f4926d9aa7,
+        type: 3}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: objsToCreate.Array.data[3]
+      value: 
+      objectReference: {fileID: 1637359420794713787, guid: f997cf4130c24e941a9aecf7371d0e5d,
+        type: 3}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: objsToCreate.Array.data[4]
+      value: 
+      objectReference: {fileID: 5359795418257256080, guid: 8183852ae8e0a364b900f76e89cabb09,
+        type: 3}
     - target: {fileID: 1270909376060818713, guid: 9cfe7c057ff792f4d9112a4602b45c74,
         type: 3}
       propertyPath: m_LocalPosition.x

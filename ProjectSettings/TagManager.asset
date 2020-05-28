@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - TrackPoint
   - Projectile
+  - SlowPoint
   layers:
   - Default
   - TransparentFX

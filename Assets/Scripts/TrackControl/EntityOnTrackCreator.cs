@@ -39,14 +39,17 @@ public class EntityOnTrackCreator : MonoBehaviour
 
     [SerializeField] private float timeToCorutineCreator = 5f;
 
-
+    /// <summary>
+    /// Расстояния на высоте от земли на котором будут спавнится активности
+    /// </summary>
+    [SerializeField] private float distSpawnBeforeLand = 1f;
 
     private void Start()
     {
         trackPath = GetComponent<TrackPath>();
         pointsAndCreations = new Dictionary<GameObject, GameObject>();
         float entitieDistance = trackPath.GetTrackDistance() / (countPointsToCreate+1);
-        float currentDistance = 0f;
+        float currentDistance = 0.5f;
 
         for (int i = 0; i < countPointsToCreate; i++)
         {
@@ -73,7 +76,10 @@ public class EntityOnTrackCreator : MonoBehaviour
             bool wasTouch = Physics.Raycast(posToCreate, Vector3.down, out raycastHit);
             if (wasTouch)
             {
-                pointsAndCreations.Add(Instantiate(pointCreator, raycastHit.point, Quaternion.identity, gameObject.transform), default);
+                Vector3 pointToSpawn = raycastHit.point;
+                pointToSpawn.y += distSpawnBeforeLand;
+
+                pointsAndCreations.Add(Instantiate(pointCreator, pointToSpawn, Quaternion.identity, gameObject.transform), default);
             }
 
         }

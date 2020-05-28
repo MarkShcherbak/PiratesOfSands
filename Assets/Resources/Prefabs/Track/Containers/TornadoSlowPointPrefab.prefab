@@ -14394,9 +14394,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8948107755681408336}
+  - component: {fileID: 9125567244401543509}
   m_Layer: 0
-  m_Name: CurrentCheckpointHighLightPrefab
-  m_TagString: Untagged
+  m_Name: SlowPointPrefab
+  m_TagString: SlowPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14416,6 +14417,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &9125567244401543509
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5359795418257256080}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8114605683328526862
 GameObject:
   m_ObjectHideFlags: 0

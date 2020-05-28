@@ -34,6 +34,8 @@ public class ShipModelView : MonoBehaviour
 
     #endregion
 
+    private float startDrag;
+
     #region Accessors
     //IsAlive Accessor
     public bool IsAlive { get => isAlive; set => isAlive = value; }
@@ -103,6 +105,7 @@ public class ShipModelView : MonoBehaviour
 
     private void Awake()
     {
+        startDrag = rb.drag;
         CreateCannons();
 
         // Устанавливаем центр тяжести корабля
@@ -209,6 +212,21 @@ public class ShipModelView : MonoBehaviour
         if (dotUp > -0.6f)
         {
             OnFlip(this, dotUp);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SlowPoint"))
+        {
+            rb.drag = startDrag * 10;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SlowPoint"))
+        {
+            rb.drag = startDrag;
         }
     }
 }
