@@ -6,20 +6,65 @@ public class ShipController
 {
     private readonly ShipModelView shipMV;
     private readonly HitpointsCanvasModelView shipHPMV;
-
+    
+    private float rbStartDrag;
+    // Скалярная величина наклона корабля
+    private float dotX;
+    private float dotZ;
+    
+    /// <summary>
+    /// Конструктор корабля
+    /// </summary>
+    /// <param name="shipModelView">Модель-представление этого корабля</param>
+    /// <param name="shipHPModelView">Полоска ХП этого корабля</param>
     public ShipController(ShipModelView shipModelView, HitpointsCanvasModelView shipHPModelView)
     {
         shipHPMV = shipHPModelView;
         shipMV = shipModelView;
+
+        rbStartDrag = shipMV.Rigidbody.drag;
+        
+        //EventHandlers
         shipMV.OnInput += HandleInput;
         shipMV.OnAction += HandleAction;
-
+        shipMV.OnTriggerIN += HandleTriggerIN;
+        shipMV.OnTriggerOUT += HandleTriggerOUT;
         shipMV.OnDamageRecieved += HandleRecieveDamage;
-
-        //shipMV.OnHorizontalFlip += HandleHorizontalFlip;
-        //shipMV.OnVerticalFlip += HandleVerticalFlip;
+        shipMV.OnFixedUpdate += HandleFixedUpdate;
+        
     }
 
+    /// <summary>
+    /// Обработка входа в зону триггера
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="tag"></param>
+    private void HandleTriggerIN(object sender, string tag)
+    {
+        if (tag.Equals("SlowPoint"))
+        {
+            shipMV.Rigidbody.drag = rbStartDrag * 10;
+        }
+    }
+    
+    /// <summary>
+    /// Обработка выхода из зоны триггера
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="tag"></param>
+    private void HandleTriggerOUT(object sender, string tag)
+    {
+        if (tag.Equals("SlowPoint"))
+        {
+            shipMV.Rigidbody.drag = rbStartDrag;
+        }
+    }
+
+    /// <summary>
+    /// Обработка ввода действия
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="direction"></param>
     private void HandleAction(object sender, Vector3 direction)
     {
         if (direction != Vector3.back)
@@ -29,6 +74,11 @@ public class ShipController
             shipMV.SecondaryAction();
     }
 
+    /// <summary>
+    /// Обработка ввода управления
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="input"></param>
     private void HandleInput(object sender, Vector3 input)
     {
         //TODO реализовать нормальное управление!!!
@@ -38,6 +88,11 @@ public class ShipController
         shipMV.transform.Rotate(0.0f, input.x, 0.0f);
     }
 
+    /// <summary>
+    /// Обработка получения урона
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="amount"></param>
     private void HandleRecieveDamage(object sender, float amount)
     {
         if (shipHPMV != null)
@@ -56,27 +111,40 @@ public class ShipController
         }
     }
 
-    //private void HandleHorizontalFlip(object sender, float dotProduct)
-    //{
-    //    // Добавляем обратную тягу кораблю, чтобы вернуть его "на ноги"
-    //    shipMV.Rigidbody.AddRelativeTorque(0, 0, shipMV.Rigidbody.angularVelocity.z * -2f, ForceMode.Acceleration);
+    /// <summary>
+    /// Обработка FixedUpdate, проверка заваливания корабля TODO переделать иначе?
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void HandleFixedUpdate(object sender, EventArgs e)
+    {
+        // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
+    dotX = Vector3.Dot(shipMV.transform.up, Vector3.down);
+    dotZ = Math.Abs(Vector3.Dot(shipMV.transform.forward, Vector3.down));
 
-    //    if (dotProduct < -0.6f)
-    //        shipMV.Rigidbody.angularVelocity = new Vector3(
-    //            x: shipMV.Rigidbody.angularVelocity.x,
-    //            y: shipMV.Rigidbody.angularVelocity.y,
-    //            z: shipMV.Rigidbody.angularVelocity.z / 2);
-    //}
+    if (dotX > -0.4f)
+    {
 
-    //private void HandleVerticalFlip(object sender, float dotProduct)
-    //{
-    //    // Добавляем обратную тягу кораблю, чтобы вернуть его "на ноги"
-    //    shipMV.Rigidbody.AddRelativeTorque(shipMV.Rigidbody.angularVelocity.x * -2f, 0, 0, ForceMode.Acceleration);
+        shipMV.Rigidbody.AddRelativeTorque(0, 0, shipMV.Rigidbody.angularVelocity.z * -5f, ForceMode.Impulse);
 
-    //    if (dotProduct < 0.6f)
-    //        shipMV.Rigidbody.angularVelocity = new Vector3(
-    //            x: shipMV.Rigidbody.angularVelocity.x / 2,
-    //            y: shipMV.Rigidbody.angularVelocity.y,
-    //            z: shipMV.Rigidbody.angularVelocity.z);
-    //}
+        if (dotX < -0.5f)
+            shipMV.Rigidbody.angularVelocity = new Vector3(
+                x: shipMV.Rigidbody.angularVelocity.x,
+                y: shipMV.Rigidbody.angularVelocity.y,
+                z: shipMV.Rigidbody.angularVelocity.z / 2);
+    }
+    
+    if (dotZ > 0.7f)
+    {
+
+        shipMV.Rigidbody.AddRelativeTorque(shipMV.Rigidbody.angularVelocity.x * -5f, 0, 0, ForceMode.Impulse);
+
+        if (dotZ < 0.8f)
+            shipMV.Rigidbody.angularVelocity = new Vector3(
+                x: shipMV.Rigidbody.angularVelocity.x / 2,
+                y: shipMV.Rigidbody.angularVelocity.y,
+                z: shipMV.Rigidbody.angularVelocity.z);
+    }
+    
+    }
 }

@@ -5,18 +5,22 @@ using UnityEngine.EventSystems;
 
 public class ShipModelView : MonoBehaviour, IDamageable
 {
-    #region fields
+    #region events
+
     //Events
     public event EventHandler<Vector3> OnInput = (sender, e) => { };
     public event EventHandler<Vector3> OnAction = (sender, e) => { }; 
     public event EventHandler<Sprite> OnPrimaryAbilityChanged = (sender, e) => { };
     public event EventHandler<Sprite> OnSecondaryAbilityChanged = (sender, e) => { };
     public event EventHandler<float> OnDamageRecieved = (sender, e) => { };
+    public event EventHandler<string> OnTriggerIN = (sender, tag) => { };
+    public event EventHandler<string> OnTriggerOUT = (sender, tag) => { };
+    public event EventHandler OnFixedUpdate = (sender, e) => { };
 
-    //public event EventHandler<float> OnHorizontalFlip = (sender, e) => { };
-    //public event EventHandler<float> OnVerticalFlip = (sender, e) => { };
 
-
+    #endregion
+    
+    #region fields
     //Ship data
     [SerializeField] private Rigidbody rb;
     //Cannon spots on the ship sides
@@ -31,16 +35,10 @@ public class ShipModelView : MonoBehaviour, IDamageable
     private IAbility primaryAbilitySlot;
     private IAbility secondaryAbilitySlot;
 
-    // Скалярная величина наклона корабля
-    private float dotX;
-    private float dotZ;
-
     private float health = 100;
     private bool isAlive = true;
 
     #endregion
-
-    private float startDrag;
 
     #region Accessors
     //IsAlive Accessor
@@ -67,7 +65,6 @@ public class ShipModelView : MonoBehaviour, IDamageable
             else OnPrimaryAbilityChanged(this, null);
         }
     }
-    
     public IAbility SecondaryAbility
     {
         get => secondaryAbilitySlot;
@@ -114,33 +111,35 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        startDrag = rb.drag;
+        // Создаем пушки
         CreateCannons();
-
         // Устанавливаем центр тяжести корабля
         Rigidbody.centerOfMass = new Vector3(0, 0.5f, 0.5f);
     }
 
-    #region input
-
-    //dispatching input vector to the ship controller
+    /// <summary>
+    /// Метод ввода управления. Вызывается пилотом этого корабля. При вызове активирует событие OnInput
+    /// </summary>
+    /// <param name="input"></param>
     public void SteeringInput(Vector3 input)
     {
         if(isAlive)
         OnInput(this, input);
     }
 
-    //dispatching action vector to the ship controller
+    /// <summary>
+    /// Метод ввода действия. Вызывается пилотом этого корабля. При вызове активирует событие OnAction
+    /// </summary>
+    /// <param name="input"></param>
     public void ActionInput(Vector3 input)
     {
         if (isAlive)
             OnAction(this, input);
     }
-    
 
-    #endregion
-
-    //creating Cannons
+    /// <summary>
+    /// Метод заполнения пушками слотов корабля. Сейчас вызывается в Awake
+    /// </summary>
     public void CreateCannons()
     {
         frontCannons = new ICannonModelView[frontSlots.Count];
@@ -161,9 +160,10 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
         ShieldFactory.CreateShieldTierFour(shieldSlot, Resources.Load<AbilityData>("AbilityData/Shields/ShieldTierFour"));
     }
-
-
-
+    
+    /// <summary>
+    /// Действие ModelView при активации первичной способности. Вызывается из контроллера!
+    /// </summary>
     public void PrimaryAction(Vector3 direction)
     {
         if (primaryAbilitySlot != null)
@@ -190,6 +190,9 @@ public class ShipModelView : MonoBehaviour, IDamageable
         }
     }
 
+    /// <summary>
+    /// Действие ModelView при активации второстепенной способности. Вызывается из контроллера!
+    /// </summary>
     public void SecondaryAction()
     {
         if (secondaryAbilitySlot != null)    // TODO: реализовать через Input system
@@ -224,6 +227,10 @@ public class ShipModelView : MonoBehaviour, IDamageable
         }
     }
 
+    /// <summary>
+    /// Получение урона - метод вызывается чем-то извне(например снарядом), вызывает событие получения урона в контроллере
+    /// </summary>
+    /// <param name="amount"></param>
     public void RecieveDamage(float amount)
     {
         if (isAlive)
@@ -231,53 +238,29 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 OnDamageRecieved(this, amount);
     }
 
-    public void Update()
+    /// <summary>
+    /// Вызывает событие обработки FixedUpdate
+    /// </summary>
+    private void FixedUpdate()
     {
-        // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
-        dotX = Vector3.Dot(transform.up, Vector3.down);
-        dotZ = Math.Abs(Vector3.Dot(transform.forward, Vector3.down));
-
-        if (dotX > -0.4f)
-        {
-            //OnHorizontalFlip(this, dotX);
-
-            rb.AddRelativeTorque(0, 0, rb.angularVelocity.z * -5f, ForceMode.Impulse);
-
-            if (dotX < -0.5f)
-                rb.angularVelocity = new Vector3(
-                    x: rb.angularVelocity.x,
-                    y: rb.angularVelocity.y,
-                    z: rb.angularVelocity.z / 2);
-        }
-
-        // TODO добавить флип по Z
-
-        if (dotZ > 0.7f)
-        {
-            //OnVerticalFlip(this, dotZ);
-
-            rb.AddRelativeTorque(rb.angularVelocity.x * -5f, 0, 0, ForceMode.Impulse);
-
-            if (dotZ < 0.8f)
-                rb.angularVelocity = new Vector3(
-                    x: rb.angularVelocity.x / 2,
-                    y: rb.angularVelocity.y,
-                    z: rb.angularVelocity.z);
-        }
+        OnFixedUpdate(this,EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Вызывает событие обработки входного триггера(которое передает тег в качестве параметра)
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SlowPoint"))
-        {
-            rb.drag = startDrag * 10;
-        }
+        OnTriggerIN(this, other.tag);
     }
+    
+    /// <summary>
+    /// Вызывает событие обработки выходного триггера(которое передает тег в качестве параметра)
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SlowPoint"))
-        {
-            rb.drag = startDrag;
-        }
+        OnTriggerOUT(this, other.tag);
     }
 }
