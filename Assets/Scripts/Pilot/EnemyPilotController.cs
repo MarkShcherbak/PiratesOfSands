@@ -62,8 +62,19 @@ public class EnemyPilotController
         shipModelView.ActionInput(direction);
     }
 
+    RaycastHit hit;
     private void HandleMovingInput(object sender, EventArgs e)
     {
+        //OBSTACLES AVOIDING : Nikita
+        
+        // Debug.DrawRay(shipModelView.transform.position, (aimOffset - shipModelView.transform.position).normalized, Color.red);
+        // bool isHit = Physics.BoxCast(shipModelView.transform.position, shipModelView.transform.localScale / 2,
+        //      (aimOffset - shipModelView.transform.position).normalized, shipModelView.transform.rotation, 10f);
+        // if (isHit && hit.collider.tag.Equals("SlowPoint"))
+        // {
+        //     Debug.Log("BoxCasted!");
+        // }
+        
         if (currentAim != null)
         {
             float moveH = Vector3.SignedAngle(shipModelView.transform.forward,
