@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 
-public class ShipModelView : MonoBehaviour
+public class ShipModelView : MonoBehaviour, IDamageable
 {
     #region fields
     //Events
@@ -11,9 +11,11 @@ public class ShipModelView : MonoBehaviour
     public event EventHandler<Vector3> OnAction = (sender, e) => { }; 
     public event EventHandler<Sprite> OnPrimaryAbilityChanged = (sender, e) => { };
     public event EventHandler<Sprite> OnSecondaryAbilityChanged = (sender, e) => { };
-    public event EventHandler<GameObject> OnCollision = (sender, e) => { };
+    public event EventHandler<float> OnDamageRecieved = (sender, e) => { };
 
-    public event EventHandler<float> OnFlip = (sender, e) => { };
+    //public event EventHandler<float> OnHorizontalFlip = (sender, e) => { };
+    //public event EventHandler<float> OnVerticalFlip = (sender, e) => { };
+
 
     //Ship data
     [SerializeField] private Rigidbody rb;
@@ -22,14 +24,18 @@ public class ShipModelView : MonoBehaviour
     //Cannon arrays of Cannon types
     private ICannonModelView[] frontCannons, backCannons, leftCannons, rightCannons;
 
+    // Shield spot on center of the ship
+    [SerializeField] private Transform shieldSlot;
+
     //ShipAbility
     private IAbility primaryAbilitySlot;
     private IAbility secondaryAbilitySlot;
 
     // Скалярная величина наклона корабля
-    private float dotUp;
+    private float dotX;
+    private float dotZ;
 
-    private int health = 100;
+    private float health = 100;
     private bool isAlive = true;
 
     #endregion
@@ -40,7 +46,7 @@ public class ShipModelView : MonoBehaviour
     //IsAlive Accessor
     public bool IsAlive { get => isAlive; set => isAlive = value; }
     //Health Accessor
-    public int Health
+    public float Health
     {
         get => health; set => health = value;
     }
@@ -79,6 +85,9 @@ public class ShipModelView : MonoBehaviour
         }
     }
 
+    //Shield slot accessor
+    public Transform ShieldSlot { get => shieldSlot; }
+
     //Cannons accessor
     public ICannonModelView[] FrontCannons { get => frontCannons; }
     public ICannonModelView[] BackCannons { get => backCannons; }
@@ -109,12 +118,7 @@ public class ShipModelView : MonoBehaviour
         CreateCannons();
 
         // Устанавливаем центр тяжести корабля
-        Rigidbody.centerOfMass = new Vector3(0, 0.5f, 0.25f);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        OnCollision(this, collision.gameObject);
+        Rigidbody.centerOfMass = new Vector3(0, 0.5f, 0.5f);
     }
 
     #region input
@@ -143,9 +147,9 @@ public class ShipModelView : MonoBehaviour
         for (int i = 0; i < frontSlots.Count; i++)
             frontCannons[i] = CannonFactory.CreateCannonModelView(frontSlots[i]);
 
-        backCannons = new ICannonModelView[backSlots.Count];
-        for (int i = 0; i < backSlots.Count; i++)
-            backCannons[i] = CannonFactory.CreateCannonModelView(backSlots[i]);
+        //backCannons = new ICannonModelView[backSlots.Count];
+        //for (int i = 0; i < backSlots.Count; i++)
+        //    backCannons[i] = CannonFactory.CreateCannonModelView(backSlots[i]);
 
         leftCannons = new ICannonModelView[leftSlots.Count];
         for (int i = 0; i < leftSlots.Count; i++)
@@ -154,64 +158,111 @@ public class ShipModelView : MonoBehaviour
         rightCannons = new ICannonModelView[rightSlots.Count];
         for (int i = 0; i < rightSlots.Count; i++)
             rightCannons[i] = CannonFactory.CreateCannonModelView(rightSlots[i]);
+
+        ShieldFactory.CreateShieldTierFour(shieldSlot, Resources.Load<AbilityData>("AbilityData/Shields/ShieldTierFour"));
     }
 
 
 
     public void PrimaryAction(Vector3 direction)
     {
-        if (direction == Vector3.forward)
+        if (primaryAbilitySlot != null)
         {
-            if (primaryAbilitySlot != null)
+            if (direction == Vector3.forward)
+            {
                 foreach (ICannonModelView cannon in frontCannons)
                     cannon.Fire(primaryAbilitySlot);
-
-            PrimaryAbility = null;
-        }
-        
-        if (direction == Vector3.left)
-        {
-            if(primaryAbilitySlot != null)
-                foreach (ICannonModelView cannon in leftCannons)
-                    cannon.Fire(primaryAbilitySlot);
-
-            PrimaryAbility = null;
-        }
-        
-        if (direction == Vector3.right)
-        {
-            if(primaryAbilitySlot != null)
-                foreach (ICannonModelView cannon in rightCannons)
-                    cannon.Fire(primaryAbilitySlot);
-
-            PrimaryAbility = null;
-        }
-    }
-
-    public void SecondatyAction()
-    {
-        if (secondaryAbilitySlot != null)
-        {
-            foreach (ICannonModelView cannon in backCannons)
-            {
-                cannon.Fire(secondaryAbilitySlot);
             }
 
-            SecondaryAbility = null;
+            if (direction == Vector3.left)
+            {
+                foreach (ICannonModelView cannon in leftCannons)
+                    cannon.Fire(primaryAbilitySlot);
+            }
+
+            if (direction == Vector3.right)
+            {
+                foreach (ICannonModelView cannon in rightCannons)
+                    cannon.Fire(primaryAbilitySlot);
+            }
+
+            //PrimaryAbility = null;
         }
     }
 
+    public void SecondaryAction()
+    {
+        if (secondaryAbilitySlot != null)    // TODO: реализовать через Input system
+        {
+            // Обработка абилок щитов. TODO нормальная реализация (через интерфейс?)
+            if (SecondaryAbility.Data.AbilityType == AbilityData.Ability.Shield)
+            {
+                // Удаляем щит из слота под щиты, если там что-то присутствует
+                if (shieldSlot.childCount != 0)
+                {
+                    Destroy(shieldSlot.GetChild(0).gameObject);
+                }
 
+                SecondaryAbility.Execute(shieldSlot);
+            }
 
+            if (SecondaryAbility.Data.AbilityType == AbilityData.Ability.SpeedUp)
+            {
+                // Удаляем турбину из заднего слота, если там что-то присутствует
+                foreach (Transform slot in backSlots)
+                {
+                    if (slot.childCount != 0)
+                    {
+                        Destroy(slot.GetChild(0).gameObject);
+                    }
+
+                    SecondaryAbility.Execute(slot);
+                }
+            }
+
+            //SecondaryAbility = null;
+        }
+    }
+
+    public void RecieveDamage(float amount)
+    {
+        if (isAlive)
+            if (shieldSlot.childCount == 0)
+                OnDamageRecieved(this, amount);
+    }
 
     public void Update()
     {
         // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
-        dotUp = Vector3.Dot(transform.up, Vector3.down);
+        dotX = Vector3.Dot(transform.up, Vector3.down);
+        dotZ = Math.Abs(Vector3.Dot(transform.forward, Vector3.down));
 
-        if (dotUp > -0.6f)
+        if (dotX > -0.4f)
         {
-            OnFlip(this, dotUp);
+            //OnHorizontalFlip(this, dotX);
+
+            rb.AddRelativeTorque(0, 0, rb.angularVelocity.z * -5f, ForceMode.Impulse);
+
+            if (dotX < -0.5f)
+                rb.angularVelocity = new Vector3(
+                    x: rb.angularVelocity.x,
+                    y: rb.angularVelocity.y,
+                    z: rb.angularVelocity.z / 2);
+        }
+
+        // TODO добавить флип по Z
+
+        if (dotZ > 0.7f)
+        {
+            //OnVerticalFlip(this, dotZ);
+
+            rb.AddRelativeTorque(rb.angularVelocity.x * -5f, 0, 0, ForceMode.Impulse);
+
+            if (dotZ < 0.8f)
+                rb.angularVelocity = new Vector3(
+                    x: rb.angularVelocity.x / 2,
+                    y: rb.angularVelocity.y,
+                    z: rb.angularVelocity.z);
         }
     }
 

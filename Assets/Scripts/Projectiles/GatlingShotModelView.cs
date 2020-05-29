@@ -10,6 +10,8 @@ public class GatlingShotModelView : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float speed;
 
+    [SerializeField] private bool isHarmful;
+
     #endregion
 
     #region Accessors
@@ -48,6 +50,34 @@ public class GatlingShotModelView : MonoBehaviour
 
     private void LaunchProjectile()
     {
+        isHarmful = true;
         rb.AddRelativeForce(Vector3.forward * speed, ForceMode.Impulse);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.TryGetComponent<MonoBehaviour>(out MonoBehaviour mb))
+        {
+            if (mb is IDamageable && isHarmful)
+            {
+                ((IDamageable)mb).RecieveDamage(Damage);
+                Debug.Log($"{collision.collider.name} takes {Damage} damage!");
+            }
+        }
+
+        else
+        {
+            ParticleFactory.CreateSandExplosion(gameObject.transform);
+        }
+
+        isHarmful = false;
+        rb.velocity /= 2f;
+        StartCoroutine(DelayedDestroy(3f));
+    }
+
+    private IEnumerator DelayedDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UnityEngine.Object.Destroy(gameObject);
     }
 }

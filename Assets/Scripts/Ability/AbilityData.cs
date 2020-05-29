@@ -37,11 +37,11 @@ public class AbilityData : ScriptableObject
     public float Delay { get => delay; set => delay = value; }
 
     // Куда может быть загружена способность
-    [SerializeField] private bool equippableFront, equippableBack, equippableLeft, equippableRight;
-    public bool EquippableFront { get => equippableFront; set => equippableFront = value; }
-    public bool EquippableBack { get => equippableBack; set => equippableBack = value; }
-    public bool EquippableLeft { get => equippableLeft; set => equippableLeft = value; }
-    public bool EquippableRight { get => equippableRight; set => equippableRight = value; }
+    //[SerializeField] private bool equippableFront, equippableBack, equippableLeft, equippableRight;
+    //public bool EquippableFront { get => equippableFront; set => equippableFront = value; }
+    //public bool EquippableBack { get => equippableBack; set => equippableBack = value; }
+    //public bool EquippableLeft { get => equippableLeft; set => equippableLeft = value; }
+    //public bool EquippableRight { get => equippableRight; set => equippableRight = value; }
 
     #endregion
 
@@ -81,7 +81,16 @@ public class AbilityData : ScriptableObject
 
     // Длительность работы щита
     [SerializeField] private float shieldDuration;
+
+    // Долговечность щита
+    [SerializeField] private float shieldDurability;
+
+    // Урон от щита
+    [SerializeField] private float shieldDamage;
+
     public float ShieldDuration { get => shieldDuration; set => shieldDuration = value; }
+    public float ShieldDurability { get => shieldDurability; set => shieldDurability = value; }
+    public float ShieldDamage { get => shieldDamage; set => shieldDamage = value; }
 
     // etc.
 
@@ -98,6 +107,9 @@ public class AbilityData : ScriptableObject
     [SerializeField] private float speedUpIntensity;
     public float SpeedUpIntensity { get => speedUpIntensity; set => speedUpIntensity = value; }
 
+    [SerializeField] private float speedUpMaxSpeed;
+    public float SpeedUpMaxSpeed { get => speedUpMaxSpeed; set => speedUpMaxSpeed = value; }
+
     // etc.
 
     #endregion
@@ -106,7 +118,7 @@ public class AbilityData : ScriptableObject
 [CustomEditor(typeof(AbilityData))]
 public class AbilityDataEditor : Editor
 {
-    private AbilityData Data { get { return (AbilityData) target; } }
+    private AbilityData Data { get { return (AbilityData)target; } }
 
     override public void OnInspectorGUI()
     {
@@ -119,19 +131,19 @@ public class AbilityDataEditor : Editor
         // Параметры, указывающие, в какой слот возможна загрузка способности
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
-        EditorGUILayout.PrefixLabel("Possible slots");
+        //EditorGUILayout.PrefixLabel("Possible slots");
 
-        EditorGUILayout.BeginHorizontal();
-        Data.EquippableFront = EditorGUILayout.ToggleLeft("Front", Data.EquippableFront, GUILayout.MaxWidth(100));
-        Data.EquippableLeft = EditorGUILayout.ToggleLeft("Left", Data.EquippableLeft, GUILayout.MaxWidth(100));
-        EditorGUILayout.EndHorizontal();
+        //EditorGUILayout.BeginHorizontal();
+        //Data.EquippableFront = EditorGUILayout.ToggleLeft("Front", Data.EquippableFront, GUILayout.MaxWidth(100));
+        //Data.EquippableLeft = EditorGUILayout.ToggleLeft("Left", Data.EquippableLeft, GUILayout.MaxWidth(100));
+        //EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.BeginHorizontal();
-        Data.EquippableBack = EditorGUILayout.ToggleLeft("Back", Data.EquippableBack, GUILayout.MaxWidth(100));
-        Data.EquippableRight = EditorGUILayout.ToggleLeft("Right", Data.EquippableRight, GUILayout.MaxWidth(100));
-        EditorGUILayout.EndHorizontal();
+        //EditorGUILayout.BeginHorizontal();
+        //Data.EquippableBack = EditorGUILayout.ToggleLeft("Back", Data.EquippableBack, GUILayout.MaxWidth(100));
+        //Data.EquippableRight = EditorGUILayout.ToggleLeft("Right", Data.EquippableRight, GUILayout.MaxWidth(100));
+        //EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        //EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
         // Тип способности
         Data.AbilityType = (AbilityData.Ability)EditorGUILayout.EnumPopup("Ability type", Data.AbilityType);
@@ -157,6 +169,8 @@ public class AbilityDataEditor : Editor
             case AbilityData.Ability.Shield:
 
                 Data.ShieldDuration = EditorGUILayout.FloatField("Duration", Data.ShieldDuration);
+                Data.ShieldDurability = EditorGUILayout.FloatField("Durability", Data.ShieldDurability);
+                Data.ShieldDamage = EditorGUILayout.FloatField("Collision damage", Data.ShieldDamage);
                 EditorUtility.SetDirty(target);
                 break;
 
@@ -164,6 +178,7 @@ public class AbilityDataEditor : Editor
 
                 Data.SpeedUpDuration = EditorGUILayout.FloatField("Duration", Data.SpeedUpDuration);
                 Data.SpeedUpIntensity = EditorGUILayout.FloatField("Intensity", Data.SpeedUpIntensity);
+                Data.SpeedUpMaxSpeed = EditorGUILayout.FloatField("Max speed", Data.SpeedUpMaxSpeed);
                 EditorUtility.SetDirty(target);
                 break;
 

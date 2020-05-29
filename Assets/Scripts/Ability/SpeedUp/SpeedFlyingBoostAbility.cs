@@ -6,7 +6,7 @@ public class SpeedFlyingBoostAbility : IAbility, ISecondary
 
     public SpeedFlyingBoostAbility()
     {
-        Data = Resources.Load<AbilityData>("AbilityData/SpeedUp/TestSpeedUp");
+        Data = Resources.Load<AbilityData>("AbilityData/SpeedUp/SpeedFlyingBoost");
     }
     public IAbility Add(IAbility ability)
     {
@@ -17,5 +17,7 @@ public class SpeedFlyingBoostAbility : IAbility, ISecondary
     public void Execute(Transform position)
     {
         Debug.Log("Flying Speed Boost Launched!");
+
+        SpeedUpFactory.CreateFlyingBoost(position, Data);
     }
 }

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb402bbfaa7cd140a9392ea8958a8c3, type: 3}
+  m_Name: Chain
+  m_EditorClassIdentifier: 
+  abilityType: 0
+  icon: {fileID: 21300000, guid: ee14c30a1b2ca452cae6a4fbcfb2b769, type: 3}
+  containerMaterial: {fileID: 2100000, guid: 35447764996648c4f882ba8f96731f62, type: 2}
+  prefab: {fileID: 1734538247252280134, guid: b2bb6145947f02d4a984f62b7607e881, type: 3}
+  delay: 1
+  projectileDamage: 25
+  projectileSpeed: 40
+  projectileScatter: 3
+  projectilesCount: 1
+  hazardDamage: 0
+  shieldDuration: 0
+  shieldDurability: 0
+  shieldDamage: 0
+  speedUpDuration: 0
+  speedUpIntensity: 0
+  speedUpMaxSpeed: 0

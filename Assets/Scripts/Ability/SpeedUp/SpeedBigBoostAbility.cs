@@ -2,12 +2,11 @@
 
 public class SpeedBigBoostAbility : IAbility, ISecondary
 {
-
     public AbilityData Data { get; set; }
 
     public SpeedBigBoostAbility()
     {
-        Data = Resources.Load<AbilityData>("AbilityData/SpeedUp/TestSpeedUp");
+        Data = Resources.Load<AbilityData>("AbilityData/SpeedUp/SpeedBigBoost");
     }
     public IAbility Add(IAbility ability)
     {
@@ -18,5 +17,7 @@ public class SpeedBigBoostAbility : IAbility, ISecondary
     public void Execute(Transform position)
     {
         Debug.Log("Big Speed boost launched!");
+
+        SpeedUpFactory.CreateBigBoost(position, Data);
     }
 }
