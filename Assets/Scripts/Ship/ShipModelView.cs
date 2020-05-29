@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 
-public class ShipModelView : MonoBehaviour
+public class ShipModelView : MonoBehaviour, IDamageable
 {
-    #region fields
+    #region events
+
     //Events
     public event EventHandler<Vector3> OnInput = (sender, e) => { };
     public event EventHandler<Vector3> OnAction = (sender, e) => { }; 
     public event EventHandler<Sprite> OnPrimaryAbilityChanged = (sender, e) => { };
     public event EventHandler<Sprite> OnSecondaryAbilityChanged = (sender, e) => { };
-    public event EventHandler<GameObject> OnCollision = (sender, e) => { };
+    public event EventHandler<float> OnDamageRecieved = (sender, e) => { };
+    public event EventHandler<string> OnTriggerIN = (sender, tag) => { };
+    public event EventHandler<string> OnTriggerOUT = (sender, tag) => { };
+    public event EventHandler OnFixedUpdate = (sender, e) => { };
 
-    public event EventHandler<float> OnFlip = (sender, e) => { };
 
+    #endregion
+    
+    #region fields
     //Ship data
     [SerializeField] private Rigidbody rb;
     //Cannon spots on the ship sides
@@ -22,25 +28,23 @@ public class ShipModelView : MonoBehaviour
     //Cannon arrays of Cannon types
     private ICannonModelView[] frontCannons, backCannons, leftCannons, rightCannons;
 
+    // Shield spot on center of the ship
+    [SerializeField] private Transform shieldSlot;
+
     //ShipAbility
     private IAbility primaryAbilitySlot;
     private IAbility secondaryAbilitySlot;
 
-    // Скалярная величина наклона корабля
-    private float dotUp;
-
-    private int health = 100;
+    private float health = 100;
     private bool isAlive = true;
 
     #endregion
-
-    private float startDrag;
 
     #region Accessors
     //IsAlive Accessor
     public bool IsAlive { get => isAlive; set => isAlive = value; }
     //Health Accessor
-    public int Health
+    public float Health
     {
         get => health; set => health = value;
     }
@@ -61,7 +65,6 @@ public class ShipModelView : MonoBehaviour
             else OnPrimaryAbilityChanged(this, null);
         }
     }
-    
     public IAbility SecondaryAbility
     {
         get => secondaryAbilitySlot;
@@ -78,6 +81,9 @@ public class ShipModelView : MonoBehaviour
             else OnSecondaryAbilityChanged(this, null);
         }
     }
+
+    //Shield slot accessor
+    public Transform ShieldSlot { get => shieldSlot; }
 
     //Cannons accessor
     public ICannonModelView[] FrontCannons { get => frontCannons; }
@@ -105,47 +111,44 @@ public class ShipModelView : MonoBehaviour
 
     private void Awake()
     {
-        startDrag = rb.drag;
+        // Создаем пушки
         CreateCannons();
-
         // Устанавливаем центр тяжести корабля
-        Rigidbody.centerOfMass = new Vector3(0, 0.5f, 0.25f);
+        Rigidbody.centerOfMass = new Vector3(0, 0.5f, 0.5f);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        OnCollision(this, collision.gameObject);
-    }
-
-    #region input
-
-    //dispatching input vector to the ship controller
+    /// <summary>
+    /// Метод ввода управления. Вызывается пилотом этого корабля. При вызове активирует событие OnInput
+    /// </summary>
+    /// <param name="input"></param>
     public void SteeringInput(Vector3 input)
     {
         if(isAlive)
         OnInput(this, input);
     }
 
-    //dispatching action vector to the ship controller
+    /// <summary>
+    /// Метод ввода действия. Вызывается пилотом этого корабля. При вызове активирует событие OnAction
+    /// </summary>
+    /// <param name="input"></param>
     public void ActionInput(Vector3 input)
     {
         if (isAlive)
             OnAction(this, input);
     }
-    
 
-    #endregion
-
-    //creating Cannons
+    /// <summary>
+    /// Метод заполнения пушками слотов корабля. Сейчас вызывается в Awake
+    /// </summary>
     public void CreateCannons()
     {
         frontCannons = new ICannonModelView[frontSlots.Count];
         for (int i = 0; i < frontSlots.Count; i++)
             frontCannons[i] = CannonFactory.CreateCannonModelView(frontSlots[i]);
 
-        backCannons = new ICannonModelView[backSlots.Count];
-        for (int i = 0; i < backSlots.Count; i++)
-            backCannons[i] = CannonFactory.CreateCannonModelView(backSlots[i]);
+        //backCannons = new ICannonModelView[backSlots.Count];
+        //for (int i = 0; i < backSlots.Count; i++)
+        //    backCannons[i] = CannonFactory.CreateCannonModelView(backSlots[i]);
 
         leftCannons = new ICannonModelView[leftSlots.Count];
         for (int i = 0; i < leftSlots.Count; i++)
@@ -154,79 +157,110 @@ public class ShipModelView : MonoBehaviour
         rightCannons = new ICannonModelView[rightSlots.Count];
         for (int i = 0; i < rightSlots.Count; i++)
             rightCannons[i] = CannonFactory.CreateCannonModelView(rightSlots[i]);
+
+        ShieldFactory.CreateShieldTierFour(shieldSlot, Resources.Load<AbilityData>("AbilityData/Shields/ShieldTierFour"));
     }
-
-
-
+    
+    /// <summary>
+    /// Действие ModelView при активации первичной способности. Вызывается из контроллера!
+    /// </summary>
     public void PrimaryAction(Vector3 direction)
     {
-        if (direction == Vector3.forward)
+        if (primaryAbilitySlot != null)
         {
-            if (primaryAbilitySlot != null)
+            if (direction == Vector3.forward)
+            {
                 foreach (ICannonModelView cannon in frontCannons)
                     cannon.Fire(primaryAbilitySlot);
-
-            PrimaryAbility = null;
-        }
-        
-        if (direction == Vector3.left)
-        {
-            if(primaryAbilitySlot != null)
-                foreach (ICannonModelView cannon in leftCannons)
-                    cannon.Fire(primaryAbilitySlot);
-
-            PrimaryAbility = null;
-        }
-        
-        if (direction == Vector3.right)
-        {
-            if(primaryAbilitySlot != null)
-                foreach (ICannonModelView cannon in rightCannons)
-                    cannon.Fire(primaryAbilitySlot);
-
-            PrimaryAbility = null;
-        }
-    }
-
-    public void SecondatyAction()
-    {
-        if (secondaryAbilitySlot != null)
-        {
-            foreach (ICannonModelView cannon in backCannons)
-            {
-                cannon.Fire(secondaryAbilitySlot);
             }
 
-            SecondaryAbility = null;
+            if (direction == Vector3.left)
+            {
+                foreach (ICannonModelView cannon in leftCannons)
+                    cannon.Fire(primaryAbilitySlot);
+            }
+
+            if (direction == Vector3.right)
+            {
+                foreach (ICannonModelView cannon in rightCannons)
+                    cannon.Fire(primaryAbilitySlot);
+            }
+
+            //PrimaryAbility = null;
         }
     }
 
-
-
-
-    public void Update()
+    /// <summary>
+    /// Действие ModelView при активации второстепенной способности. Вызывается из контроллера!
+    /// </summary>
+    public void SecondaryAction()
     {
-        // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
-        dotUp = Vector3.Dot(transform.up, Vector3.down);
-
-        if (dotUp > -0.6f)
+        if (secondaryAbilitySlot != null)    // TODO: реализовать через Input system
         {
-            OnFlip(this, dotUp);
+            // Обработка абилок щитов. TODO нормальная реализация (через интерфейс?)
+            if (SecondaryAbility is IShield)
+            {
+                // Удаляем щит из слота под щиты, если там что-то присутствует
+                if (shieldSlot.childCount != 0)
+                {
+                    Destroy(shieldSlot.GetChild(0).gameObject);
+                }
+
+                SecondaryAbility.Execute(shieldSlot);
+            }
+
+            if (SecondaryAbility is ISpeedUp)
+            {
+                // Удаляем турбину из заднего слота, если там что-то присутствует
+                foreach (Transform slot in backSlots)
+                {
+                    if (slot.childCount != 0)
+                    {
+                        Destroy(slot.GetChild(0).gameObject);
+                    }
+
+                    SecondaryAbility.Execute(slot);
+                }
+            }
+
+            //SecondaryAbility = null;
         }
     }
 
+    /// <summary>
+    /// Получение урона - метод вызывается чем-то извне(например снарядом), вызывает событие получения урона в контроллере
+    /// </summary>
+    /// <param name="amount"></param>
+    public void RecieveDamage(float amount)
+    {
+        if (isAlive)
+            if (!shieldSlot.GetComponentInChildren(typeof(IShield)))
+                OnDamageRecieved(this, amount);
+    }
+
+    /// <summary>
+    /// Вызывает событие обработки FixedUpdate
+    /// </summary>
+    private void FixedUpdate()
+    {
+        OnFixedUpdate(this, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Вызывает событие обработки входного триггера(которое передает тег в качестве параметра)
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("SlowPoint"))
-        {
-            rb.drag = startDrag * 10;
-        }
+        OnTriggerIN(this, other.tag);
     }
+    
+    /// <summary>
+    /// Вызывает событие обработки выходного триггера(которое передает тег в качестве параметра)
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SlowPoint"))
-        {
-            rb.drag = startDrag;
-        }
+        OnTriggerOUT(this, other.tag);
     }
 }

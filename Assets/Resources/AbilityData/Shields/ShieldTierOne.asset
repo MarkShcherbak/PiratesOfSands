@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb402bbfaa7cd140a9392ea8958a8c3, type: 3}
+  m_Name: ShieldTierOne
+  m_EditorClassIdentifier: 
+  abilityType: 2
+  icon: {fileID: 21300000, guid: bca3fcbed06d440ef9d1e158c45c1032, type: 3}
+  containerMaterial: {fileID: 2100000, guid: 26815b7ecba469f4584dca84f26b719c, type: 2}
+  prefab: {fileID: 8148907935147830915, guid: 6800e5fc90b7c564688a610c26fb3765, type: 3}
+  delay: 4
+  projectileDamage: 0
+  projectileSpeed: 0
+  projectileScatter: 0
+  projectilesCount: 0
+  hazardDamage: 0
+  shieldDuration: 10
+  shieldDurability: 20
+  shieldDamage: 0
+  speedUpDuration: 3
+  speedUpIntensity: 1
+  speedUpMaxSpeed: 0

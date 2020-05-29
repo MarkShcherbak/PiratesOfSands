@@ -9,6 +9,7 @@ TagManager:
   - TrackPoint
   - Projectile
   - SlowPoint
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -19,6 +20,7 @@ TagManager:
   - 
   - 
   - Projectile
+  - Shield
   - 
   - snowMesh
   - 
@@ -39,9 +41,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Ship
+  - Ground
   m_SortingLayers:
   - name: Default
     uniqueID: 0

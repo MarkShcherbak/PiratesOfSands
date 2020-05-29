@@ -10,7 +10,7 @@ public class AmmoFactory
     {
         for (int i = 0; i < data.ProjectilesCount; i++)
         {
-            GameObject shot = Resources.Load<GameObject>("Prefabs/Projectiles/Cannonball");
+            GameObject shot = data.Prefab;
             CannonballShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<CannonballShotModelView>();
             modelView.Damage = data.ProjectileDamage;
             modelView.Speed = data.ProjectileSpeed;
@@ -23,7 +23,7 @@ public class AmmoFactory
     {
         for (int i = 0; i < data.ProjectilesCount; i++)
         {
-            GameObject shot = Resources.Load<GameObject>("Prefabs/Projectiles/GrapplingHook");
+            GameObject shot = data.Prefab;
             HookShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<HookShotModelView>();
             modelView.Damage = data.ProjectileDamage;
             modelView.Speed = data.ProjectileSpeed;
@@ -36,7 +36,7 @@ public class AmmoFactory
     {
         for (int i = 0; i < data.ProjectilesCount; i++)
         {
-            GameObject shot = Resources.Load<GameObject>("Prefabs/Projectiles/Chain");
+            GameObject shot = data.Prefab;
             ChainShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<ChainShotModelView>();
             modelView.Damage = data.ProjectileDamage;
             modelView.Speed = data.ProjectileSpeed;
@@ -49,7 +49,7 @@ public class AmmoFactory
     {
         for (int i = 0; i < data.ProjectilesCount; i++)
         {
-            GameObject shot = Resources.Load<GameObject>("Prefabs/Projectiles/Gatling");
+            GameObject shot = data.Prefab;
             GatlingShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<GatlingShotModelView>();
             modelView.Damage = data.ProjectileDamage;
             modelView.Speed = data.ProjectileSpeed;

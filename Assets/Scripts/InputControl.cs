@@ -99,7 +99,7 @@ public class InputControl : Singleton<InputControl>
         }
         if (InputParams.DownFireButtonDown)
         {
-            OnActionInput(this, Vector3.down);
+            OnActionInput(this, Vector3.back);
         }
     }
 
