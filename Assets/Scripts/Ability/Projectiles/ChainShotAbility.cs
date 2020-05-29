@@ -19,5 +19,6 @@ public class ChainShotAbility : IAbility,IPrimary
         Debug.Log("Chain fired!");
 
         AmmoFactory.CreateChainShot(position, Data);
+        ParticleFactory.CreateShotSmoke(position);
     }
 }

@@ -19,5 +19,6 @@ public class GrapplingHookAbility : IAbility, IPrimary
         Debug.Log("Hook fired!");
 
         AmmoFactory.CreateHookShot(position, Data);
+        ParticleFactory.CreateShotSmoke(position);
     }
 }

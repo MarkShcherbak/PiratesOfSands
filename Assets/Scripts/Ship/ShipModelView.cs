@@ -198,7 +198,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
         if (secondaryAbilitySlot != null)    // TODO: реализовать через Input system
         {
             // Обработка абилок щитов. TODO нормальная реализация (через интерфейс?)
-            if (SecondaryAbility.Data.AbilityType == AbilityData.Ability.Shield)
+            if (SecondaryAbility is IShield)
             {
                 // Удаляем щит из слота под щиты, если там что-то присутствует
                 if (shieldSlot.childCount != 0)
@@ -209,7 +209,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 SecondaryAbility.Execute(shieldSlot);
             }
 
-            if (SecondaryAbility.Data.AbilityType == AbilityData.Ability.SpeedUp)
+            if (SecondaryAbility is ISpeedUp)
             {
                 // Удаляем турбину из заднего слота, если там что-то присутствует
                 foreach (Transform slot in backSlots)
@@ -234,7 +234,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     public void RecieveDamage(float amount)
     {
         if (isAlive)
-            if (shieldSlot.childCount == 0)
+            if (!shieldSlot.GetComponentInChildren(typeof(IShield)))
                 OnDamageRecieved(this, amount);
     }
 
@@ -243,7 +243,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     /// </summary>
     private void FixedUpdate()
     {
-        OnFixedUpdate(this,EventArgs.Empty);
+        OnFixedUpdate(this, EventArgs.Empty);
     }
 
     /// <summary>

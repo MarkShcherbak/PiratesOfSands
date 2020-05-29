@@ -21,5 +21,6 @@ public class GatilngShotAbility : IAbility, IPrimary
         Debug.Log("Gatling fired!");
 
         AmmoFactory.CreateGatlingShot(position, Data);
+        ParticleFactory.CreateShotSmoke(position);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedUpFlyingBoostModelView : MonoBehaviour
+public class SpeedUpFlyingBoostModelView : MonoBehaviour, ISpeedUp
 {
     [SerializeField] private float duration;
     [SerializeField] private float intensity;

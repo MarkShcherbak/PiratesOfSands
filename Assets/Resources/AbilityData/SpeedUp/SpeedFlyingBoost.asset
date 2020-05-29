@@ -25,6 +25,6 @@ MonoBehaviour:
   shieldDuration: 0
   shieldDurability: 0
   shieldDamage: 0
-  speedUpDuration: 6
-  speedUpIntensity: 25
+  speedUpDuration: 3
+  speedUpIntensity: 15
   speedUpMaxSpeed: 30

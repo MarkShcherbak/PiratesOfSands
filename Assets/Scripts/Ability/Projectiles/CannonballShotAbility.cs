@@ -20,5 +20,6 @@ public class CannonballShotAbility : IAbility,IPrimary
         Debug.Log("Cannonball fired!");
 
         AmmoFactory.CreateCannonballShot(position, Data);
+        ParticleFactory.CreateShotSmoke(position);
     }
 }

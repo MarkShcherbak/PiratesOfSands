@@ -124,7 +124,6 @@ public class ShipController
 
     if (dotX > -0.4f)
     {
-
         shipMV.Rigidbody.AddRelativeTorque(0, 0, shipMV.Rigidbody.angularVelocity.z * -5f, ForceMode.Impulse);
 
         if (dotX < -0.5f)
@@ -134,17 +133,21 @@ public class ShipController
                 z: shipMV.Rigidbody.angularVelocity.z / 2);
     }
     
-    if (dotZ > 0.7f)
-    {
+    if (dotZ > 0.5f)
+        {
+            shipMV.Rigidbody.AddForce(Vector3.down * 500 * Time.fixedDeltaTime, ForceMode.Acceleration);
 
-        shipMV.Rigidbody.AddRelativeTorque(shipMV.Rigidbody.angularVelocity.x * -5f, 0, 0, ForceMode.Impulse);
+            if (dotZ > 0.7f)
+            {
+                shipMV.Rigidbody.AddRelativeTorque(shipMV.Rigidbody.angularVelocity.x * -5f, 0, 0, ForceMode.Impulse);
 
-        if (dotZ < 0.8f)
-            shipMV.Rigidbody.angularVelocity = new Vector3(
-                x: shipMV.Rigidbody.angularVelocity.x / 2,
-                y: shipMV.Rigidbody.angularVelocity.y,
-                z: shipMV.Rigidbody.angularVelocity.z);
-    }
-    
+
+                if (dotZ < 0.8f)
+                    shipMV.Rigidbody.angularVelocity = new Vector3(
+                        x: shipMV.Rigidbody.angularVelocity.x / 2,
+                        y: shipMV.Rigidbody.angularVelocity.y,
+                        z: shipMV.Rigidbody.angularVelocity.z);
+            }
+        }
     }
 }

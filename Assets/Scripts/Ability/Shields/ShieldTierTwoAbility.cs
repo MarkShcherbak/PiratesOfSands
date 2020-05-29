@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ShieldTierTwoAbility : IAbility, ISecondary
+public class ShieldTierTwoAbility : IAbility, ISecondary, IShield
 {
     public AbilityData Data { get; set; }
 

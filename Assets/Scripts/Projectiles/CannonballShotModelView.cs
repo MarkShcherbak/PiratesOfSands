@@ -61,12 +61,16 @@ public class CannonballShotModelView : MonoBehaviour
             if (mb is IDamageable && isHarmful)
             {
                 ((IDamageable)mb).RecieveDamage(Damage);
+                Debug.Log($"{collision.collider.name} takes {damage} damage! from {name}");
+
+                if (collision.collider.tag == "Ship")
+                    ParticleFactory.CreateShipCollision(transform);
             }
         }
 
         else if (collision.collider.tag == "Ground")
         {
-            ParticleFactory.CreateSandExplosion(gameObject.transform);
+            ParticleFactory.CreateSandExplosion(transform);
         }
 
         isHarmful = false;

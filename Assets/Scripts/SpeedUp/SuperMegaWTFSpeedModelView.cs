@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SuperMegaWTFSpeedModelView : MonoBehaviour
+public class SuperMegaWTFSpeedModelView : MonoBehaviour, ISpeedUp
 {
     [SerializeField] private float duration;
     [SerializeField] private float intensity;

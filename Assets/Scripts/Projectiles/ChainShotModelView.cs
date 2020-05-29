@@ -61,7 +61,10 @@ public class ChainShotModelView : MonoBehaviour
             if (mb is IDamageable && isHarmful)
             {
                 ((IDamageable)mb).RecieveDamage(Damage);
-                Debug.Log($"{collision.collider.name} takes {Damage} damage!");
+                Debug.Log($"{collision.collider.name} takes {damage} damage! from {name}");
+
+                if (collision.collider.tag == "Ship")
+                    ParticleFactory.CreateShipCollision(transform);
             }
         }
 

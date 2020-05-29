@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpeedSmallBoostAbility : IAbility, ISecondary
+public class SpeedSmallBoostAbility : IAbility, ISecondary, ISpeedUp
 {
     public AbilityData Data { get; set; }
 

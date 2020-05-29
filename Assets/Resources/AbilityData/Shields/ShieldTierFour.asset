@@ -22,7 +22,7 @@ MonoBehaviour:
   projectileScatter: 0
   projectilesCount: 0
   hazardDamage: 0
-  shieldDuration: 30
+  shieldDuration: 0
   shieldDurability: 50
   shieldDamage: 0
   speedUpDuration: 3

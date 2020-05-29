@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldTierFourModelView : MonoBehaviour, IDamageable
+public class ShieldTierFourModelView : MonoBehaviour, IDamageable, IShield
 {
     [SerializeField] private float duration;
     [SerializeField] private float durability;
