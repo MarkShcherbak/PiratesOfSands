@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 2016597236742576595}
   - component: {fileID: 2016597236742576594}
   - component: {fileID: 2016597236742576593}
-  - component: {fileID: 4777901553187820556}
   m_Layer: 31
   m_Name: Terrain
   m_TagString: Ground
@@ -229,25 +228,6 @@ TerrainCollider:
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: f51ba47b97d7fb04b91c7018c03911dc, type: 2}
   m_EnableTreeColliders: 1
---- !u!114 &4777901553187820556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016597236742576607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2614e265d9d59a3469bbffa3baebc884, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stampSize: 2
-  stampTexture: {fileID: 2800000, guid: 346496a7b10ae8d4e9fb5fe51f9e606f, type: 3}
-  rtWorldPos: {fileID: 8400000, guid: 0c4342ef03b61e64da1efb005c607284, type: 2}
-  rtWorldNormal: {fileID: 8400000, guid: c245d66d81fe65e4c98579a16b36f605, type: 2}
-  SSP2N: {fileID: 2100000, guid: 9b8817a4fe524d54db0df3f11b1ae98c, type: 2}
-  SSP: {fileID: 2100000, guid: 04d8561912cce4b4a95386109b3573f9, type: 2}
-  actors: []
 --- !u!1 &2016597237145145762
 GameObject:
   m_ObjectHideFlags: 0
