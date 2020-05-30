@@ -12,6 +12,8 @@ public class EnemyPilotModelView : MonoBehaviour
     private float moveH, moveV;
     private Vector3 actionDirection;
     
+    public Vector3 ChechpointTarget { get; set; }
+    
     //TODO добавить ИИ для управления и действий
 
     private void FixedUpdate()
@@ -23,49 +25,68 @@ public class EnemyPilotModelView : MonoBehaviour
     {
         OnTriggerCollision(this, other.transform);
     }
+
+    #region Gizmos
+
     
+
+   
     void OnDrawGizmos()
     {
         float maxDistance = 100f;
         RaycastHit hit;
-        
-        Vector3 forwardDirection = new Vector3(transform.forward.x, 0 , transform.forward.z) * 2f;
-        Vector3 rightDirection = new Vector3(transform.right.x, 0 , transform.right.z) * 0.75f;
-        
-        //forward cast
-        bool isHit = Physics.BoxCast(transform.position + (forwardDirection + Vector3.up).normalized * 20, 
-            transform.lossyScale / 2, Vector3.down, out hit,
-            transform.rotation, maxDistance);
-        if (isHit)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(hit.point, transform.lossyScale);
-            Gizmos.DrawLine(transform.position, transform.position + (forwardDirection + transform.up).normalized * 20);
-            Gizmos.DrawLine(transform.position + (forwardDirection + transform.up).normalized * 20, hit.point);
-        }
 
-        //right cast
-        isHit = Physics.BoxCast(transform.position + (forwardDirection + Vector3.up + rightDirection).normalized * 20, 
-            transform.lossyScale / 2, Vector3.down, out hit,
-            transform.rotation, maxDistance);
-        if (isHit)
+        if (ChechpointTarget != null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(hit.point, transform.lossyScale);
-            Gizmos.DrawLine(transform.position, transform.position + (forwardDirection + Vector3.up + rightDirection).normalized * 20);
-            Gizmos.DrawLine(transform.position + (forwardDirection + Vector3.up + rightDirection).normalized * 20, hit.point);
-        }
 
-        //left cast
-        isHit = Physics.BoxCast(transform.position + (forwardDirection + Vector3.up + -rightDirection).normalized * 20,
-            transform.lossyScale / 2, Vector3.down, out hit,
-            transform.rotation, maxDistance);
-        if (isHit)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(hit.point, transform.lossyScale);
-            Gizmos.DrawLine(transform.position, transform.position + (forwardDirection + Vector3.up + -rightDirection).normalized * 20);
-            Gizmos.DrawLine(transform.position + (forwardDirection + Vector3.up + -rightDirection).normalized * 20, hit.point);
+            Vector3 forwardDirection = new Vector3((ChechpointTarget - transform.position).normalized.x, 0,
+                (ChechpointTarget - transform.position).normalized.z) * 2f;
+            Vector3 rightDirection = new Vector3(transform.right.x, 0, transform.right.z) * 0.75f;
+
+            //forward cast
+            bool isHit = Physics.BoxCast(transform.position + (forwardDirection + Vector3.up).normalized * 20,
+                transform.lossyScale / 2, Vector3.down, out hit,
+                transform.rotation, maxDistance);
+            if (isHit)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(hit.point, transform.lossyScale);
+                Gizmos.DrawLine(transform.position,
+                    transform.position + (forwardDirection + transform.up).normalized * 20);
+                Gizmos.DrawLine(transform.position + (forwardDirection + transform.up).normalized * 20, hit.point);
+            }
+
+            //right cast
+            isHit = Physics.BoxCast(
+                transform.position + (forwardDirection + Vector3.up + rightDirection).normalized * 20,
+                transform.lossyScale / 2, Vector3.down, out hit,
+                transform.rotation, maxDistance);
+            if (isHit)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(hit.point, transform.lossyScale);
+                Gizmos.DrawLine(transform.position,
+                    transform.position + (forwardDirection + Vector3.up + rightDirection).normalized * 20);
+                Gizmos.DrawLine(transform.position + (forwardDirection + Vector3.up + rightDirection).normalized * 20,
+                    hit.point);
+            }
+
+            //left cast
+            isHit = Physics.BoxCast(
+                transform.position + (forwardDirection + Vector3.up + -rightDirection).normalized * 20,
+                transform.lossyScale / 2, Vector3.down, out hit,
+                transform.rotation, maxDistance);
+            if (isHit)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(hit.point, transform.lossyScale);
+                Gizmos.DrawLine(transform.position,
+                    transform.position + (forwardDirection + Vector3.up + -rightDirection).normalized * 20);
+                Gizmos.DrawLine(transform.position + (forwardDirection + Vector3.up + -rightDirection).normalized * 20,
+                    hit.point);
+            }
         }
     }
+    
+    #endregion
 }

@@ -26,6 +26,8 @@ public class EnemyPilotController
         
         currentAim = checkpointsPath.GetStartPosition();
         checkpointsPath.SetObjPosition(pilotModelView.transform, true);
+
+        pilotModelView.ChechpointTarget = currentAim.position;
         
         pilotModelView.OnMovingInput += HandleMovingInput;
         pilotModelView.OnActionInput += HandleActionInput;
@@ -50,6 +52,8 @@ public class EnemyPilotController
 
             // и размещаем эту точку внутри коллайдера (т.е. возвращаем ближайшую соответствующую полученным координатам точку в пространстве коллайдера)
             aimOffset = collider.ClosestPoint(aimOffset);
+
+            pilotModelView.ChechpointTarget = aimOffset;
 
             // Получаем множитель скорости движения к следующей цели
             aimInterest = UnityEngine.Random.Range(0.4f, 1f);
