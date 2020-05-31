@@ -49,6 +49,12 @@ public class EntityOnTrackCreator : MonoBehaviour
     [Serializable]
     private class GameobjectsToCreate
     {
+        public enum TypeOfCreation
+        {
+            simple,
+            radius,
+            oneSide
+        }
         /// <summary>
         /// префаб спавна
         /// </summary>
@@ -61,12 +67,13 @@ public class EntityOnTrackCreator : MonoBehaviour
         /// расстояние от земли на котором создается объект
         /// </summary>
         public float distFromGround = 0.5f;
-
+        
+        public TypeOfCreation typeOfCreation = TypeOfCreation.simple;
         /// <summary>
         /// радиус рандомного спавна
         /// </summary>
-        public float randomRadius = 10f;
-
+        public float radius = 10f;
+        
     }
 
 
@@ -137,7 +144,7 @@ public class EntityOnTrackCreator : MonoBehaviour
             }
         }
 
-
+        //раздаём точкам тип префаба
         foreach (GameObject pointOfSpawn in listOfPoints)
         {
 
@@ -169,11 +176,18 @@ public class EntityOnTrackCreator : MonoBehaviour
 
         
         Vector3 posOfPiu = new Vector3(pointOfCreate.transform.position.x, pointOfCreate.transform.position.y, pointOfCreate.transform.position.z);
+
+        if (gObjStruct.typeOfCreation==GameobjectsToCreate.TypeOfCreation.radius)
+        {
+            float xrnd = UnityEngine.Random.Range(-gObjStruct.radius, gObjStruct.radius);
+            posOfPiu += pointOfCreate.transform.right * xrnd;
+
+        }
+        else if (gObjStruct.typeOfCreation == GameobjectsToCreate.TypeOfCreation.oneSide)
+        {
+            posOfPiu += pointOfCreate.transform.right * gObjStruct.radius;
+        }
         
-        //rnd radius++
-        float xrnd = UnityEngine.Random.Range(-gObjStruct.randomRadius, gObjStruct.randomRadius);
-        posOfPiu += pointOfCreate.transform.right * xrnd; 
-        //--
 
         RaycastHit raycastHit = new RaycastHit();
         bool wasTouch = Physics.Raycast(posOfPiu, Vector3.down, out raycastHit);

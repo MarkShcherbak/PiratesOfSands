@@ -1,5 +1,28 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5298102608539651081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955098051952443236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed83657f6469694da576cac11fb080b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointCreator: {fileID: 1081485305171292, guid: c23a5db78ca1a5b4f921e0109f33128c,
+    type: 3}
+  generateConstantly: 0
+  timeToCorutineCreator: 5
+  creation:
+  - gameObj: {fileID: 1830589527976850792, guid: 3d482d1bdb83fee4989bc3c86d3c6123,
+      type: 3}
+    count: 50
+    distFromGround: 0
+    typeOfCreation: 2
+    radius: 50
 --- !u!1001 &552796898145549159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1276,6 +1299,36 @@ PrefabInstance:
       propertyPath: creation.Array.data[2].randomRadius
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: creation.Array.data[0].typeOfCreation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: creation.Array.data[0].radius
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: creation.Array.data[1].radius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: creation.Array.data[2].radius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: creation.Array.data[1].typeOfCreation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+        type: 3}
+      propertyPath: creation.Array.data[2].typeOfCreation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1270909376060818713, guid: 9cfe7c057ff792f4d9112a4602b45c74,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1481,6 +1534,12 @@ PrefabInstance:
 --- !u!4 &9159389347727470489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1270909376060818713, guid: 9cfe7c057ff792f4d9112a4602b45c74,
+    type: 3}
+  m_PrefabInstance: {fileID: 7980270019887721088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &955098051952443236 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7205387577523803620, guid: 9cfe7c057ff792f4d9112a4602b45c74,
     type: 3}
   m_PrefabInstance: {fileID: 7980270019887721088}
   m_PrefabAsset: {fileID: 0}
