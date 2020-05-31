@@ -45,6 +45,15 @@ public class ShipController
         {
             shipMV.Rigidbody.drag = rbStartDrag * 10;
         }
+
+        if (tag.Equals("SlipperyPoint"))
+        {
+            switch (UnityEngine.Random.Range(0, 2))
+            {
+                case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, UnityEngine.Random.Range(-200f, -100f), 0), ForceMode.Impulse); break;
+                case 1: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, UnityEngine.Random.Range(100f, 200f), 0), ForceMode.Impulse); break;
+            }
+        }
     }
     
     /// <summary>
@@ -98,6 +107,7 @@ public class ShipController
         if (shipHPMV != null)
         {
             shipMV.Health -= amount;
+            Debug.Log($"{shipMV.name} was damaged for {amount} damage! {shipMV.Health} hp left!");
 
             shipHPMV.GreenBarFill = shipMV.Health / 100;
             shipHPMV.HPAmount.text = $"{shipMV.Health}%";
@@ -106,7 +116,7 @@ public class ShipController
             {
                 shipMV.IsAlive = false;
                 shipHPMV.HPAmount.text = $"X_X";
-                Debug.Log($"{shipMV.name} is destroyed!");
+                Debug.Log($"{shipMV.name} was destroyed!");
             }
         }
     }
@@ -119,21 +129,21 @@ public class ShipController
     private void HandleFixedUpdate(object sender, EventArgs e)
     {
         // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
-    dotX = Vector3.Dot(shipMV.transform.up, Vector3.down);
-    dotZ = Math.Abs(Vector3.Dot(shipMV.transform.forward, Vector3.down));
+        dotX = Vector3.Dot(shipMV.transform.up, Vector3.down);
+        dotZ = Math.Abs(Vector3.Dot(shipMV.transform.forward, Vector3.down));
 
-    if (dotX > -0.4f)
-    {
-        shipMV.Rigidbody.AddRelativeTorque(0, 0, shipMV.Rigidbody.angularVelocity.z * -5f, ForceMode.Impulse);
+        if (dotX > -0.4f)
+        {
+            shipMV.Rigidbody.AddRelativeTorque(0, 0, shipMV.Rigidbody.angularVelocity.z * -5f, ForceMode.Impulse);
 
-        if (dotX < -0.5f)
-            shipMV.Rigidbody.angularVelocity = new Vector3(
-                x: shipMV.Rigidbody.angularVelocity.x,
-                y: shipMV.Rigidbody.angularVelocity.y,
-                z: shipMV.Rigidbody.angularVelocity.z / 2);
-    }
+            if (dotX < -0.5f)
+                shipMV.Rigidbody.angularVelocity = new Vector3(
+                    x: shipMV.Rigidbody.angularVelocity.x,
+                    y: shipMV.Rigidbody.angularVelocity.y,
+                    z: shipMV.Rigidbody.angularVelocity.z / 2);
+        }
     
-    if (dotZ > 0.5f)
+        if (dotZ > 0.5f)
         {
             shipMV.Rigidbody.AddForce(Vector3.down * 500 * Time.fixedDeltaTime, ForceMode.Acceleration);
 

@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 
-public class OilAbility : IAbility, ISecondary
+public class OilAbility : IAbility, ISecondary, IHazard
 {
     public AbilityData Data { get; set; }
 
     public OilAbility()
     {
-        Data = Resources.Load<AbilityData>("AbilityData/Hazard/TestHazard");
+        Data = Resources.Load<AbilityData>("AbilityData/Hazard/Oil");
     }
 
     public IAbility Add(IAbility ability)
     {
-        if (ability is OilAbility) return new BombAbility();
+        if (ability is OilAbility) return new SpikesAbility();
         else return ability;
     }
 
     public void Execute(Transform position)
     {
-        Debug.Log("Oil launched!");
+        Debug.Log("Oil Bomb launched!");
+        HazardFactory.CreateOilHazard(position, Data);
     }
 }

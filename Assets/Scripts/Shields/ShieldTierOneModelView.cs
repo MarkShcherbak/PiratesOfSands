@@ -59,17 +59,17 @@ public class ShieldTierOneModelView : MonoBehaviour, IDamageable
             if (Time.time > destroyTime)
                 Destroy(gameObject);
         }
+    }
+
+    public void RecieveDamage(float amount)
+    {
+        durability -= amount;
+        Debug.Log($"{gameObject.name} was damaged for {amount}. {durability} durability left");
 
         if (durability <= 0)
         {
             Debug.Log($"{gameObject.name} was destroyed!");
             Destroy(gameObject);
         }
-    }
-
-    public void RecieveDamage(float amount)
-    {
-        durability -= amount;
-        Debug.Log($"{gameObject.name} - {amount} dur. {durability} dur. left");
     }
 }

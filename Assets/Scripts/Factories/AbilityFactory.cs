@@ -11,7 +11,7 @@ public class AbilityFactory
         public static IAbility CreateRandomAbility()
         {
             IAbility ability = null;
-            switch (Random.Range(0,3)) //TODO включить все
+            switch (Random.Range(3, 4)) //TODO включить все
             {
                 case 0: ability = CreateShootingAbility(); break;
                 case 1: ability = CreateSpeedBoostAbility(); break;

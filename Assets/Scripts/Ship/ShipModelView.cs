@@ -186,7 +186,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
                     cannon.Fire(primaryAbilitySlot);
             }
 
-            //PrimaryAbility = null;
+            //PrimaryAbility = null; // TODO: включить
         }
     }
 
@@ -197,7 +197,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         if (secondaryAbilitySlot != null)    // TODO: реализовать через Input system
         {
-            // Обработка абилок щитов. TODO нормальная реализация (через интерфейс?)
+            // Обработка абилок щитов
             if (SecondaryAbility is IShield)
             {
                 // Удаляем щит из слота под щиты, если там что-то присутствует
@@ -223,7 +223,15 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 }
             }
 
-            //SecondaryAbility = null;
+            if (SecondaryAbility is IHazard)
+            {
+                foreach (Transform slot in backSlots)
+                {
+                    SecondaryAbility.Execute(slot);
+                }
+            }
+
+            //SecondaryAbility = null; // TODO: включить
         }
     }
 
