@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2504576217843659969}
   - component: {fileID: 5465526686539642021}
   - component: {fileID: 7474287290529394938}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spiral_01.2 Tornado tall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4782,7 +4782,7 @@ GameObject:
   - component: {fileID: 3530501216896357795}
   - component: {fileID: 2130362581973026818}
   - component: {fileID: 7714875486106821293}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: particle master
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9669,7 +9669,7 @@ GameObject:
   - component: {fileID: 3685488790173311236}
   - component: {fileID: 4079780299691358445}
   - component: {fileID: 4351877716033454576}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: particle glow slave birth trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14395,8 +14395,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8948107755681408336}
   - component: {fileID: 9125567244401543509}
-  m_Layer: 0
-  m_Name: SlowPointPrefab
+  m_Layer: 10
+  m_Name: TornadoSlowPointPrefab
   m_TagString: SlowPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14441,7 +14441,7 @@ GameObject:
   - component: {fileID: 2637760708100776769}
   - component: {fileID: 7974143643531507556}
   - component: {fileID: 7020946609839722681}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: particle glow slave birth dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7072791593101805206}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StonesSlowPrefab
   m_TagString: SlowPoint
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 7033710396103981183}
   - component: {fileID: 2947110826995872990}
   - component: {fileID: 6713711747380780636}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stone_4
   m_TagString: SlowPoint
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 492631469307612300}
   - component: {fileID: 888313174520468778}
   - component: {fileID: 5191368194552162288}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stone_1
   m_TagString: SlowPoint
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 1376801432118335511}
   - component: {fileID: 5026041221212398091}
   - component: {fileID: 3780521906166375142}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stone_2
   m_TagString: SlowPoint
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 5664286273689481272}
   - component: {fileID: 8903849430672451746}
   - component: {fileID: 5755673790626051508}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stone_3
   m_TagString: SlowPoint
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 7574822122945075311}
   - component: {fileID: 2448585290496799046}
   - component: {fileID: 2352489398934152143}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stone_5
   m_TagString: SlowPoint
   m_Icon: {fileID: 0}
