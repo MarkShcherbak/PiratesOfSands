@@ -116,7 +116,7 @@ public class EnemyPilotController
             }
 
             float moveH;
-            
+            int runOutDirection = 2; // TODO переделать этот пиздец
             if (isObstacleOnMyWay)
             {
                 if(isRightHit == false)
@@ -134,9 +134,18 @@ public class EnemyPilotController
                 }
                 else
                 {
-                    moveH = Vector3.SignedAngle(shipModelView.transform.forward,
-                        shipModelView.transform.forward + leftDirection * 4, Vector3.up);
+                    if (runOutDirection == 2)
+                        runOutDirection = UnityEngine.Random.Range(0, 2);
                     
+                    if(runOutDirection == 0)
+                        moveH = Vector3.SignedAngle(shipModelView.transform.forward,
+                            shipModelView.transform.forward + leftDirection * 4, Vector3.up);
+                    else
+                    {
+                        moveH = Vector3.SignedAngle(shipModelView.transform.forward,
+                            shipModelView.transform.forward + rightDirection * 4, Vector3.up);
+                    }
+                        
                 }
             }
             else 

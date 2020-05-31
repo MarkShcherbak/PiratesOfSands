@@ -157,8 +157,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
         rightCannons = new ICannonModelView[rightSlots.Count];
         for (int i = 0; i < rightSlots.Count; i++)
             rightCannons[i] = CannonFactory.CreateCannonModelView(rightSlots[i]);
-
-        ShieldFactory.CreateShieldTierFour(shieldSlot, Resources.Load<AbilityData>("AbilityData/Shields/ShieldTierFour"));
+        
     }
     
     /// <summary>
