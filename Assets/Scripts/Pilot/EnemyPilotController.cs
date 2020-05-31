@@ -16,6 +16,8 @@ public class EnemyPilotController
 
     // "Шум" скорости передвижения
     private float aimInterest = 1.0f;
+    
+     private int runOutDirection = 2; // TODO переделать этот костыль
 
     public EnemyPilotController(EnemyPilotModelView enemyPilot, ShipModelView ship, TrackPath checkpoints)
     {
@@ -80,10 +82,14 @@ public class EnemyPilotController
         bool isLeftHit = false;
         bool isRightHit = false;
         bool isObstacleOnMyWay = false;
+        bool isEnemyOnForward = false;
+        bool isEnemyOnLeft = false;
+        bool isEnemyOnRight = false;
         
         //вводим слои для обнаружения земли и для обнаружения подбираемых\уклоняемых сущностей на трассе
         LayerMask TrackEntityMask = LayerMask.GetMask("AICastedEntity");
         LayerMask groundMask = LayerMask.GetMask("Ground");
+        LayerMask enemyMask = LayerMask.GetMask("Ship");
         
         if (pilotModelView.ChechpointTarget != null)
         {
@@ -98,7 +104,18 @@ public class EnemyPilotController
                 Vector3.down, out hit, maxDistance, groundMask);
             if (isLandCast)
             {
+                // находим расстояние до рейкаста до земли
                 float pilotToCastPointDistance = Vector3.Distance(pilotModelView.transform.position, hit.point);
+                
+                    // смотрим есть ли противник спереди или по бокам
+                isEnemyOnForward = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, hit.point,
+                    Quaternion.identity, pilotToCastPointDistance, enemyMask);
+                isEnemyOnLeft = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, leftDirection,
+                        Quaternion.identity, pilotToCastPointDistance, enemyMask);
+                isEnemyOnRight = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, leftDirection,
+                        Quaternion.identity, pilotToCastPointDistance, enemyMask);
+                
+                    // смотрим есть ли препятствие на пути
                 isObstacleOnMyWay = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale / 2, hit.point, out hit,
                     Quaternion.identity, pilotToCastPointDistance, TrackEntityMask);
                 if (isObstacleOnMyWay)
@@ -115,8 +132,15 @@ public class EnemyPilotController
                 }
             }
 
+            if(isEnemyOnForward && shipModelView.PrimaryAbility != null)
+                HandleActionInput(this, Vector3.forward);
+            if(isEnemyOnLeft && shipModelView.PrimaryAbility != null)
+                HandleActionInput(this, Vector3.left);
+            if(isEnemyOnRight && shipModelView.PrimaryAbility != null)
+                HandleActionInput(this, Vector3.right);
+            
+            // создание вектора движения и поворота
             float moveH;
-            int runOutDirection = 2; // TODO переделать этот пиздец
             if (isObstacleOnMyWay)
             {
                 if(isRightHit == false)
