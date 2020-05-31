@@ -70,8 +70,7 @@ public class EnemyPilotController
     { 
         shipModelView.ActionInput(direction);
     }
-
-    RaycastHit hit;
+    
     private void HandleMovingInput(object sender, EventArgs e)
     {
         // AI obstacles avoiding (nikita)
