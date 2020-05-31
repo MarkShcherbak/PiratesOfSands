@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,21 +10,14 @@ using UnityEngine;
 public class EntityOnTrackCreator : MonoBehaviour
 {
     private TrackPath trackPath;
-    /// <summary>
-    /// Количество точек, в которых будут генерироваться бусты
-    /// </summary>
-    [SerializeField] private int countPointsToCreate;
-    /// <summary>
-    /// Максимальный радиус, в котором создается точка на случайном расстоянии от трека
-    /// </summary>
-    [SerializeField] private float maxDistFromPath;
+    
     /// <summary>
     /// префаб точки, которая будет генерировать бусты
     /// </summary>
     [SerializeField] private GameObject pointCreator;
 
     /// <summary>
-    /// Связка позиции для создания и созданного объекта. 
+    /// Связка точки спавна объектов и созданного объекта. 
     /// </summary>
     private Dictionary<GameObject, GameObject> pointsAndCreations;
 
@@ -32,26 +26,76 @@ public class EntityOnTrackCreator : MonoBehaviour
     /// </summary>
     [SerializeField] private bool generateConstantly = true;
 
-    /// <summary>
-    /// префабы которые будут создаваться в точках генерации
-    /// </summary>
-    [SerializeField] private List<GameObject> objsToCreate;
-
     [SerializeField] private float timeToCorutineCreator = 5f;
 
     /// <summary>
-    /// Расстояния на высоте от земли на котором будут спавнится активности
+    /// Список создаваемых объектов со свойствами
     /// </summary>
-    [SerializeField] private float distSpawnBeforeLand = 1f;
+    [SerializeField] private List<GameobjectsToCreate> creation;
+
+    /// <summary>
+    /// Список точек спавна объектов и соответствий префабов которые будут генерироваться в этой точке 
+    /// </summary>
+    private Dictionary<GameObject, GameobjectsToCreate> pointsAndPrefabs;
+
+    /// <summary>
+    /// список всех точек спавна объектов
+    /// </summary>
+    private List<GameObject> listOfPoints;
+
+    /// <summary>
+    /// класс содержащий перфаб и его свойства для спавна
+    /// </summary>
+    [Serializable]
+    private class GameobjectsToCreate
+    {
+        /// <summary>
+        /// префаб спавна
+        /// </summary>
+        public GameObject gameObj;
+        /// <summary>
+        /// количество создаваемых префабов на трек
+        /// </summary>
+        public int count;
+        /// <summary>
+        /// расстояние от земли на котором создается объект
+        /// </summary>
+        public float distFromGround = 0.5f;
+
+        /// <summary>
+        /// радиус рандомного спавна
+        /// </summary>
+        public float randomRadius = 10f;
+
+    }
+
 
     private void Start()
     {
+        if (creation.Count==0)
+        {
+            return;
+        }
+
         trackPath = GetComponent<TrackPath>();
+        pointsAndPrefabs = new Dictionary<GameObject, GameobjectsToCreate>();
         pointsAndCreations = new Dictionary<GameObject, GameObject>();
-        float entitieDistance = trackPath.GetTrackDistance() / (countPointsToCreate+1);
+        listOfPoints = new List<GameObject>();
+
+
+        //определяем количество создаваемых объектов
+        int sumPointToCreate = 0;
+        foreach (GameobjectsToCreate gameobjectsToCreate in creation)
+        {
+            sumPointToCreate += gameobjectsToCreate.count;
+        }
+
+        //Длина интервала между точками спавна объектов
+        float entitieDistance = trackPath.GetTrackDistance() / (sumPointToCreate + 1);
         float currentDistance = 0.5f;
 
-        for (int i = 0; i < countPointsToCreate; i++)
+        //создаём точки спавна объектов
+        for (int i = 0; i < sumPointToCreate; i++)
         {
             currentDistance += entitieDistance;
 
@@ -67,30 +111,83 @@ public class EntityOnTrackCreator : MonoBehaviour
             float y = (m2 * curPoint.y + m1 * nextPoint.y) / (m1 + m2);
             float z = (m2 * curPoint.z + m1 * nextPoint.z) / (m1 + m2);
 
-            float xrnd = Random.Range(-maxDistFromPath, maxDistFromPath);
-            float zrnd = Random.Range(-maxDistFromPath, maxDistFromPath);
+           
 
-            Vector3 posToCreate = new Vector3(x+ xrnd, y+100f,z+ zrnd);
+            Vector3 posToCreate = new Vector3(x, y+100f,z);
 
-            RaycastHit raycastHit = new RaycastHit();
-            bool wasTouch = Physics.Raycast(posToCreate, Vector3.down, out raycastHit);
-            if (wasTouch)
-            {
-                Vector3 pointToSpawn = raycastHit.point;
-                pointToSpawn.y += distSpawnBeforeLand;
+            GameObject pointOfCreation = Instantiate(pointCreator, posToCreate, Quaternion.identity, gameObject.transform);
 
-                pointsAndCreations.Add(Instantiate(pointCreator, pointToSpawn, Quaternion.identity, gameObject.transform), default);
-            }
+            Vector3 posToLookAt = nextPoint;
+            posToLookAt.y = pointOfCreation.transform.position.y;
+
+            pointOfCreation.transform.LookAt(posToLookAt);
+
+            pointsAndCreations.Add(pointOfCreation, default);
+            listOfPoints.Add(pointOfCreation);
 
         }
+
+        ///создаём Список всех создаваемых префабов по их количеству
+        List<GameobjectsToCreate> creaturesCountList= new List<GameobjectsToCreate>();
+        foreach (var item in creation)
+        {
+            for (int i = 0; i < item.count; i++)
+            {
+                creaturesCountList.Add( item);
+            }
+        }
+
+
+        foreach (GameObject pointOfSpawn in listOfPoints)
+        {
+
+            int curRnd = UnityEngine.Random.Range(0, creaturesCountList.Count);
+
+            pointsAndPrefabs.Add(pointOfSpawn, creaturesCountList[curRnd]);
+            creaturesCountList.RemoveAt(curRnd);
+        }
+
         CheckAndCreateEntities();
 
-        if (generateConstantly && objsToCreate.Count>0)
+        if (generateConstantly)
         {
             StartCoroutine(CreateEntitiesCorut());
         }
 
 
+    }
+
+
+    /// <summary>
+    /// Создает объект в указанной точке на поверхности
+    /// </summary>
+    /// <param name="gObj">префаб</param>
+    /// <param name="distFromGround">расстояние от земли на котором создается префаб</param>
+    /// <param name="randomDistanceFromCenter">максимальная дистация от центра на котором создаются объекты</param>
+    private GameObject CreateObjOnGround(GameobjectsToCreate gObjStruct, GameObject pointOfCreate)
+    {
+
+        
+        Vector3 posOfPiu = new Vector3(pointOfCreate.transform.position.x, pointOfCreate.transform.position.y, pointOfCreate.transform.position.z);
+        
+        //rnd radius++
+        float xrnd = UnityEngine.Random.Range(-gObjStruct.randomRadius, gObjStruct.randomRadius);
+        posOfPiu += pointOfCreate.transform.right * xrnd; 
+        //--
+
+        RaycastHit raycastHit = new RaycastHit();
+        bool wasTouch = Physics.Raycast(posOfPiu, Vector3.down, out raycastHit);
+        if (wasTouch)
+        {
+            Vector3 pointToSpawn = raycastHit.point;
+            pointToSpawn.y += gObjStruct.distFromGround;
+
+            return Instantiate(gObjStruct.gameObj, pointToSpawn, pointOfCreate.transform.rotation, gameObject.transform);
+
+        }else
+        {
+            return default;
+        }
     }
 
     IEnumerator CreateEntitiesCorut()
@@ -108,26 +205,30 @@ public class EntityOnTrackCreator : MonoBehaviour
     /// </summary>
     private void CheckAndCreateEntities()
     {
-        List<GameObject> listToCreate = new List<GameObject>();
+        List<GameObject> listOfPointWithoutPrefab = new List<GameObject>();
         foreach (KeyValuePair<GameObject, GameObject> point in pointsAndCreations)
         {
             if (point.Value == default)
             {
-                listToCreate.Add(point.Key);
+                listOfPointWithoutPrefab.Add(point.Key);
                 
             }
         }
-        foreach (GameObject item in listToCreate)
+        foreach (GameObject item in listOfPointWithoutPrefab)
         {
-            GameObject newEntity = Instantiate(objsToCreate[Random.Range(0, objsToCreate.Count)], item.transform.position, Quaternion.identity, gameObject.transform);
-            EntitiyDeleter entitiyDeleter = newEntity.AddComponent<EntitiyDeleter>();
-            entitiyDeleter.SetParentCreator(this);
-
-            pointsAndCreations[item] = newEntity;
+            GameobjectsToCreate gobjStruct = pointsAndPrefabs[item];
+            GameObject newEntity = CreateObjOnGround(gobjStruct, item);
+            if (newEntity)
+            {
+                EntitiyDeleter entitiyDeleter = newEntity.AddComponent<EntitiyDeleter>();
+                entitiyDeleter.SetParentCreator(this);
+                pointsAndCreations[item] = newEntity;
+            }
         }
             
-            
     }
+
+
 
     /// <summary>
     /// Удаляет объект из списка существующих, после этого может создваться новый буст
@@ -145,3 +246,5 @@ public class EntityOnTrackCreator : MonoBehaviour
     }
 
 }
+
+
