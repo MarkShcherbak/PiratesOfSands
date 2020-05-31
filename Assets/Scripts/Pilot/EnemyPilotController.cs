@@ -119,20 +119,20 @@ public class EnemyPilotController
                 {
                     moveH = Vector3.SignedAngle(shipModelView.transform.forward,
                         shipModelView.transform.forward + rightDirection, Vector3.up);
-                    Debug.Log("TURNING RIGHT!");
+                    
                 }
 
                  else if (isLeftHit == false)
                 {
                     moveH = Vector3.SignedAngle(shipModelView.transform.forward,
                         shipModelView.transform.forward + leftDirection, Vector3.up);
-                    Debug.Log("TURNING LEFT!");
+                    
                 }
                 else
                 {
                     moveH = Vector3.SignedAngle(shipModelView.transform.forward,
                         shipModelView.transform.forward + leftDirection * 4, Vector3.up);
-                    Debug.Log("PANIC!");
+                    
                 }
             }
             else 

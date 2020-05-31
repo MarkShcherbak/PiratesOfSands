@@ -50,7 +50,7 @@ public class GameController
         objectsInGame.Add(playerPilotMV.gameObject);
 
         
-        for (int i = 1; i < 2; i++) //TODO поменять на бесконечное колво игроков? => изменить объект размещения
+        for (int i = 1; i < 6; i++) //TODO поменять на бесконечное колво игроков? => изменить объект размещения
         {
             // создаем корабль противника
             ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(i));
