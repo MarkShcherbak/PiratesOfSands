@@ -14,7 +14,6 @@ public class EnemyPilotModelView : MonoBehaviour
     
     public Vector3 ChechpointTarget { get; set; }
     
-    //TODO добавить ИИ для управления и действий
 
     private void FixedUpdate()
     {
@@ -25,12 +24,29 @@ public class EnemyPilotModelView : MonoBehaviour
     {
         OnTriggerCollision(this, other.transform);
     }
+    
+    /// <summary>
+    /// Вызывает корутину с рандомным временем задержки
+    /// </summary>
+    /// <param name="minDelay"></param>
+    /// <param name="maxDelay"></param>
+    public void InvokeSecondaryAbilityAfterDelay(float minDelay, float maxDelay)
+    {
+        float delay = UnityEngine.Random.Range(minDelay, maxDelay);
+        StartCoroutine(InvokeSecondaryAction(delay));
+    }
+    
+    IEnumerator InvokeSecondaryAction(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        OnActionInput(this, Vector3.back);
+    }
 
     #region Gizmos
 
     
 
-   
+    // Drawing gizmos for obstacle avoid system (test)
     void OnDrawGizmos()
     {
         float maxDistance = 100f;

@@ -28,11 +28,16 @@ public class EnemyPilotController
         checkpointsPath.SetObjPosition(pilotModelView.transform, true);
 
         pilotModelView.ChechpointTarget = currentAim.position;
-        
         pilotModelView.OnMovingInput += HandleMovingInput;
         pilotModelView.OnActionInput += HandleActionInput;
         pilotModelView.OnTriggerCollision += HandleTriggerCollision;
 
+        shipModelView.OnSecondaryAbilityChanged += HandleShipSecondaryAbilityChanged;
+    }
+
+    private void HandleShipSecondaryAbilityChanged(object sender, Sprite e)
+    {
+        pilotModelView.InvokeSecondaryAbilityAfterDelay(1f,6f);
     }
 
     private void HandleTriggerCollision(object sender, Transform checkpointTransform)
@@ -62,7 +67,7 @@ public class EnemyPilotController
 
 
     private void HandleActionInput(object sender, Vector3 direction)
-    { //TODO сделать обработку действий противника
+    { 
         shipModelView.ActionInput(direction);
     }
 
