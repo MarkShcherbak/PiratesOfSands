@@ -112,7 +112,7 @@ public class EnemyPilotController
                     Quaternion.identity, pilotToCastPointDistance, enemyMask);
                 isEnemyOnLeft = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, leftDirection,
                         Quaternion.identity, pilotToCastPointDistance, enemyMask);
-                isEnemyOnRight = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, leftDirection,
+                isEnemyOnRight = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, rightDirection,
                         Quaternion.identity, pilotToCastPointDistance, enemyMask);
                 
                     // смотрим есть ли препятствие на пути
