@@ -17,6 +17,7 @@ public class CannonballShotModelView : MonoBehaviour
     #region Accessors
 
     public Rigidbody Rigidbody { get => rb; }
+
     public float Damage
     {
         get => damage;
@@ -60,18 +61,16 @@ public class CannonballShotModelView : MonoBehaviour
         {
             if (mb is IDamageable && isHarmful)
             {
-                ((IDamageable)mb).RecieveDamage(Damage);
+                ((IDamageable)mb).RecieveDamage(damage);
                 Debug.Log($"{collision.collider.name} takes {damage} damage! from {name}");
 
-                if (collision.collider.tag == "Ship")
+                if (mb.tag.Equals("Ship"))
                     ParticleFactory.CreateShipCollision(transform);
             }
         }
 
-        else if (collision.collider.tag == "Ground")
-        {
+        else if (collision.collider.tag.Equals("Ground"))
             ParticleFactory.CreateSandExplosion(transform);
-        }
 
         isHarmful = false;
         rb.velocity /= 2f;

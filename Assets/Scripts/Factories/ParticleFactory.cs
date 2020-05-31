@@ -8,9 +8,11 @@ public class ParticleFactory
 
     public static void CreateSandExplosion(Transform origin)
     {
-        ParticleSystem particle = Resources.Load<ParticleSystem>("Particles/SandExplosion");
+        ParticleSystem particle = Resources.Load<ParticleSystem>("Particles/Explosions/SandExplosion");
         UnityEngine.Object.Instantiate(particle, origin.position, Quaternion.identity);
     }
+
+    // Мусор от корабля при столкновении
 
     public static void CreateShipCollision(Transform origin)
     {
@@ -18,9 +20,25 @@ public class ParticleFactory
         UnityEngine.Object.Instantiate(particle, origin.position, Quaternion.identity);
     }
 
+    //Дым из пушки
+
     public static void CreateShotSmoke(Transform origin)
     {
         ParticleSystem particle = Resources.Load<ParticleSystem>("Particles/ShotSmoke");
         UnityEngine.Object.Instantiate(particle, origin.position, Quaternion.identity);
+    }
+
+    // Малый взрыв
+    public static GameObject CreateSmallExplosion(Transform origin)
+    {
+        GameObject explosion = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Particles/Explosions/SmallExplosion"), origin.position, Quaternion.identity);
+        return explosion;
+    }
+
+    // Большой взрыв
+    public static GameObject CreateBigExplosion(Transform origin)
+    {
+        GameObject explosion = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Particles/Explosions/BigExplosion"), origin.position, Quaternion.identity);
+        return explosion;
     }
 }

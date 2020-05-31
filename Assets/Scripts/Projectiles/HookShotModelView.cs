@@ -17,6 +17,7 @@ public class HookShotModelView : MonoBehaviour
     #region Accessors
 
     public Rigidbody Rigidbody { get => rb; }
+
     public float Damage
     {
         get => damage;
@@ -60,18 +61,15 @@ public class HookShotModelView : MonoBehaviour
         {
             if (mb is IDamageable && isHarmful)
             {
-                ((IDamageable)mb).RecieveDamage(Damage);
-                Debug.Log($"{collision.collider.name} takes {damage} damage! from {name}");
+                ((IDamageable)mb).RecieveDamage(damage);
 
-                if(collision.collider.tag == "Ship")
+                if (mb.tag.Equals("Ship"))
                     ParticleFactory.CreateShipCollision(transform);
             }
         }
 
-        else
-        {
-            ParticleFactory.CreateSandExplosion(gameObject.transform);
-        }
+        else if (collision.collider.tag.Equals("Ground"))
+            ParticleFactory.CreateSandExplosion(transform);
 
         isHarmful = false;
         rb.velocity /= 2f;

@@ -11,7 +11,6 @@ public class ShieldFactory
         ShieldTierOneModelView modelView = UnityEngine.Object.Instantiate(shield, origin.position, origin.rotation, origin.transform).GetComponent<ShieldTierOneModelView>();
         modelView.Duration = data.ShieldDuration;
         modelView.Durability = data.ShieldDurability;
-        modelView.Damage = data.ShieldDamage;
     }
 
     // Второй
@@ -21,7 +20,6 @@ public class ShieldFactory
         ShieldTierTwoModelView modelView = UnityEngine.Object.Instantiate(shield, origin.position, origin.rotation, origin.transform).GetComponent<ShieldTierTwoModelView>();
         modelView.Duration = data.ShieldDuration;
         modelView.Durability = data.ShieldDurability;
-        modelView.Damage = data.ShieldDamage;
     }
 
     // Третий
@@ -31,7 +29,6 @@ public class ShieldFactory
         ShieldTierThreeModelView modelView = UnityEngine.Object.Instantiate(shield, origin.position, origin.rotation, origin.transform).GetComponent<ShieldTierThreeModelView>();
         modelView.Duration = data.ShieldDuration;
         modelView.Durability = data.ShieldDurability;
-        modelView.Damage = data.ShieldDamage;
     }
 
     // Четвертый
@@ -41,6 +38,5 @@ public class ShieldFactory
         ShieldTierFourModelView modelView = UnityEngine.Object.Instantiate(shield, origin.position, origin.rotation, origin.transform).GetComponent<ShieldTierFourModelView>();
         modelView.Duration = data.ShieldDuration;
         modelView.Durability = data.ShieldDurability;
-        modelView.Damage = data.ShieldDamage;
     }
 }

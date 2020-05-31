@@ -17,6 +17,7 @@ public class ChainShotModelView : MonoBehaviour
     #region Accessors
 
     public Rigidbody Rigidbody { get => rb; }
+
     public float Damage
     {
         get => damage;
@@ -68,10 +69,8 @@ public class ChainShotModelView : MonoBehaviour
             }
         }
 
-        else
-        {
-            ParticleFactory.CreateSandExplosion(gameObject.transform);
-        }
+        else if (collision.collider.tag.Equals("Ground"))
+            ParticleFactory.CreateSandExplosion(transform);
 
         isHarmful = false;
         rb.velocity /= 2f;

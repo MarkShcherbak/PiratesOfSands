@@ -1177,12 +1177,12 @@ PrefabInstance:
     - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
         type: 3}
       propertyPath: countPointsToCreate
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
         type: 3}
       propertyPath: maxDistFromPath
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 694259867059007013, guid: 9cfe7c057ff792f4d9112a4602b45c74,
         type: 3}

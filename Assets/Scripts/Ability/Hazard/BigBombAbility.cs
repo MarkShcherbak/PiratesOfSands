@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class NetAbility : IAbility, ISecondary
+public class BigBombAbility : IAbility, ISecondary, IHazard
 {
     public AbilityData Data { get; set; }
 
-    public NetAbility()
+    public BigBombAbility()
     {
-        Data = Resources.Load<AbilityData>("AbilityData/Hazard/TestHazard");
+        Data = Resources.Load<AbilityData>("AbilityData/Hazard/BigBomb");
     }
 
     public IAbility Add(IAbility ability)
@@ -17,6 +17,7 @@ public class NetAbility : IAbility, ISecondary
 
     public void Execute(Transform position)
     {
-        Debug.Log("Net launched!");
+        Debug.Log("Big Bomb launched!");
+        HazardFactory.CreateBigBombHazard(position, Data);
     }
 }

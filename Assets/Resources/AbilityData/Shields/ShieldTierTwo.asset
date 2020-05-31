@@ -16,15 +16,19 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: bca3fcbed06d440ef9d1e158c45c1032, type: 3}
   containerMaterial: {fileID: 2100000, guid: 26815b7ecba469f4584dca84f26b719c, type: 2}
   prefab: {fileID: 5286096636083429726, guid: 37da47e3150c5864f90890dc22b1b8b6, type: 3}
-  delay: 4
   projectileDamage: 0
   projectileSpeed: 0
   projectileScatter: 0
   projectilesCount: 0
   hazardDamage: 0
+  hazardSpeed: 0
+  hazardLifetime: 0
+  hazardScatter: 0
+  hazardsCount: 0
+  hazardExplosionForce: 0
+  hazardExplosionRadius: 0
   shieldDuration: 15
   shieldDurability: 30
-  shieldDamage: 0
   speedUpDuration: 0
   speedUpIntensity: 0
   speedUpMaxSpeed: 0
