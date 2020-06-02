@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - SlowPoint
   - Shield
+  - HitBox
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Shield
   - AICastedEntity
   - snowMesh
-  - 
+  - Target
   - 
   - 
   - 

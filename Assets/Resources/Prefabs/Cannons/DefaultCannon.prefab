@@ -124,3 +124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotOrigin: {fileID: 102229644551854457}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 4096
+  aimDistance: 50
+  aimRadius: 0.5
+  aimDelay: 0.1

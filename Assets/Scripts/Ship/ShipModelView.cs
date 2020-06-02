@@ -113,8 +113,9 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         // Создаем пушки
         CreateCannons();
+
         // Устанавливаем центр тяжести корабля
-        Rigidbody.centerOfMass = new Vector3(0, 0.5f, 0.5f);
+        Rigidbody.centerOfMass = new Vector3(0f, 0f, 0f);
     }
 
     /// <summary>

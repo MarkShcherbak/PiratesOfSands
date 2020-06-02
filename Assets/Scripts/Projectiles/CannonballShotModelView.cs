@@ -51,8 +51,12 @@ public class CannonballShotModelView : MonoBehaviour
 
     private void LaunchProjectile()
     {
+        rb.useGravity = false;
+
         isHarmful = true;
         rb.AddRelativeForce(Vector3.forward * speed, ForceMode.Impulse);
+
+        StartCoroutine(DelayedDestroy(2f));
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -73,13 +77,18 @@ public class CannonballShotModelView : MonoBehaviour
             ParticleFactory.CreateSandExplosion(transform);
 
         isHarmful = false;
+        rb.useGravity = true;
         rb.velocity /= 2f;
-        StartCoroutine(DelayedDestroy(3f));
     }
 
     private IEnumerator DelayedDestroy(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        rb.useGravity = true;
+
+        yield return new WaitForSeconds(delay);
+
         UnityEngine.Object.Destroy(gameObject);
     }
 }

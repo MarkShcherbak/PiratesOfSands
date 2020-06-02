@@ -6,7 +6,7 @@ public class ShipFactory
 {
     public static ShipModelView CreateShipModelView(Transform transform)
     {
-            GameObject testShipPrefab = Resources.Load<GameObject>("Prefabs/Ship/TestShip");
+            GameObject testShipPrefab = Resources.Load<GameObject>("Prefabs/Ship/TestSledAdv");
             ShipModelView modelView = UnityEngine.Object.Instantiate(testShipPrefab, transform.position, transform.rotation)
                 .GetComponent<ShipModelView>();
             return modelView;

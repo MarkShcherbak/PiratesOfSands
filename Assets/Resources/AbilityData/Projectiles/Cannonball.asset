@@ -17,7 +17,7 @@ MonoBehaviour:
   containerMaterial: {fileID: 2100000, guid: 35447764996648c4f882ba8f96731f62, type: 2}
   prefab: {fileID: 4153465357934045856, guid: bf27222a898d473408d6204b67635f0c, type: 3}
   projectileDamage: 20
-  projectileSpeed: 35
+  projectileSpeed: 50
   projectileScatter: 1
   projectilesCount: 1
   hazardDamage: 0
