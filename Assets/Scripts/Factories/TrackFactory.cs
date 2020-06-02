@@ -23,7 +23,7 @@ using UnityEngine;
         
         public static TrackModelView CreateBigTrackModelView()
         {
-            GameObject testTrackPrefab = Resources.Load<GameObject>("Prefabs/Track/BigTrack");
+            GameObject testTrackPrefab = Resources.Load<GameObject>("Prefabs/Track/desert_race_track");
             TrackModelView modelView = UnityEngine.Object.Instantiate(testTrackPrefab)
                 .GetComponent<TrackModelView>();
             return modelView;
@@ -31,7 +31,7 @@ using UnityEngine;
 
         public static TrackPath CreateBigTrackPath()
         {
-            GameObject testTrackPathPrefab = Resources.Load<GameObject>("Prefabs/Track/BigCheckpointsPath");
+            GameObject testTrackPathPrefab = Resources.Load<GameObject>("Prefabs/Track/DesertRaceCheckpointsPath");
             TrackPath path = UnityEngine.Object.Instantiate(testTrackPathPrefab)
                 .GetComponent<TrackPath>();
             return path;
