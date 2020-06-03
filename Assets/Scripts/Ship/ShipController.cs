@@ -6,7 +6,7 @@ public class ShipController
 {
     private readonly ShipModelView shipMV;
     private readonly HitpointsCanvasModelView shipHPMV;
-    
+
     private float rbStartDrag;
     // Скалярная величина наклона корабля
     private float dotX;
@@ -26,7 +26,7 @@ public class ShipController
         shipMV = shipModelView;
 
         rbStartDrag = shipMV.Rigidbody.drag;
-        
+
         //EventHandlers
         shipMV.OnInput += HandleInput;
         shipMV.OnAction += HandleAction;
@@ -34,7 +34,7 @@ public class ShipController
         shipMV.OnTriggerOUT += HandleTriggerOUT;
         shipMV.OnDamageRecieved += HandleRecieveDamage;
         shipMV.OnFixedUpdate += HandleFixedUpdate;
-        
+
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class ShipController
             }
         }
     }
-    
+
     /// <summary>
     /// Обработка выхода из зоны триггера
     /// </summary>
@@ -94,10 +94,12 @@ public class ShipController
     private void HandleInput(object sender, Vector3 input)
     {
         //TODO реализовать нормальное управление!!!
-        if (shipMV.Rigidbody.velocity.magnitude < 15.0f)
+        if (shipMV.Rigidbody.velocity.magnitude < 25.0f)
             shipMV.Rigidbody.AddForce(shipMV.transform.forward * input.z * 1000 * Time.fixedDeltaTime * InputParams.moveTimeScale, ForceMode.Impulse);
 
         shipMV.transform.Rotate(0.0f, input.x, 0.0f);
+
+        shipMV.Rigidbody.AddForce(Vector3.down * 10f, ForceMode.Acceleration);
     }
 
     /// <summary>
@@ -131,54 +133,48 @@ public class ShipController
     /// <param name="e"></param>
     private void HandleFixedUpdate(object sender, EventArgs e)
     {
-        // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
-        dotX = Vector3.Dot(shipMV.transform.up, Vector3.down);
-
-        if (dotX > -0.75f)
-        {
-            shipMV.Rigidbody.AddRelativeTorque(Vector3.forward * shipMV.Rigidbody.angularVelocity.z * -5f, ForceMode.Impulse);
-
-            if(dotX > 0.1f)
-            {
-                if(flipping == false)
-                {
-                    flipCooldown = Time.time + 3.0f;
-
-                    shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 10f, ForceMode.Impulse);
-                    shipMV.Rigidbody.AddRelativeTorque(Vector3.forward * 500f, ForceMode.Impulse);
-
-                    flipping = true;
-                }
-            }
-
-            else if (dotX < -0.5f)
-                shipMV.Rigidbody.angularVelocity = new Vector3(
-                    x: shipMV.Rigidbody.angularVelocity.x,
-                    y: shipMV.Rigidbody.angularVelocity.y,
-                    z: shipMV.Rigidbody.angularVelocity.z / 2);
-        }
-
-        dotZ = Math.Abs(Vector3.Dot(shipMV.transform.forward, Vector3.down));
-
-        if (dotZ > 0.5f)
-        {
-            shipMV.Rigidbody.AddForce(Vector3.down * 500 * Time.fixedDeltaTime, ForceMode.Acceleration);
-
-            if (dotZ > 0.7f)
-            {
-                shipMV.Rigidbody.AddRelativeTorque(Vector3.right * shipMV.Rigidbody.angularVelocity.x * -20f, ForceMode.Impulse);
-
-                if (dotZ < 0.8f)
-                    shipMV.Rigidbody.angularVelocity = new Vector3(
-                        x: shipMV.Rigidbody.angularVelocity.x / 2,
-                        y: shipMV.Rigidbody.angularVelocity.y,
-                        z: shipMV.Rigidbody.angularVelocity.z);
-            }
-        }
-
         if (Time.time > flipCooldown)
         {
             flipping = false;
+        }
+
+        // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
+        dotX = Vector3.Dot(shipMV.transform.up, Vector3.down);
+
+        if(flipping == false)
+        {
+            if(dotX > -0.25f)
+            {
+                flipping = true;
+                flipCooldown = Time.time + 2.0f;
+
+                if (Physics.Raycast(shipMV.transform.position, shipMV.transform.right, 2f))
+                {
+                    shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 5f, ForceMode.Impulse);
+                    shipMV.Rigidbody.AddRelativeTorque(shipMV.transform.InverseTransformDirection(shipMV.transform.forward) * 50f, ForceMode.Impulse);
+
+                }
+
+                else if (Physics.Raycast(shipMV.transform.position, -shipMV.transform.right, 2f))
+                {
+                    shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 5f, ForceMode.Impulse);
+                    shipMV.Rigidbody.AddRelativeTorque(shipMV.transform.InverseTransformDirection(shipMV.transform.forward) * -50f, ForceMode.Impulse);
+                }
+
+                else if (Physics.Raycast(shipMV.transform.position, shipMV.transform.up, 2f))
+                {
+                    shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 10f, ForceMode.Impulse);
+                    shipMV.Rigidbody.AddRelativeTorque(shipMV.transform.InverseTransformDirection(shipMV.transform.right) * -1000f, ForceMode.Impulse);
+                }
+            }
+        }
+
+        else
+        {
+            if(dotX < -0.8f)
+            {
+                shipMV.Rigidbody.angularVelocity *= 0.75f;
+            }
         }
     }
 }

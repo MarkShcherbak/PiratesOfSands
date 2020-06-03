@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
@@ -115,7 +115,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
         CreateCannons();
 
         // Устанавливаем центр тяжести корабля
-        Rigidbody.centerOfMass = new Vector3(0f, 0f, 0f);
+        Rigidbody.centerOfMass = new Vector3(0f, -1f, -0.5f);
     }
 
     /// <summary>
