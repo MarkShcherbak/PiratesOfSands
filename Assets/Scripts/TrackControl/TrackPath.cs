@@ -288,12 +288,13 @@ public class TrackPath : MonoBehaviour
 
         if (isActive && curPoint)
         {
+            TrySetPilotNextGatePointAndCheckInTable(pilot, trigerTransform);
             if (curPoint == trigerTransform)
             {
                 Transform newPoint = GetNextPosition(curPoint);
                 TrackPositionData.SetCurrentPointToObject(pilot, newPoint);
-                TrySetPilotNextGatePointAndCheckInTable(pilot, curPoint);
-                MakeHighLightNextGate(pilot);
+                
+                
 
                 return newPoint;
             }
@@ -318,11 +319,9 @@ public class TrackPath : MonoBehaviour
     /// <param name="trackPoint"></param>
     private void TrySetPilotNextGatePointAndCheckInTable(Transform pilot, Transform trackPoint)
     {
-
         if (gatePoints.Contains(trackPoint))
         {
             int nextGatePointID = pilotsAndCurrentGatePoint[pilot]+1;
-
             
             if ((nextGatePointID >= gatePointsFollow.Count && isLooped)||
                 (!isLooped&& nextGatePointID >= gatePointsFollow.Count-1) )
@@ -334,7 +333,7 @@ public class TrackPath : MonoBehaviour
             {
                 pilotsAndCurrentGatePoint[pilot] = nextGatePointID;
                 AddRowToLeaderTable(pilot, nextGatePointID);
-                
+                MakeHighLightNextGate(pilot);
             }
               
         }
@@ -357,6 +356,8 @@ public class TrackPath : MonoBehaviour
 
         pilotsAndCurrentGatePoint.Add(pilot, 0);
         hasPilotFinished.Add(pilot, false);
+
+        MakeHighLightNextGate(pilot);
     }
 
     /// <summary>
