@@ -8,6 +8,7 @@ public class Main : MonoBehaviour
 {
     public Canvas canvas;
     public Camera mainCamera;
+    public GameStats gameStats;
 
     // точка входа в приложение
     void Start()
@@ -37,7 +38,7 @@ public class Main : MonoBehaviour
 
     private void StartGame()
     {
-        GameController game = new GameController(canvas, mainCamera);
+        GameController game = new GameController(canvas, mainCamera, gameStats);
         game.CountdownPause();
         game.OnDestroyGame += HandleOnGameDestroy;
     }

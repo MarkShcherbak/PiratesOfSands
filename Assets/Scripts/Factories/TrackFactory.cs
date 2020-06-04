@@ -21,33 +21,33 @@ using UnityEngine;
         //     return path;
         // }
         
-        public static TrackModelView CreateBigTrackModelView()
+        public static TrackModelView CreateBigTrackModelView(string resourceString)
         {
-            GameObject testTrackPrefab = Resources.Load<GameObject>("Prefabs/Track/desert_race_track");
+            GameObject testTrackPrefab = Resources.Load<GameObject>(resourceString);
             TrackModelView modelView = UnityEngine.Object.Instantiate(testTrackPrefab)
                 .GetComponent<TrackModelView>();
             return modelView;
         }
 
-        public static TrackPath CreateBigTrackPath()
+        public static TrackPath CreateBigTrackPath(string resourceString)
         {
-            GameObject testTrackPathPrefab = Resources.Load<GameObject>("Prefabs/Track/DesertRaceCheckpointsPath");
+            GameObject testTrackPathPrefab = Resources.Load<GameObject>(resourceString);
             TrackPath path = UnityEngine.Object.Instantiate(testTrackPathPrefab)
                 .GetComponent<TrackPath>();
             return path;
         }
 
-        public static AbilityContainerModelView CreateAbilityContainer(Vector3 position)
+        public static AbilityContainerModelView CreateAbilityContainer(Vector3 position, string resourceString)
         {
-            GameObject containerPrefab = Resources.Load<GameObject>("Prefabs/Track/AbilityContainer");
+            GameObject containerPrefab = Resources.Load<GameObject>(resourceString);
             AbilityContainerModelView modelView = UnityEngine.Object.Instantiate(containerPrefab,position,Quaternion.identity)
                 .GetComponent<AbilityContainerModelView>();
             return modelView;
         }
 
-        public static StartPlacerModelView CreateStartPlacer(Transform startGate)
+        public static StartPlacerModelView CreateStartPlacer(Transform startGate, string resourceString)
         {
-            GameObject placerPrefab = Resources.Load<GameObject>("Prefabs/Track/StartPlacer");
+            GameObject placerPrefab = Resources.Load<GameObject>(resourceString);
             StartPlacerModelView modelView = UnityEngine.Object.Instantiate(placerPrefab, startGate.position,startGate.rotation)
                 .GetComponent<StartPlacerModelView>();
             return modelView;

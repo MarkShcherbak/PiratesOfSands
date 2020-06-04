@@ -428,6 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1601690600}
   mainCamera: {fileID: 963194227}
+  gameStats: {fileID: 11400000, guid: 0ee9a6e75870db44abd2320222920c8c, type: 2}
 --- !u!4 &1552940430
 Transform:
   m_ObjectHideFlags: 0

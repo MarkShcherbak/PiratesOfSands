@@ -16,26 +16,28 @@ public class GameController
     private Camera mainCamera;
     private TrackPath checkpointsPath;
     private AlertsModelView alertsModelView = null;
+    public GameStats gameStats;
 
 
-    public GameController(Canvas mainCanvas, Camera mainCam) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
+    public GameController(Canvas mainCanvas, Camera mainCam, GameStats gameStat) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
     {
         mainCamera = mainCam;
         objectsInGame = new List<GameObject>();
         canvas = mainCanvas;
-        
+        gameStats = gameStat;
+
         //создаем трассу
-        trackMV =  TrackFactory.CreateBigTrackModelView(); // создаем трассу и добавляем в лист объектов в игре
+        trackMV =  TrackFactory.CreateBigTrackModelView(gameStats.testTrackPrefab); // создаем трассу и добавляем в лист объектов в игре
         trackMV.OnPause += HandleGamePause; // подписываем обработчик паузы на событие паузы
         objectsInGame.Add(trackMV.gameObject);
         
         //создаем сеть чекпоинтов
-        checkpointsPath = TrackFactory.CreateBigTrackPath();
+        checkpointsPath = TrackFactory.CreateBigTrackPath(gameStats.testTrackPathPrefab);
         checkpointsPath.OnFinish += HandleTrackFinish; 
         objectsInGame.Add(checkpointsPath.gameObject);
             
         // создаем объект размещения кораблей на трассе
-        StartPlacerModelView placerMV = TrackFactory.CreateStartPlacer(checkpointsPath.GetStartPosition());
+        StartPlacerModelView placerMV = TrackFactory.CreateStartPlacer(checkpointsPath.GetStartPosition(), gameStats.placerPrefab);
 
         // создаем корабль игрока
         ShipModelView playerShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(0));
