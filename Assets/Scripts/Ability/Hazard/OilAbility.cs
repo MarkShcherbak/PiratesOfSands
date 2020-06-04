@@ -11,7 +11,9 @@ public class OilAbility : IAbility, ISecondary, IHazard
 
     public IAbility Add(IAbility ability)
     {
-        if (ability is OilAbility) return new SpikesAbility();
+        //if (ability is OilAbility) return new SpikesAbility();
+
+        if (ability is OilAbility) return new LandMineAbility();
         else return ability;
     }
 

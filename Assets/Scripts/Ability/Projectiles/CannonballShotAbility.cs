@@ -11,7 +11,10 @@ public class CannonballShotAbility : IAbility,IPrimary
 
     public IAbility Add(IAbility ability)
     {
-        if (ability is CannonballShotAbility) return new GrapplingHookAbility();
+        //if (ability is CannonballShotAbility) return new GrapplingHookAbility();
+        //else return ability;
+
+        if (ability is CannonballShotAbility) return new ChainShotAbility();
         else return ability;
     }
 

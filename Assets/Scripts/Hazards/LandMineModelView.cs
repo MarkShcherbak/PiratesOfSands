@@ -118,9 +118,9 @@ public class LandMineModelView : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.TryGetComponent<MonoBehaviour>(out MonoBehaviour mb))
+        if (collision.collider.tag.Equals("Ship"))
         {
-            if (mb is IDamageable && isArmed)
+            if (isArmed)
             {
                 Explode();
             }

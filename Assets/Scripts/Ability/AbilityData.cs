@@ -25,8 +25,8 @@ public class AbilityData : ScriptableObject
     public Sprite Icon { get => icon; set => icon = value; }
 
     //Материал контейнера на сцене
-    [SerializeField] private Material containerMaterial;
-    public Material ContainerMaterial { get => containerMaterial; set => containerMaterial = value; }
+    [SerializeField] private GameObject containerMesh;
+    public GameObject ContainerMesh { get => containerMesh; set => containerMesh = value; }
 
     // Префаб способности
     [SerializeField] private GameObject prefab;
@@ -138,7 +138,6 @@ public class AbilityDataEditor : Editor
     override public void OnInspectorGUI()
     {
         // Основные параметры SO - иконка, префаб и задержка перед применением
-        Data.ContainerMaterial = (Material)EditorGUILayout.ObjectField("ContainerMaterial", Data.ContainerMaterial, typeof(Material), false);
         Data.Icon = (Sprite)EditorGUILayout.ObjectField("Icon", Data.Icon, typeof(Sprite), false);
         Data.Prefab = (GameObject)EditorGUILayout.ObjectField("Prefab", Data.Prefab, typeof(GameObject), false);
 
@@ -167,6 +166,7 @@ public class AbilityDataEditor : Editor
         {
             case AbilityData.Ability.Shooting:
 
+                Data.ContainerMesh = Resources.Load<GameObject>("Prefabs/AbilityPickups/AbilityProjectile");
                 Data.ProjectileDamage = EditorGUILayout.FloatField("Damage", Data.ProjectileDamage);
                 Data.ProjectileSpeed = EditorGUILayout.FloatField("Speed", Data.ProjectileSpeed);
                 Data.ProjectileScatter = EditorGUILayout.FloatField("Scatter", Data.ProjectileScatter);
@@ -176,6 +176,7 @@ public class AbilityDataEditor : Editor
 
             case AbilityData.Ability.Hazard:
 
+                Data.ContainerMesh = Resources.Load<GameObject>("Prefabs/AbilityPickups/AbilityHazard");
                 Data.HazardDamage = EditorGUILayout.FloatField("Damage", Data.HazardDamage);
                 Data.HazardSpeed = EditorGUILayout.FloatField("Speed", Data.HazardSpeed);
                 Data.HazardLifetime = EditorGUILayout.FloatField("Lifetime", Data.HazardLifetime);
@@ -192,6 +193,7 @@ public class AbilityDataEditor : Editor
 
             case AbilityData.Ability.Shield:
 
+                Data.ContainerMesh = Resources.Load<GameObject>("Prefabs/AbilityPickups/AbilityShield");
                 Data.ShieldDuration = EditorGUILayout.FloatField("Duration", Data.ShieldDuration);
                 Data.ShieldDurability = EditorGUILayout.FloatField("Durability", Data.ShieldDurability);
                 EditorUtility.SetDirty(target);
@@ -199,6 +201,7 @@ public class AbilityDataEditor : Editor
 
             case AbilityData.Ability.SpeedUp:
 
+                Data.ContainerMesh = Resources.Load<GameObject>("Prefabs/AbilityPickups/AbilitySpeedUp");
                 Data.SpeedUpDuration = EditorGUILayout.FloatField("Duration", Data.SpeedUpDuration);
                 Data.SpeedUpIntensity = EditorGUILayout.FloatField("Intensity", Data.SpeedUpIntensity);
                 Data.SpeedUpMaxSpeed = EditorGUILayout.FloatField("Max speed", Data.SpeedUpMaxSpeed);
