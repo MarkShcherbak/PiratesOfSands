@@ -26,8 +26,9 @@ public class EnemyPilotController
         checkpointsPath = checkpoints;
 
         
-        currentAim = checkpointsPath.GetStartPosition();
+        
         checkpointsPath.SetObjPosition(pilotModelView.transform, true);
+        currentAim = checkpointsPath.GetStartPosition();
 
         pilotModelView.ChechpointTarget = currentAim.position;
         pilotModelView.OnMovingInput += HandleMovingInput;
@@ -35,6 +36,7 @@ public class EnemyPilotController
         pilotModelView.OnTriggerCollision += HandleTriggerCollision;
 
         shipModelView.OnSecondaryAbilityChanged += HandleShipSecondaryAbilityChanged;
+        SetAimAndOffset();
     }
 
     private void HandleShipSecondaryAbilityChanged(object sender, Sprite e)
@@ -48,23 +50,28 @@ public class EnemyPilotController
         {
             currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkpointTransform); //?????
 
-            // Получаем компонент коллайдера, описывающего расстояние между столбами ворот
-            BoxCollider collider = currentAim.GetComponentInChildren<BoxCollider>();
-
-            // Получаем случайную точку исходя из размеров коллайдера
-            aimOffset = new Vector3(
-                x: UnityEngine.Random.Range(collider.bounds.min.x, collider.bounds.max.x), 
-                y: collider.bounds.max.y, 
-                z: UnityEngine.Random.Range(collider.bounds.min.z, collider.bounds.max.z));
-
-            // и размещаем эту точку внутри коллайдера (т.е. возвращаем ближайшую соответствующую полученным координатам точку в пространстве коллайдера)
-            aimOffset = collider.ClosestPoint(aimOffset);
-
-            pilotModelView.ChechpointTarget = aimOffset;
-
-            // Получаем множитель скорости движения к следующей цели
-            aimInterest = UnityEngine.Random.Range(0.75f, 1f);
+            SetAimAndOffset();
         }
+    }
+
+    private void SetAimAndOffset()
+    {
+        // Получаем компонент коллайдера, описывающего расстояние между столбами ворот
+        BoxCollider collider = currentAim.GetComponentInChildren<BoxCollider>();
+
+        // Получаем случайную точку исходя из размеров коллайдера
+        aimOffset = new Vector3(
+            x: UnityEngine.Random.Range(collider.bounds.min.x, collider.bounds.max.x),
+            y: collider.bounds.max.y,
+            z: UnityEngine.Random.Range(collider.bounds.min.z, collider.bounds.max.z));
+
+        // и размещаем эту точку внутри коллайдера (т.е. возвращаем ближайшую соответствующую полученным координатам точку в пространстве коллайдера)
+        aimOffset = collider.ClosestPoint(aimOffset);
+
+        pilotModelView.ChechpointTarget = aimOffset;
+
+        // Получаем множитель скорости движения к следующей цели
+        aimInterest = UnityEngine.Random.Range(0.75f, 1f);
     }
 
 
