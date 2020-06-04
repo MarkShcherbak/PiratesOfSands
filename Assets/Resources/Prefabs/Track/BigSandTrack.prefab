@@ -470,17 +470,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed83657f6469694da576cac11fb080b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointCreator: {fileID: 1081485305171292, guid: c23a5db78ca1a5b4f921e0109f33128c,
+  pointCreator: {fileID: 6116600525866705780, guid: ad9af387b30c8bf49bac676088bf8cfa,
     type: 3}
   generateConstantly: 0
   timeToCorutineCreator: 5
   creation:
-  - gameObj: {fileID: 1830589527976850792, guid: 3d482d1bdb83fee4989bc3c86d3c6123,
-      type: 3}
-    count: 50
+  - gameObj: {fileID: 1000013518663082, guid: 46fef82a1bf92374096a89660fd2a186, type: 3}
+    count: 20
     distFromGround: 0
     typeOfCreation: 2
-    radius: 50
+    radius: 40
+  - gameObj: {fileID: 1000010285526238, guid: 847ad21e052823640b649f294605afb2, type: 3}
+    count: 20
+    distFromGround: 0
+    typeOfCreation: 2
+    radius: 45
+  - gameObj: {fileID: 1000010390738104, guid: 09c2ce84a75b3324fb5c689e5ac6ce7e, type: 3}
+    count: 20
+    distFromGround: 0
+    typeOfCreation: 2
+    radius: 35
 --- !u!1 &737827579841486206
 GameObject:
   m_ObjectHideFlags: 0

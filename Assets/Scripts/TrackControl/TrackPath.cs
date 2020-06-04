@@ -56,6 +56,7 @@ public class TrackPath : MonoBehaviour
 
     [SerializeField] private GameObject checkPointHightLight;
     private GameObject checkPointHightLightInstce;
+    private float heightOfHighLight = 5f;
 
     private void Awake()
     {
@@ -590,7 +591,7 @@ public class TrackPath : MonoBehaviour
 
         
 
-        position.y +=10f;
+        position.y +=heightOfHighLight;
         while (checkPointHightLightInstce.transform.position!= position)
         {
 
