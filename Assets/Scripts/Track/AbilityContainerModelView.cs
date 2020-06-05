@@ -9,7 +9,7 @@ namespace Track
         [SerializeField]
         private float recoveryTime;
         [SerializeField]
-        private Renderer renderer;
+        private GameObject containerMesh;
 
         private float hidedTime;
         private bool isActive = true;
@@ -26,7 +26,7 @@ namespace Track
         private void CreateAbility()
         {
             Ability = AbilityFactory.CreateRandomAbility();
-            renderer.material = Ability.Data.ContainerMaterial;
+            containerMesh = Instantiate(Ability.Data.ContainerMesh, transform);
 
         }
         
@@ -51,7 +51,7 @@ namespace Track
         private void HideContainer()
         {
             isActive = false;
-            renderer.enabled = isActive;
+            Destroy(containerMesh);
             hidedTime = Time.time;
         }
 
@@ -62,7 +62,6 @@ namespace Track
                 if (Time.time > hidedTime + recoveryTime)
                 {
                     isActive = true;
-                    renderer.enabled = isActive;
                     CreateAbility();
                 }
             }

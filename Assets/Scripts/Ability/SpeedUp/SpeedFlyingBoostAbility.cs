@@ -10,7 +10,9 @@ public class SpeedFlyingBoostAbility : IAbility, ISecondary, ISpeedUp
     }
     public IAbility Add(IAbility ability)
     {
-        if (ability is SpeedSmallBoostAbility) return new SuperMegaWTFSpeedAbility();
+        //if (ability is SpeedSmallBoostAbility) return new SuperMegaWTFSpeedAbility();
+
+        if (ability is SpeedSmallBoostAbility) return this;
         else return ability;
     }
 

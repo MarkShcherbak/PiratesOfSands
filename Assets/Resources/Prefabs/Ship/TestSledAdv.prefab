@@ -513,9 +513,9 @@ GameObject:
   - component: {fileID: 8578655152827269548}
   - component: {fileID: 7534620940656579569}
   - component: {fileID: 4909154693728905499}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Ski_Adv_L
-  m_TagString: Untagged
+  m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -660,9 +660,9 @@ GameObject:
   - component: {fileID: 3116326585745974339}
   - component: {fileID: 7843884224277839808}
   - component: {fileID: 5677212738702727007}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Ski_Adv_R
-  m_TagString: Untagged
+  m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

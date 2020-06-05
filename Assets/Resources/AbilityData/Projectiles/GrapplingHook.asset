@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityType: 0
   icon: {fileID: 21300000, guid: 6c5ee99ece1d9e94897fc3cdcfaca429, type: 3}
-  containerMaterial: {fileID: 2100000, guid: 35447764996648c4f882ba8f96731f62, type: 2}
+  containerMesh: {fileID: 3942922782657709613, guid: 2938d5017647668488d4b6353ad503fd,
+    type: 3}
   prefab: {fileID: 3168661713494583772, guid: 169127fad7c0da14d835ef05c5674a1e, type: 3}
   projectileDamage: 15
   projectileSpeed: 35

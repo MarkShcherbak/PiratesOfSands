@@ -11,7 +11,9 @@ public class ShieldTierThreeAbility : IAbility, ISecondary, IShield
 
     public IAbility Add(IAbility ability)
     {
-        if (ability is ShieldTierOneAbility) return new ShieldTierFourAbility();
+        //if (ability is ShieldTierOneAbility) return new ShieldTierFourAbility();
+
+        if (ability is ShieldTierOneAbility) return this;
         else return ability;
     }
 
