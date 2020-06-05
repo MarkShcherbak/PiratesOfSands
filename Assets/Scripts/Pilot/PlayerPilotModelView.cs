@@ -12,6 +12,7 @@ public class PlayerPilotModelView : MonoBehaviour
     private void FixedUpdate()
     {
         OnMovingInput(this, new Vector3(InputParams.XAxis, 0, InputParams.ZAxis));
+        
     }
 
     private void OnTriggerEnter(Collider other)

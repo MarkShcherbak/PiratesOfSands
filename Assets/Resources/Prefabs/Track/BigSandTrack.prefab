@@ -445,19 +445,19 @@ MonoBehaviour:
     count: 50
     distFromGround: 0.5
     typeOfCreation: 1
-    radius: 40
+    radius: 30
   - gameObj: {fileID: 1637359420794713787, guid: f997cf4130c24e941a9aecf7371d0e5d,
       type: 3}
     count: 10
-    distFromGround: 0.5
+    distFromGround: 2
     typeOfCreation: 1
-    radius: 10
+    radius: 40
   - gameObj: {fileID: 5359795418257256080, guid: 8183852ae8e0a364b900f76e89cabb09,
       type: 3}
     count: 10
     distFromGround: 0.5
     typeOfCreation: 1
-    radius: 20
+    radius: 40
 --- !u!114 &3710706827223681676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,17 +476,22 @@ MonoBehaviour:
   timeToCorutineCreator: 5
   creation:
   - gameObj: {fileID: 1000013518663082, guid: 46fef82a1bf92374096a89660fd2a186, type: 3}
-    count: 20
+    count: 15
     distFromGround: 0
     typeOfCreation: 2
     radius: 40
   - gameObj: {fileID: 1000010285526238, guid: 847ad21e052823640b649f294605afb2, type: 3}
-    count: 20
+    count: 15
     distFromGround: 0
     typeOfCreation: 2
-    radius: 45
+    radius: -45
   - gameObj: {fileID: 1000010390738104, guid: 09c2ce84a75b3324fb5c689e5ac6ce7e, type: 3}
-    count: 20
+    count: 15
+    distFromGround: 0
+    typeOfCreation: 2
+    radius: 35
+  - gameObj: {fileID: 1000013553030096, guid: d6238962ede8add4b877e688a0620c24, type: 3}
+    count: 15
     distFromGround: 0
     typeOfCreation: 2
     radius: 35

@@ -93,13 +93,23 @@ public class ShipController
     /// <param name="input"></param>
     private void HandleInput(object sender, Vector3 input)
     {
-        //TODO реализовать нормальное управление!!!
-        if (shipMV.Rigidbody.velocity.magnitude < 25.0f)
-            shipMV.Rigidbody.AddForce(shipMV.transform.forward * input.z * 1000 * Time.fixedDeltaTime * InputParams.moveTimeScale, ForceMode.Impulse);
+        Vector3 down = Vector3.Project(shipMV.Rigidbody.velocity, shipMV.transform.up);
+        Vector3 right = Vector3.Project(shipMV.Rigidbody.velocity, -shipMV.transform.right);
+        Vector3 forward = Vector3.Project(shipMV.Rigidbody.velocity, -shipMV.transform.forward);
 
-        shipMV.transform.Rotate(0.0f, input.x, 0.0f);
 
-        shipMV.Rigidbody.AddForce(Vector3.down * 10f, ForceMode.Acceleration);
+        Ray ray = new Ray(shipMV.transform.position, -shipMV.transform.up);
+        shipMV.transform.Rotate(0f, input.x * shipMV.shipDriveParams.RotateCoef * Time.fixedDeltaTime, 0f, Space.Self);
+        if (Physics.Raycast(ray, shipMV.shipDriveParams.distance))
+        {
+            Vector3 direction = Vector3.ProjectOnPlane(shipMV.transform.forward, Vector3.up);
+            shipMV.Rigidbody.AddForce(direction * input.z * shipMV.shipDriveParams.acceleration * InputParams.moveTimeScale, ForceMode.Acceleration);
+            forward *= shipMV.shipDriveParams.inertialCoef;
+            right *= shipMV.shipDriveParams.inertialCoef;
+        }
+
+        shipMV.Rigidbody.velocity = down + forward + right;
+
     }
 
     /// <summary>

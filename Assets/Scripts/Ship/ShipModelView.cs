@@ -106,6 +106,8 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     public Rigidbody Rigidbody { get => rb; }
 
+    public ShipDriveParams shipDriveParams;
+
     #endregion
 
 

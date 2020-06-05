@@ -192,6 +192,7 @@ MonoBehaviour:
   - {fileID: 14920996440657787}
   - {fileID: 6341517022576273068}
   shieldSlot: {fileID: 5918154305437573145}
+  shipDriveParams: {fileID: 11400000, guid: cc81c5418edc0904bb39d0118de88ccb, type: 2}
 --- !u!1 &4030377082524092000
 GameObject:
   m_ObjectHideFlags: 0
