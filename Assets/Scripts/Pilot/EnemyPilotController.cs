@@ -71,7 +71,7 @@ public class EnemyPilotController
         pilotModelView.ChechpointTarget = aimOffset;
 
         // Получаем множитель скорости движения к следующей цели
-        aimInterest = UnityEngine.Random.Range(0.75f, 1f);
+        aimInterest = UnityEngine.Random.Range(0.9f, 1.18f);
     }
 
 
