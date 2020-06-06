@@ -16,3 +16,4 @@ MonoBehaviour:
   testTrackPathPrefab: Prefabs/Track/BigSandTrack
   containerPrefab: Prefabs/Track/AbilityContainer
   placerPrefab: Prefabs/Track/StartPlacer
+  sandStormPrefab: Prefabs/Effects/SandStorm

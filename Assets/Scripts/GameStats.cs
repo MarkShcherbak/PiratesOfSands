@@ -9,4 +9,5 @@ public class GameStats: ScriptableObject
     public string testTrackPathPrefab = "Prefabs/Track/DesertRaceCheckpointsPath";
     public string containerPrefab = "Prefabs/Track/AbilityContainer";
     public string placerPrefab = "Prefabs/Track/StartPlacer";
+    public string sandStormPrefab = "Prefabs/Effects/SandStorm";
 }
