@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eb402bbfaa7cd140a9392ea8958a8c3, type: 3}
-  m_Name: Gatling
+  m_Name: SpikeShot
   m_EditorClassIdentifier: 
-  abilityType: 0
-  icon: {fileID: 21300000, guid: b8e4ed22a14bb4d9188b700dfe909caf, type: 3}
-  containerMesh: {fileID: 3942922782657709613, guid: 2938d5017647668488d4b6353ad503fd,
+  abilityType: 1
+  icon: {fileID: 21300000, guid: aa6b6bb1b71b54f1fb42bdda462746e4, type: 3}
+  containerMesh: {fileID: 3942922782657709613, guid: f96472851df8c35488f19789cd7ef1f4,
     type: 3}
-  prefab: {fileID: 4396129762280923121, guid: 3b055fb8d8510ae4892b83727e209a68, type: 3}
-  projectileDamage: 5
-  projectileSpeed: 80
-  projectileScatter: 10
-  projectilesCount: 5
-  hazardDamage: 0
-  hazardSpeed: 0
-  hazardLifetime: 0
-  hazardScatter: 0
-  hazardsCount: 0
+  prefab: {fileID: 5709023815025511057, guid: d26d44366f3a83a4e9973827f099bc44, type: 3}
+  projectileDamage: 0
+  projectileSpeed: 0
+  projectileScatter: 0
+  projectilesCount: 0
+  hazardDamage: 5
+  hazardSpeed: 15
+  hazardLifetime: 30
+  hazardScatter: 360
+  hazardsCount: 5
   hazardIsExplosive: 0
   hazardExplosionForce: 0
   hazardExplosionRadius: 0

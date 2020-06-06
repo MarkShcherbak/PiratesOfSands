@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   prefab: {fileID: 1734538247252280134, guid: b2bb6145947f02d4a984f62b7607e881, type: 3}
   projectileDamage: 25
-  projectileSpeed: 40
+  projectileSpeed: 80
   projectileScatter: 3
   projectilesCount: 1
   hazardDamage: 0

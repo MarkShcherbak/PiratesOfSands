@@ -76,8 +76,12 @@ public class ChainShotModelView : MonoBehaviour
         else if (collision.collider.tag.Equals("Ground"))
             ParticleFactory.CreateSandExplosion(transform);
 
+        if(isHarmful)
+            HazardFactory.CreateSpikesHazard(transform, Resources.Load<AbilityData>("AbilityData/Hazard/SpikeShot"));
+
         isHarmful = false;
         rb.useGravity = true;
+
         rb.velocity /= 2f;
     }
 

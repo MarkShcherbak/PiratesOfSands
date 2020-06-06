@@ -132,6 +132,9 @@ public class ShipController
                 shipMV.IsAlive = false;
                 shipHPMV.HPAmount.text = $"X_X";
                 Debug.Log($"{shipMV.name} was destroyed!");
+
+                //TODO переделать
+                shipMV.DetachPilot();
             }
         }
     }
@@ -153,10 +156,10 @@ public class ShipController
 
         if(flipping == false)
         {
-            if(dotX > -0.25f)
+            if(dotX > -0.1f)
             {
                 flipping = true;
-                flipCooldown = Time.time + 2.0f;
+                flipCooldown = Time.time + 1.0f;
 
                 if (Physics.Raycast(shipMV.transform.position, shipMV.transform.right, 2f))
                 {
@@ -169,12 +172,6 @@ public class ShipController
                 {
                     shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 5f, ForceMode.Impulse);
                     shipMV.Rigidbody.AddRelativeTorque(shipMV.transform.InverseTransformDirection(shipMV.transform.forward) * -50f, ForceMode.Impulse);
-                }
-
-                else if (Physics.Raycast(shipMV.transform.position, shipMV.transform.up, 2f))
-                {
-                    shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 10f, ForceMode.Impulse);
-                    shipMV.Rigidbody.AddRelativeTorque(shipMV.transform.InverseTransformDirection(shipMV.transform.right) * -1000f, ForceMode.Impulse);
                 }
             }
         }

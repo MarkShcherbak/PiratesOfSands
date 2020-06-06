@@ -38,6 +38,12 @@ public class ShipModelView : MonoBehaviour, IDamageable
     private float health = 100;
     private bool isAlive = true;
 
+    //TODO переделать
+    [SerializeField] private GameObject pirate;
+
+    Collider[] pirateColliders;
+    Rigidbody[] pirateRigidbodies;
+
     #endregion
 
     #region Accessors
@@ -113,11 +119,26 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        //TODO переделать
+
+        pirateColliders = pirate.GetComponentsInChildren<Collider>();
+
+        foreach (Collider col in pirateColliders)
+            col.enabled = false;
+
+        pirateRigidbodies = pirate.GetComponentsInChildren<Rigidbody>();
+
+        foreach (Rigidbody rb in pirateRigidbodies)
+            rb.isKinematic = true;
+
+
         // Создаем пушки
         CreateCannons();
 
         // Устанавливаем центр тяжести корабля
-        Rigidbody.centerOfMass = new Vector3(0f, -1f, -0.5f);
+        Rigidbody.centerOfMass = new Vector3(0f, 0f, -1f);
+
+        
     }
 
     /// <summary>
@@ -161,6 +182,20 @@ public class ShipModelView : MonoBehaviour, IDamageable
         for (int i = 0; i < rightSlots.Count; i++)
             rightCannons[i] = CannonFactory.CreateCannonModelView(rightSlots[i]);
         
+    }
+
+    //TODO переделать
+    public void DetachPilot()
+    {
+        pirate.GetComponent<Animator>().enabled = false;
+
+        foreach (Collider col in pirateColliders)
+            col.enabled = true;
+
+        foreach (Rigidbody rb in pirateRigidbodies)
+            rb.isKinematic = false;
+
+        pirate.transform.parent = null;
     }
     
     /// <summary>
