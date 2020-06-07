@@ -49,6 +49,7 @@ public class GameController
         ///Создаем эффект песчаной бури и привязываем к игроку 
         EffectModelView effectModelView = EffectsFactory.CreateSandstormEffect(gameStats.sandStormPrefab);
         effectModelView.transform.parent = playerShipMV.transform;
+        effectModelView.transform.position = playerShipMV.transform.position;
 
 
         // создаем пилота игрока
