@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotateCoef: 100
   acceleration: 60
-  distance: 3
+  distance: 1
   inertialCoef: 0.97

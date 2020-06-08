@@ -31,6 +31,6 @@ MonoBehaviour:
   hazardExplosionRadius: 0
   shieldDuration: 0
   shieldDurability: 0
-  speedUpDuration: 5
-  speedUpIntensity: 35
+  speedUpDuration: 3
+  speedUpIntensity: 60
   speedUpMaxSpeed: 70

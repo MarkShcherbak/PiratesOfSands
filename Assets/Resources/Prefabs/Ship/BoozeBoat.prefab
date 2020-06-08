@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444353825110797277}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.65, z: -2}
+  m_LocalPosition: {x: 0, y: 1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9212472415855633294}
@@ -430,7 +430,7 @@ MonoBehaviour:
   leftSlots: []
   rightSlots: []
   shieldSlot: {fileID: 8674399705523645171}
-  centerOfMass: {x: 0, y: 1, z: -0.5}
+  centerOfMass: {x: 0, y: 1, z: 0}
   shipDriveParams: {fileID: 11400000, guid: cc81c5418edc0904bb39d0118de88ccb, type: 2}
 --- !u!215 &8352497770520668103
 ReflectionProbe:

@@ -53,7 +53,7 @@ public class SpeedUpFlyingBoostModelView : MonoBehaviour, ISpeedUp
     {
         joint.connectedBody = GetComponentInParent<ShipModelView>().Rigidbody;
 
-        //rb.AddRelativeForce(Vector3.back * intensity * 1000 * Time.fixedDeltaTime, ForceMode.Impulse);
+        rb.AddRelativeForce(Vector3.back * intensity * 1000 * Time.fixedDeltaTime, ForceMode.Impulse);
 
         if (duration != 0)
             destroyTime = Time.time + duration;

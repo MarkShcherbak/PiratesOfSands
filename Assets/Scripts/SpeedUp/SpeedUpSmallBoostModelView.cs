@@ -69,7 +69,7 @@ public class SpeedUpSmallBoostModelView : MonoBehaviour, ISpeedUp
 
         if (rb.velocity.magnitude < maxSpeed)
         {
-            rb.AddRelativeForce(Vector3.back * intensity * 1000 * Time.fixedDeltaTime, ForceMode.Force);
+            rb.AddRelativeForce(Vector3.back * intensity * 1000 * Time.fixedDeltaTime, ForceMode.Acceleration);
         }
     }
 }
