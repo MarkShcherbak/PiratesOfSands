@@ -25,7 +25,7 @@ public class ParticleFactory
     public static void CreateShotSmoke(Transform origin)
     {
         ParticleSystem particle = Resources.Load<ParticleSystem>("Particles/ShotSmoke");
-        UnityEngine.Object.Instantiate(particle, origin.position, Quaternion.identity);
+        UnityEngine.Object.Instantiate(particle, origin.position, origin.rotation);
     }
 
     // Малый взрыв

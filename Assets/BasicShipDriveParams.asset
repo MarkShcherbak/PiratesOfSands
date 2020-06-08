@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BasicShipDriveParams
   m_EditorClassIdentifier: 
   RotateCoef: 100
-  acceleration: 80
+  acceleration: 60
   distance: 3
   inertialCoef: 0.97

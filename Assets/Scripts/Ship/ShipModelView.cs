@@ -38,11 +38,13 @@ public class ShipModelView : MonoBehaviour, IDamageable
     private float health = 100;
     private bool isAlive = true;
 
-    //TODO переделать
-    [SerializeField] private GameObject pirate;
+    ////TODO переделать
+    //[SerializeField] private GameObject pirate;
 
-    Collider[] pirateColliders;
-    Rigidbody[] pirateRigidbodies;
+    //Collider[] pirateColliders;
+    //Rigidbody[] pirateRigidbodies;
+
+    [SerializeField] Vector3 centerOfMass;
 
     #endregion
 
@@ -116,27 +118,32 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     #endregion
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position + transform.rotation * centerOfMass, 1f);
+    }
 
     private void Awake()
     {
         //TODO переделать
 
-        pirateColliders = pirate.GetComponentsInChildren<Collider>();
+        //pirateColliders = pirate.GetComponentsInChildren<Collider>();
 
-        foreach (Collider col in pirateColliders)
-            col.enabled = false;
+        //foreach (Collider col in pirateColliders)
+        //    col.enabled = false;
 
-        pirateRigidbodies = pirate.GetComponentsInChildren<Rigidbody>();
+        //pirateRigidbodies = pirate.GetComponentsInChildren<Rigidbody>();
 
-        foreach (Rigidbody rb in pirateRigidbodies)
-            rb.isKinematic = true;
+        //foreach (Rigidbody rb in pirateRigidbodies)
+        //    rb.isKinematic = true;
 
 
         // Создаем пушки
         CreateCannons();
 
         // Устанавливаем центр тяжести корабля
-        Rigidbody.centerOfMass = new Vector3(0f, 0f, -1f);
+        Rigidbody.centerOfMass = centerOfMass;
 
         
     }
@@ -185,18 +192,18 @@ public class ShipModelView : MonoBehaviour, IDamageable
     }
 
     //TODO переделать
-    public void DetachPilot()
-    {
-        pirate.GetComponent<Animator>().enabled = false;
+    //public void DetachPilot()
+    //{
+    //    pirate.GetComponent<Animator>().enabled = false;
 
-        foreach (Collider col in pirateColliders)
-            col.enabled = true;
+    //    foreach (Collider col in pirateColliders)
+    //        col.enabled = true;
 
-        foreach (Rigidbody rb in pirateRigidbodies)
-            rb.isKinematic = false;
+    //    foreach (Rigidbody rb in pirateRigidbodies)
+    //        rb.isKinematic = false;
 
-        pirate.transform.parent = null;
-    }
+    //    pirate.transform.parent = null;
+    //}
     
     /// <summary>
     /// Действие ModelView при активации первичной способности. Вызывается из контроллера!

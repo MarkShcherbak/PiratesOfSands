@@ -9,8 +9,8 @@ public class ShipController
 
     private float rbStartDrag;
     // Скалярная величина наклона корабля
-    private float dotX;
     private float dotZ;
+    private float dotX;
 
     private bool flipping = false;
     private float flipCooldown = 0f;
@@ -53,8 +53,8 @@ public class ShipController
         {
             switch (UnityEngine.Random.Range(0, 2))
             {
-                case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, -200f, 0), ForceMode.Impulse); break;
-                case 1: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, 200f, 0), ForceMode.Impulse); break;
+                case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, -1000f, 0), ForceMode.Impulse); break;
+                case 1: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, 1000f, 0), ForceMode.Impulse); break;
             }
         }
     }
@@ -134,7 +134,7 @@ public class ShipController
                 Debug.Log($"{shipMV.name} was destroyed!");
 
                 //TODO переделать
-                shipMV.DetachPilot();
+                //shipMV.DetachPilot();
             }
         }
     }
@@ -146,42 +146,39 @@ public class ShipController
     /// <param name="e"></param>
     private void HandleFixedUpdate(object sender, EventArgs e)
     {
-        if (Time.time > flipCooldown)
+        if (Time.time < flipCooldown)
+        {
+            flipping = true;
+        }
+
+        else
         {
             flipping = false;
         }
 
         // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
-        dotX = Vector3.Dot(shipMV.transform.up, Vector3.down);
+        dotZ = Vector3.Dot(shipMV.transform.up, Vector3.down);
+        dotX = Mathf.Abs(Vector3.Dot(shipMV.transform.right, Vector3.down));
 
-        if(flipping == false)
+        if (flipping == false)
         {
-            if(dotX > -0.1f)
+            if (Physics.Raycast(shipMV.transform.position, Vector3.down, 1f))
             {
-                flipping = true;
-                flipCooldown = Time.time + 1.0f;
+                flipCooldown = Time.time + 3.0f;
 
-                if (Physics.Raycast(shipMV.transform.position, shipMV.transform.right, 2f))
+                if (dotZ > -0.1f)
                 {
-                    shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 5f, ForceMode.Impulse);
-                    shipMV.Rigidbody.AddRelativeTorque(shipMV.transform.InverseTransformDirection(shipMV.transform.forward) * 50f, ForceMode.Impulse);
-
-                }
-
-                else if (Physics.Raycast(shipMV.transform.position, -shipMV.transform.right, 2f))
-                {
-                    shipMV.Rigidbody.AddExplosionForce(500f, shipMV.transform.position, 1f, 5f, ForceMode.Impulse);
-                    shipMV.Rigidbody.AddRelativeTorque(shipMV.transform.InverseTransformDirection(shipMV.transform.forward) * -50f, ForceMode.Impulse);
+                    FlipShip(shipMV.transform.forward);
                 }
             }
         }
+    }
 
-        else
-        {
-            if(dotX < -0.8f)
-            {
-                shipMV.Rigidbody.angularVelocity *= 0.75f;
-            }
-        }
+    private void FlipShip(Vector3 direction)
+    {
+        shipMV.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        shipMV.transform.position += Vector3.up * 0.5f;
+        shipMV.Rigidbody.velocity = Vector3.zero;
+        shipMV.Rigidbody.angularVelocity = Vector3.zero;
     }
 }

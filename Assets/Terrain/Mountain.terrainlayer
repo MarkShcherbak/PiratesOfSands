@@ -7,14 +7,14 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mountain
-  m_DiffuseTexture: {fileID: 2800000, guid: e9b639bd7a820dc418cf532faa19a27d, type: 3}
-  m_NormalMapTexture: {fileID: 0}
+  m_DiffuseTexture: {fileID: 2800000, guid: 3c241f24cc9fa094e935ce0a94050dd1, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: fa9163400460e264cb8a9b48d042f323, type: 3}
   m_MaskMapTexture: {fileID: 0}
-  m_TileSize: {x: 100, y: 100}
+  m_TileSize: {x: 50, y: 50}
   m_TileOffset: {x: 0, y: 0}
-  m_Specular: {r: 0, g: 0, b: 0, a: 0}
+  m_Specular: {r: 0.9622642, g: 0.84679526, b: 0.6309185, a: 0}
   m_Metallic: 0
-  m_Smoothness: 0
+  m_Smoothness: 0.5
   m_NormalScale: 1
   m_DiffuseRemapMin: {x: 0, y: 0, z: 0, w: 0}
   m_DiffuseRemapMax: {x: 1, y: 1, z: 1, w: 1}
