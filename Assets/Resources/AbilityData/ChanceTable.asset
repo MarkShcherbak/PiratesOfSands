@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ChanceTable
   m_EditorClassIdentifier: 
   projectileAbilityChance: 35
-  speedUpAbilityChance: 0
-  shieldAbilityChance: 0
-  hazardAbilityChance: 0
+  speedUpAbilityChance: 15
+  shieldAbilityChance: 25
+  hazardAbilityChance: 25
