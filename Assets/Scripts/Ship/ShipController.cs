@@ -57,6 +57,7 @@ public class ShipController
 
             if (tag.Equals("SlipperyPoint"))
             {
+                
                 switch (UnityEngine.Random.Range(0, 2))
                 {
                     case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, -1000f, 0), ForceMode.Impulse); break;
@@ -127,7 +128,7 @@ public class ShipController
         }
         else
         {
-            shipMV.Rigidbody.angularDrag = 20f;
+            shipMV.Rigidbody.angularDrag = 3f;
         }
 
         shipMV.Rigidbody.velocity = down + forward + right;
