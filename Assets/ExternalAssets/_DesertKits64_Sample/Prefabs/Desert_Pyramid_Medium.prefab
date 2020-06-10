@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4000012489837478}
   - component: {fileID: 33000011443751018}
   - component: {fileID: 23000012732811326}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Desert_Pyramid_Medium
   m_TagString: Untagged
   m_Icon: {fileID: 0}

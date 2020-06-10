@@ -16,7 +16,7 @@ public class PlayerPilotController
         shipModelView = ship;
         checkpointsPath = checkpoints;
 
-        checkpointsPath.SetObjPosition(playerModelView.transform, true);
+        checkpointsPath.SetObjPosition(shipModelView.transform, ship, true, true);
 
 
         playerModelView.OnMovingInput += HandleMovingInput;
@@ -39,7 +39,7 @@ public class PlayerPilotController
     {
         if (checkpointTransform.tag.Equals("TrackPoint"))
         {
-            checkpointsPath.GetNextCheckPointAndCheckIn(playerModelView.transform, checkpointTransform); 
+            checkpointsPath.GetNextCheckPointAndCheckIn(shipModelView.transform, checkpointTransform); 
         }
     }
 }

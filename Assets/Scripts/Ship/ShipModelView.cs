@@ -230,7 +230,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
                     cannon.Fire(primaryAbilitySlot);
             }
 
-            //PrimaryAbility = null; // TODO: включить
+            PrimaryAbility = null; // TODO: включить
         }
     }
 
@@ -275,7 +275,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 }
             }
 
-            //SecondaryAbility = null; // TODO: включить
+            SecondaryAbility = null; // TODO: включить
         }
     }
 
@@ -315,4 +315,5 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         OnTriggerOUT(this, other.tag);
     }
+
 }

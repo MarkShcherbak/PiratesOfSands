@@ -58,6 +58,11 @@ public class TrackPath : MonoBehaviour
     private GameObject checkPointHightLightInstce;
     private float heightOfHighLight = 5f;
 
+    Transform player;
+    List<ShipModelView> enemiesShipModelView;
+    [SerializeField] private float distToAutoBoost = 10f;
+    [SerializeField] private float timerForBoostCorutine = 5f;
+
     private void Awake()
     {
         if (trackPoints.Count > 1)
@@ -86,16 +91,14 @@ public class TrackPath : MonoBehaviour
         {
             checkPointHightLightInstce.transform.position = trackPoints[0].position;
         }
-        
 
+        enemiesShipModelView = new List<ShipModelView>();
     }
 
-    //private void Start()
-    //{
-    //    TimeFollowController.Instance.DoubleTimeScale();
-    //    TimeFollowController.Instance.DoubleTimeScale();
-
-    //}
+    private void Start()
+    {
+        StartCoroutine(TrackEnemyHelperCorut(timerForBoostCorutine));
+    }
 
     /// <summary>
     /// Метод устанавливает связь чекпоинт - дистанция от начала прохождения в list checkPointAndDistance
@@ -376,7 +379,7 @@ public class TrackPath : MonoBehaviour
         if (isFinish)
         {
             hasPilotFinished[pilot] = true;
-            if (pilot.CompareTag("Player")|| pilot.GetComponent<PlayerPilotModelView>()!=null)
+            if (pilot==player)
             {
                 //Finish
                 SetWin();
@@ -454,8 +457,17 @@ public class TrackPath : MonoBehaviour
     /// </summary>
     /// <param name="pilotTransform">объект для слежения</param>
     /// <param name="setNearestPoint">вместо стартовой позиции следующей точкой укаазать ближашую</param>
-    public void SetObjPosition(Transform pilotTransform, bool setStartPoint = false)
+    public void SetObjPosition(Transform pilotTransform, ShipModelView shipModelView, bool setStartPoint = false, bool isPlayer = false)
     {
+        if (isPlayer)
+        {
+            player = pilotTransform;
+        }
+        else
+        {
+            enemiesShipModelView.Add(shipModelView);
+        }
+
         if (setStartPoint)
         {
             Transform startPosition = GetStartPosition();
@@ -466,6 +478,8 @@ public class TrackPath : MonoBehaviour
         {
             TrackPositionData.SetCurrentPointToObject(pilotTransform, GetNearCheckPointPosition(pilotTransform));
         }
+
+        
     }
 
     /// <summary>
@@ -572,7 +586,7 @@ public class TrackPath : MonoBehaviour
     /// <param name="pilot"></param>
     public void MakeHighLightNextGate(Transform pilot)
     {
-        if (pilot.CompareTag("Player") || pilot.GetComponent<PlayerPilotModelView>() != null)
+        if (pilot == player)
         {
             if (checkPointHightLightInstce==null)
             {
@@ -603,6 +617,30 @@ public class TrackPath : MonoBehaviour
         }
     }
 
-    
+
+    IEnumerator TrackEnemyHelperCorut(float timerToBoost = 5f)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timerToBoost);
+            TrackEnemyHelper();
+        }
+        
+    }
+
+    private void TrackEnemyHelper()
+    {
+        int curPointPlayer = pilotsAndCurrentGatePoint[player];
+        
+        foreach (ShipModelView enemy in enemiesShipModelView)
+        {
+            if (Vector3.Distance(player.position, enemy.transform.position)>distToAutoBoost 
+                && pilotsAndCurrentGatePoint[enemy.transform] < curPointPlayer)
+            {
+                enemy.SecondaryAbility = new SuperMegaWTFSpeedAbility();
+                Debug.Log(enemy.transform.name + " add: speedBostHack");
+            }
+        }
+    }
     
 }

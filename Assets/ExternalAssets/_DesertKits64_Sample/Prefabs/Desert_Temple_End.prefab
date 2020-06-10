@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4000010649076558}
   - component: {fileID: 33000010236090220}
   - component: {fileID: 23000010419284406}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Desert_Temple_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}

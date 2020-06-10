@@ -27,7 +27,7 @@ public class EnemyPilotController
 
         
         
-        checkpointsPath.SetObjPosition(pilotModelView.transform, true);
+        checkpointsPath.SetObjPosition(ship.transform, shipModelView, true);
         currentAim = checkpointsPath.GetStartPosition();
 
         pilotModelView.ChechpointTarget = currentAim.position;
@@ -48,7 +48,7 @@ public class EnemyPilotController
     {
         if (checkpointTransform.tag.Equals("TrackPoint"))
         {
-            currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(pilotModelView.transform, checkpointTransform); //?????
+            currentAim = checkpointsPath.GetNextCheckPointAndCheckIn(shipModelView.transform, checkpointTransform); //?????
 
             SetAimAndOffset();
         }
@@ -112,7 +112,7 @@ public class EnemyPilotController
             if (isLandCast)
             {
                 // находим расстояние до рейкаста до земли
-                float pilotToCastPointDistance = Vector3.Distance(pilotModelView.transform.position, hit.point);
+                float pilotToCastPointDistance = Vector3.Distance(pilotModelView.transform.position, hit.point)*2;
                 
                     // смотрим есть ли противник спереди или по бокам
                 isEnemyOnForward = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, hit.point,

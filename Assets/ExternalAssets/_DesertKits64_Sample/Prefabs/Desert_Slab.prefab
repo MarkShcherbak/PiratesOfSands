@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4000012447238448}
   - component: {fileID: 33000011903685982}
   - component: {fileID: 23000012253912586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Desert_Slab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

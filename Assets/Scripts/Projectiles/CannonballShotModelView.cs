@@ -81,6 +81,30 @@ public class CannonballShotModelView : MonoBehaviour
         rb.velocity /= 2f;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<MonoBehaviour>(out MonoBehaviour mb))
+        {
+            if (mb is IDamageable && isHarmful)
+            {
+                ((IDamageable)mb).RecieveDamage(damage);
+                Debug.Log($"{other.name} takes {damage} damage! from {name}");
+
+                if (mb.tag.Equals("Ship"))
+                    ParticleFactory.CreateShipCollision(transform);
+            }
+        }
+
+        else if (other.tag.Equals("Ground"))
+            ParticleFactory.CreateSandExplosion(transform);
+
+        isHarmful = false;
+        rb.useGravity = true;
+        rb.velocity /= 2f;
+    }
+
+    
+
     private IEnumerator DelayedDestroy(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -91,4 +115,5 @@ public class CannonballShotModelView : MonoBehaviour
 
         UnityEngine.Object.Destroy(gameObject);
     }
+
 }

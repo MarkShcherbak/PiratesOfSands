@@ -18,7 +18,7 @@ public class TestTrackMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         currentAim = trackPath.GetStartPosition();
-        trackPath.SetObjPosition(transform, true);
+        //trackPath.SetObjPosition(transform, true);
     }
 
     // Update is called once per frame

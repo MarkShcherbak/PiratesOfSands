@@ -46,8 +46,14 @@ public class ShipController
     {
         if (tag.Equals("SlowPoint"))
         {
-            shipMV.Rigidbody.drag = rbStartDrag * 10;
+            shipMV.Rigidbody.drag = rbStartDrag * 100;
         }
+
+        if (tag.Equals("Tornado"))
+        {
+            shipMV.Rigidbody.AddForce(Vector3.up * 500, ForceMode.Acceleration);
+        }
+        
 
         if (tag.Equals("SlipperyPoint"))
         {
@@ -119,24 +125,28 @@ public class ShipController
     /// <param name="amount"></param>
     private void HandleRecieveDamage(object sender, float amount)
     {
-        if (shipHPMV != null)
-        {
-            shipMV.Health -= amount;
-            Debug.Log($"{shipMV.name} was damaged for {amount} damage! {shipMV.Health} hp left!");
+        //if (shipHPMV != null)
+        //{
+        //    shipMV.Health -= amount;
+        //    Debug.Log($"{shipMV.name} was damaged for {amount} damage! {shipMV.Health} hp left!");
 
-            shipHPMV.GreenBarFill = shipMV.Health / 100;
-            shipHPMV.HPAmount.text = $"{shipMV.Health}%";
+        //    shipHPMV.GreenBarFill = shipMV.Health / 100;
+        //    shipHPMV.HPAmount.text = $"{shipMV.Health}%";
 
-            if (shipMV.Health <= 0)
-            {
-                shipMV.IsAlive = false;
-                shipHPMV.HPAmount.text = $"X_X";
-                Debug.Log($"{shipMV.name} was destroyed!");
+        //    if (shipMV.Health <= 0)
+        //    {
+        //        shipMV.IsAlive = false;
+        //        shipHPMV.HPAmount.text = $"X_X";
+        //        Debug.Log($"{shipMV.name} was destroyed!");
 
-                //TODO переделать
-                //shipMV.DetachPilot();
-            }
-        }
+        //        //TODO переделать
+        //        //shipMV.DetachPilot();
+        //    }
+        //}
+
+        shipMV.Rigidbody.velocity = Vector3.zero;
+        shipMV.Rigidbody.AddForce(Vector3.up * 1500, ForceMode.Acceleration);
+
     }
 
     /// <summary>
@@ -181,4 +191,6 @@ public class ShipController
         shipMV.Rigidbody.velocity = Vector3.zero;
         shipMV.Rigidbody.angularVelocity = Vector3.zero;
     }
+
+
 }

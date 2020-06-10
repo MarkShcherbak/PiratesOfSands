@@ -11,6 +11,7 @@ TagManager:
   - SlowPoint
   - Shield
   - HitBox
+  - Tornado
   layers:
   - Default
   - TransparentFX

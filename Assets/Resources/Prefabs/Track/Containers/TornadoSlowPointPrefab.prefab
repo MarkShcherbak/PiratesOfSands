@@ -9620,7 +9620,7 @@ GameObject:
   - component: {fileID: 9125567244401543509}
   m_Layer: 10
   m_Name: TornadoSlowPointPrefab
-  m_TagString: SlowPoint
+  m_TagString: Tornado
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
