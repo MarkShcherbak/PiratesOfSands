@@ -19,8 +19,12 @@ MonoBehaviour:
   prefab: {fileID: 4153465357934045856, guid: bf27222a898d473408d6204b67635f0c, type: 3}
   projectileDamage: 20
   projectileSpeed: 100
+  projectileLifetime: 3
   projectileScatter: 1
   projectilesCount: 1
+  projectileIsExplosive: 0
+  projectileExplosionForce: 0
+  projectileExplosionRadius: 0
   hazardDamage: 0
   hazardSpeed: 0
   hazardLifetime: 0

@@ -9,8 +9,14 @@ public class GatlingShotModelView : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float damage;
     [SerializeField] private float speed;
+    [SerializeField] private float lifetime;
 
     [SerializeField] private bool isHarmful;
+
+    private bool isFloating;
+
+    private RaycastHit startHeight;
+    private RaycastHit currentHeight;
 
     #endregion
 
@@ -42,6 +48,18 @@ public class GatlingShotModelView : MonoBehaviour
         }
     }
 
+    public float Lifetime
+    {
+        get => lifetime;
+        set
+        {
+            if (lifetime != value)
+            {
+                lifetime = value;
+            }
+        }
+    }
+
     #endregion
 
     private void Start()
@@ -49,14 +67,40 @@ public class GatlingShotModelView : MonoBehaviour
         LaunchProjectile();
     }
 
+    private void Update()
+    {
+        if (isFloating)
+        {
+            Physics.Raycast(transform.position, Vector3.down, out currentHeight, Mathf.Infinity, 1 << LayerMask.NameToLayer("Ground"));
+
+            if (currentHeight.distance != startHeight.distance)
+                rb.MovePosition(new Vector3(rb.transform.position.x, rb.transform.position.y - currentHeight.distance + startHeight.distance, rb.transform.position.z));
+        }
+    }
+
     private void LaunchProjectile()
     {
+        isFloating = true;
         rb.useGravity = false;
+
+        Physics.Raycast(transform.position, Vector3.down, out startHeight);
 
         isHarmful = true;
         rb.AddRelativeForce(Vector3.forward * speed, ForceMode.Impulse);
 
-        StartCoroutine(DelayedDestroy(2f));
+        StartCoroutine(DelayedDestroy(lifetime));
+    }
+
+    private IEnumerator DelayedDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        isFloating = false;
+        rb.useGravity = true;
+
+        yield return new WaitForSeconds(delay);
+
+        UnityEngine.Object.Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -69,7 +113,14 @@ public class GatlingShotModelView : MonoBehaviour
                 Debug.Log($"{collision.collider.name} takes {damage} damage! from {name}");
 
                 if (mb.tag.Equals("Ship"))
+                {
+                    mb.TryGetComponent<Rigidbody>(out Rigidbody rb);
+                    rb.AddExplosionForce(50f, transform.position, 3f, 10f, ForceMode.Impulse);
+                    rb.AddRelativeTorque(Vector3.up * Random.Range(-1000f, 1000f), ForceMode.Impulse);
+                    rb.velocity /= 2f;
+
                     ParticleFactory.CreateShipCollision(transform);
+                }
             }
         }
 
@@ -77,18 +128,9 @@ public class GatlingShotModelView : MonoBehaviour
             ParticleFactory.CreateSandExplosion(transform);
 
         isHarmful = false;
+
+        isFloating = false;
         rb.useGravity = true;
         rb.velocity /= 2f;
-    }
-
-    private IEnumerator DelayedDestroy(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        rb.useGravity = true;
-
-        yield return new WaitForSeconds(delay);
-
-        UnityEngine.Object.Destroy(gameObject);
     }
 }

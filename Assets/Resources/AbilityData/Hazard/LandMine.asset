@@ -22,12 +22,12 @@ MonoBehaviour:
   projectileScatter: 0
   projectilesCount: 0
   hazardDamage: 20
-  hazardSpeed: 50
+  hazardSpeed: 75
   hazardLifetime: 30
-  hazardScatter: 90
+  hazardScatter: 135
   hazardsCount: 3
   hazardIsExplosive: 1
-  hazardExplosionForce: 200
+  hazardExplosionForce: 350
   hazardExplosionRadius: 2
   shieldDuration: 0
   shieldDurability: 0

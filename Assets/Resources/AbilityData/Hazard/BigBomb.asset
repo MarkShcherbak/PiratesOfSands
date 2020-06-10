@@ -21,13 +21,16 @@ MonoBehaviour:
   projectileSpeed: 0
   projectileScatter: 0
   projectilesCount: 0
+  projectileIsExplosive: 0
+  projectileExplosionForce: 0
+  projectileExplosionRadius: 0
   hazardDamage: 75
   hazardSpeed: 100
-  hazardLifetime: 1
+  hazardLifetime: 2
   hazardScatter: 0
   hazardsCount: 1
   hazardIsExplosive: 1
-  hazardExplosionForce: 300
+  hazardExplosionForce: 1000
   hazardExplosionRadius: 10
   shieldDuration: 0
   shieldDurability: 0

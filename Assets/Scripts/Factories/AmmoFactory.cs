@@ -14,6 +14,7 @@ public class AmmoFactory
             CannonballShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<CannonballShotModelView>();
             modelView.Damage = data.ProjectileDamage;
             modelView.Speed = data.ProjectileSpeed;
+            modelView.Lifetime = data.ProjectileLifetime;
         }
     }
 
@@ -32,14 +33,17 @@ public class AmmoFactory
 
     // Цепное ядро
 
-    public static void CreateChainShot(Transform origin, AbilityData data)
+    public static void CreateSeaMineShot(Transform origin, AbilityData data)
     {
         for (int i = 0; i < data.ProjectilesCount; i++)
         {
             GameObject shot = data.Prefab;
-            ChainShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<ChainShotModelView>();
+            SeaMineShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<SeaMineShotModelView>();
             modelView.Damage = data.ProjectileDamage;
             modelView.Speed = data.ProjectileSpeed;
+            modelView.Lifetime = data.ProjectileLifetime;
+            modelView.Force = data.ProjectileExplosionForce;
+            modelView.Radius = data.ProjectileExplosionRadius;
         }
     }
 
@@ -47,12 +51,26 @@ public class AmmoFactory
 
     public static void CreateGatlingShot(Transform origin, AbilityData data)
     {
+        float step = data.ProjectileScatter / (data.ProjectilesCount - 1);
+        float currentSpawnRotation;
+
+        if (data.ProjectilesCount > 1)
+            currentSpawnRotation = (origin.rotation.y - data.ProjectileScatter) / 2;
+
+        else
+            currentSpawnRotation = 0f;
+
         for (int i = 0; i < data.ProjectilesCount; i++)
         {
             GameObject shot = data.Prefab;
-            GatlingShotModelView modelView = UnityEngine.Object.Instantiate(shot, origin.position, origin.rotation * GetRandomInsideCone(data.ProjectileScatter)).GetComponent<GatlingShotModelView>();
+            GatlingShotModelView modelView = UnityEngine.Object.Instantiate
+                (shot, origin.position, origin.rotation * Quaternion.Euler(0f, currentSpawnRotation, 0f)).GetComponent<GatlingShotModelView>();
+
             modelView.Damage = data.ProjectileDamage;
             modelView.Speed = data.ProjectileSpeed;
+            modelView.Lifetime = data.ProjectileLifetime;
+
+            currentSpawnRotation += step;
         }
     }
 

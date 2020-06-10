@@ -10,7 +10,7 @@ public class GrapplingHookAbility : IAbility, IPrimary
     }
     public IAbility Add(IAbility ability)
     {
-        if (ability is CannonballShotAbility) return new ChainShotAbility();
+        if (ability is CannonballShotAbility) return new SeaMineShotAbility();
         else return ability;
     }
 

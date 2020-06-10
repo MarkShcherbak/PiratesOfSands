@@ -6,6 +6,8 @@ public class CannonModelView : MonoBehaviour, ICannonModelView
 {
     [SerializeField] private Transform shotOrigin;
 
+    [SerializeField] bool aimEnabled = false;
+
     [SerializeField] private LayerMask targetLayers;
 
     [SerializeField] private float aimDistance = 30f;
@@ -16,8 +18,11 @@ public class CannonModelView : MonoBehaviour, ICannonModelView
 
     private void Start()
     {
-        selfColliders = GetComponentsInParent<BoxCollider>();
-        StartCoroutine(AimTarget());
+        if (aimEnabled)
+        {
+            selfColliders = GetComponentsInParent<BoxCollider>();
+            StartCoroutine(AimTarget());
+        }
     }
 
     public void Fire(IAbility ability)
