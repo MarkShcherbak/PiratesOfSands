@@ -17,11 +17,11 @@ public class TrackFinishMenuModelView : MonoBehaviour
         System.Text.StringBuilder strb = new System.Text.StringBuilder();
         if (trackPath.isWin)
         {
-            strb.AppendLine("WINNER!");
+            strb.AppendLine("WINNER☺");
         }
         else
         {
-            strb.AppendLine("LOOSER!");
+            strb.AppendLine("LOOSE.!.");
         }
         foreach (string rawLeader in trackPath.GetFinishTrackLeaderBoard())
         {

@@ -63,6 +63,8 @@ public class TrackPath : MonoBehaviour
     [SerializeField] private float distToAutoBoost = 10f;
     [SerializeField] private float timerForBoostCorutine = 5f;
 
+    private DateTime startTime;
+
     private void Awake()
     {
         if (trackPoints.Count > 1)
@@ -93,6 +95,7 @@ public class TrackPath : MonoBehaviour
         }
 
         enemiesShipModelView = new List<ShipModelView>();
+        startTime = DateTime.Now;
     }
 
     private void Start()
@@ -542,7 +545,7 @@ public class TrackPath : MonoBehaviour
         List<string> leaderListString = new List<string>();
         foreach (KeyValuePair<string, DateTime> item in leaderList)
         {
-            leaderListString.Add(item.Key +"; " + item.Value.ToString());
+            leaderListString.Add(item.Key +"; " + (item.Value- startTime).ToString());
         }
         
         return leaderListString;
@@ -631,11 +634,18 @@ public class TrackPath : MonoBehaviour
     private void TrackEnemyHelper()
     {
         int curPointPlayer = pilotsAndCurrentGatePoint[player];
+        float playerNextGatePosDistance = Vector3.Distance(GetNextGatePoint(player).position, player.position);
         
         foreach (ShipModelView enemy in enemiesShipModelView)
         {
-            if (Vector3.Distance(player.position, enemy.transform.position)>distToAutoBoost 
-                && pilotsAndCurrentGatePoint[enemy.transform] < curPointPlayer)
+            float enemyNextGatePosDistance = Vector3.Distance(GetNextGatePoint(enemy.transform).position, enemy.transform.position);
+
+            float playerEnemyDistance = Vector3.Distance(player.position, enemy.transform.position);                                                                                      //добавляем ускороение если:
+            if ((pilotsAndCurrentGatePoint[enemy.transform] < curPointPlayer                        // последний зачекиненый поинт меньше чем у игрока
+                && playerEnemyDistance > distToAutoBoost)                                           // и дистация между игроком и врагом больше чем указанная;
+                || ( pilotsAndCurrentGatePoint[enemy.transform] == curPointPlayer                   // или одинаковый чекпоинт, но
+                && enemyNextGatePosDistance > playerNextGatePosDistance                             // расстояние до сл. чекпоинта больше чем у игрока
+                && playerEnemyDistance > distToAutoBoost ))                                         // и дистация между игроком и врагом больше чем указанная
             {
                 enemy.SecondaryAbility = new SuperMegaWTFSpeedAbility();
                 Debug.Log(enemy.transform.name + " add: speedBostHack");
