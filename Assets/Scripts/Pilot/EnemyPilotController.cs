@@ -103,11 +103,11 @@ public class EnemyPilotController
             // нормализуем вектор направления до чекпоинта, отсекаем ему Y составляющую
             Vector3 checkpointDirection = new Vector3((pilotModelView.ChechpointTarget - pilotModelView.transform.position).normalized.x, 0,
                 (pilotModelView.ChechpointTarget - pilotModelView.transform.position).normalized.z) * 2f;
-            Vector3 rightDirection = new Vector3(pilotModelView.transform.right.x, 0, pilotModelView.transform.right.z) * 2f;
-            Vector3 leftDirection = new Vector3(-pilotModelView.transform.right.x, 0, -pilotModelView.transform.right.z) * 2f;
+            Vector3 rightDirection = new Vector3(pilotModelView.transform.right.x, 0, pilotModelView.transform.right.z) * 10;
+            Vector3 leftDirection = new Vector3(-pilotModelView.transform.right.x, 0, -pilotModelView.transform.right.z) * 10;
 
             //forward cast
-            bool isLandCast = Physics.Raycast(pilotModelView.transform.position + (checkpointDirection + Vector3.up).normalized * 20f,
+            bool isLandCast = Physics.Raycast(pilotModelView.transform.position + (checkpointDirection + Vector3.up).normalized * 20,
                 Vector3.down, out hit, maxDistance, groundMask);
             if (isLandCast)
             {
@@ -121,19 +121,20 @@ public class EnemyPilotController
                 //        Quaternion.identity, pilotToCastPointDistance, enemyMask);
                 //isEnemyOnRight = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale, rightDirection,
                 //        Quaternion.identity, pilotToCastPointDistance, enemyMask);
-
-                // смотрим есть ли препятствие на пути
+                
+                    // смотрим есть ли препятствие на пути
                 isObstacleOnMyWay = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale / 2, hit.point, out hit,
                     Quaternion.identity, pilotToCastPointDistance, TrackEntityMask);
                 if (isObstacleOnMyWay)
                 {
-                    if (hit.collider.tag.Equals("SlowPoint") || hit.collider.tag.Equals("Tornado"))
+                    if (hit.collider.tag.Equals("SlowPoint"))
                     {
                         isRightHit = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale / 2, (hit.point + rightDirection).normalized ,
                             Quaternion.identity, pilotToCastPointDistance, TrackEntityMask);
                         
                         isLeftHit = Physics.BoxCast(pilotModelView.transform.position, pilotModelView.transform.lossyScale / 2, (hit.point + leftDirection).normalized ,
                             Quaternion.identity, pilotToCastPointDistance, TrackEntityMask);
+                        
                     }
                 }
             }
@@ -169,11 +170,11 @@ public class EnemyPilotController
                     
                     if(runOutDirection == 0)
                         moveH = Vector3.SignedAngle(shipModelView.transform.forward,
-                            shipModelView.transform.forward + leftDirection, Vector3.up);
+                            shipModelView.transform.forward + leftDirection * 4, Vector3.up);
                     else
                     {
                         moveH = Vector3.SignedAngle(shipModelView.transform.forward,
-                            shipModelView.transform.forward + rightDirection, Vector3.up);
+                            shipModelView.transform.forward + rightDirection * 4, Vector3.up);
                     }
                         
                 }
@@ -182,7 +183,7 @@ public class EnemyPilotController
                 moveH = Vector3.SignedAngle(shipModelView.transform.forward,
                 aimOffset - shipModelView.transform.position, Vector3.up);
 
-            Vector3 direction = new Vector3(moveH / 30f, 0, aimInterest);
+            Vector3 direction = new Vector3(moveH / 30, 0, aimInterest);
             shipModelView.SteeringInput(direction);
 
             Debug.DrawLine(shipModelView.transform.position, aimOffset);
