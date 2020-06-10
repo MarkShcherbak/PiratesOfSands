@@ -8,6 +8,10 @@ public class CinemachineModelView : Singleton<CinemachineModelView>
 {
     [SerializeField] private List<CinemachineVirtualCamera> virtCameras;
     [SerializeField] private CinemachineBrain cinemachineBrain;
+
+    // Camera accessor for hp bars
+    public CinemachineBrain CineCamera { get => cinemachineBrain; }
+
     public Transform targetPosition = null;
 
     [SerializeField] private GameObject trackDolly;
