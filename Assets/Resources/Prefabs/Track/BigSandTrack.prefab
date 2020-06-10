@@ -451,7 +451,7 @@ MonoBehaviour:
     count: 50
     distFromGround: 0.5
     typeOfCreation: 1
-    radius: 30
+    radius: 10
   - gameObj: {fileID: 1637359420794713787, guid: f997cf4130c24e941a9aecf7371d0e5d,
       type: 3}
     count: 10

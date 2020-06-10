@@ -3,58 +3,91 @@ using System;
 using Random = UnityEngine.Random;
 
 public class AbilityFactory
+{
+    /// <summary>
+    /// возвращает рандомную способность первого уровня
+    /// </summary>
+    /// <returns></returns>
+    public static IAbility CreateRandomAbility()
     {
-        /// <summary>
-        /// возвращает рандомную способность первого уровня
-        /// </summary>
-        /// <returns></returns>
-        public static IAbility CreateRandomAbility()
+        IAbility ability = null;
+
+        AbilityDropChance table = Resources.Load<AbilityDropChance>("AbilityData/ChanceTable");
+
+        int currentRoll = Random.Range(1, table.HazardChance);
+
+        if (currentRoll <= table.ProjectileChance)
         {
-            IAbility ability = null;
-            switch (Random.Range(0, 4))
-            {
-                case 0: ability = CreateShootingAbility(); break;
-                case 1: ability = CreateSpeedBoostAbility(); break;
-                case 2: ability = CreateShieldAbility(); break;
-                case 3: ability = CreateHazardAbility(); break;
-                default: ability = CreateShootingAbility(); break;
-            }
-            return ability;
+            if (table.ProjectileChance != 0)
+                ability = CreateShootingAbility();
         }
 
-        /// <summary>
-        /// возвращает стрелковую способность первого уровня
-        /// </summary>
-        /// <returns></returns>
-        public static IAbility CreateShootingAbility()
+        else if (currentRoll <= table.SpeedUpChance)
         {
-            return new CannonballShotAbility();
+            if (table.SpeedUpChance != 0)
+                ability = CreateSpeedBoostAbility();
         }
 
-        /// <summary>
-        /// возвращает способность ускорения первого уровня
-        /// </summary>
-        /// <returns></returns>
-        public static IAbility CreateSpeedBoostAbility()
+        else if (currentRoll <= table.ShieldChance)
         {
-            return new SpeedSmallBoostAbility();
+            if (table.ShieldChance != 0)
+                ability = CreateShieldAbility();
         }
 
-        /// <summary>
-        /// возвращает способность щита первого уровня
-        /// </summary>
-        /// <returns></returns>
-        public static IAbility CreateShieldAbility()
+        else if (currentRoll <= table.HazardChance)
         {
-            return new ShieldTierOneAbility();
+            if (table.HazardChance != 0)
+                ability = CreateHazardAbility();
         }
 
-        /// <summary>
-        /// возвращает опасную способность первого уровня
-        /// </summary>
-        /// <returns></returns>
-        public static IAbility CreateHazardAbility()
-        {
-            return new OilAbility();
-        }
+
+        return ability;
+
+        //IAbility ability = null;
+        //switch (Random.Range(0, 4))
+        //{
+        //    case 0: ability = CreateShootingAbility(); break;
+        //    case 1: ability = CreateSpeedBoostAbility(); break;
+        //    case 2: ability = CreateShieldAbility(); break;
+        //    case 3: ability = CreateHazardAbility(); break;
+        //    default: ability = CreateShootingAbility(); break;
+        //}
+        //return ability;
     }
+
+    /// <summary>
+    /// возвращает стрелковую способность первого уровня
+    /// </summary>
+    /// <returns></returns>
+    public static IAbility CreateShootingAbility()
+    {
+        return new CannonballShotAbility();
+    }
+
+    /// <summary>
+    /// возвращает способность ускорения первого уровня
+    /// </summary>
+    /// <returns></returns>
+    public static IAbility CreateSpeedBoostAbility()
+    {
+        return new SpeedSmallBoostAbility();
+    }
+
+    /// <summary>
+    /// возвращает способность щита первого уровня
+    /// </summary>
+    /// <returns></returns>
+    public static IAbility CreateShieldAbility()
+    {
+        return new ShieldTierOneAbility();
+    }
+
+    /// <summary>
+    /// возвращает опасную способность первого уровня
+    /// </summary>
+    /// <returns></returns>
+    public static IAbility CreateHazardAbility()
+    {
+        return new OilAbility();
+    }
+}

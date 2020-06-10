@@ -13,6 +13,8 @@ public class SeaMineShotModelView : MonoBehaviour
     [SerializeField] private float force;
     [SerializeField] private float radius;
 
+    private float destroyTime;
+
     private Collider[] affectedColliders;
     private HashSet<GameObject> affectedObjects;
 
@@ -93,6 +95,9 @@ public class SeaMineShotModelView : MonoBehaviour
     {
         affectedObjects = new HashSet<GameObject>();
 
+        if (lifetime != 0)
+            destroyTime = Time.time + lifetime;
+
         LaunchProjectile();
     }
 
@@ -103,7 +108,15 @@ public class SeaMineShotModelView : MonoBehaviour
 
     private void Update()
     {
-        affectedColliders = Physics.OverlapSphere(transform.position, radius);
+        if (destroyTime != 0)
+        {
+            affectedColliders = Physics.OverlapSphere(transform.position, radius);
+
+            if (Time.time > destroyTime)
+            {
+                Explode();
+            }
+        }
 
         if (isFloating)
         {
@@ -124,7 +137,7 @@ public class SeaMineShotModelView : MonoBehaviour
         rb.AddRelativeForce(Vector3.forward * speed, ForceMode.Impulse);
         rb.AddRelativeTorque(Vector3.right * speed, ForceMode.Impulse);
 
-        StartCoroutine(DelayedDestroy(lifetime));
+        StartCoroutine(DelayedDestroy(lifetime * 0.5f));
     }
 
 
@@ -171,10 +184,6 @@ public class SeaMineShotModelView : MonoBehaviour
 
         isFloating = false;
         rb.useGravity = true;
-
-        yield return new WaitForSeconds(delay);
-
-        Explode();
     }
 
     private void OnCollisionEnter(Collision collision)
