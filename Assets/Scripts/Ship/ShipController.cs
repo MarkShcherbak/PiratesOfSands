@@ -15,6 +15,8 @@ public class ShipController
     private bool flipping = false;
     private float flipCooldown = 0f;
 
+    private float previousAngularDrag;
+
     /// <summary>
     /// Конструктор корабля
     /// </summary>
@@ -34,6 +36,8 @@ public class ShipController
         shipMV.OnTriggerOUT += HandleTriggerOUT;
         shipMV.OnDamageRecieved += HandleRecieveDamage;
         shipMV.OnFixedUpdate += HandleFixedUpdate;
+
+        previousAngularDrag = shipMV.Rigidbody.angularDrag;
 
     }
 
@@ -108,10 +112,18 @@ public class ShipController
         shipMV.transform.Rotate(0f, input.x * shipMV.shipDriveParams.RotateCoef * Time.fixedDeltaTime, 0f, Space.Self);
         if (Physics.Raycast(ray, shipMV.shipDriveParams.distance))
         {
+            shipMV.Rigidbody.angularDrag = previousAngularDrag;
+
             Vector3 direction = Vector3.ProjectOnPlane(shipMV.transform.forward, Vector3.up);
             shipMV.Rigidbody.AddForce(direction * input.z * shipMV.shipDriveParams.acceleration * InputParams.moveTimeScale, ForceMode.Acceleration);
             forward *= shipMV.shipDriveParams.inertialCoef;
             right *= shipMV.shipDriveParams.inertialCoef;
+
+
+        }
+        else
+        {
+            shipMV.Rigidbody.angularDrag = 20f;
         }
 
         shipMV.Rigidbody.velocity = down + forward + right;
