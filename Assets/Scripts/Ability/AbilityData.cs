@@ -52,6 +52,10 @@ public class AbilityData : ScriptableObject
     [SerializeField] private float projectileSpeed;
     public float ProjectileSpeed { get => projectileSpeed; set => projectileSpeed = value; }
 
+    // Продолжительность существования ловушки
+    [SerializeField] private float projectileLifetime;
+    public float ProjectileLifetime { get => projectileLifetime; set => projectileLifetime = value; }
+
     // Разброс снарядов
     [SerializeField] private float projectileScatter;
     public float ProjectileScatter { get => projectileScatter; set => projectileScatter = value; }
@@ -59,6 +63,17 @@ public class AbilityData : ScriptableObject
     // Количество снарядов
     [SerializeField] private float projectilesCount;
     public float ProjectilesCount { get => projectilesCount; set => projectilesCount = value; }
+
+    [SerializeField] private bool projectileIsExplosive;
+    public bool ProjectileIsExplosive { get => projectileIsExplosive; set => projectileIsExplosive = value; }
+
+    // Сила взрыва
+    [SerializeField] private float projectileExplosionForce;
+    public float ProjectileExplosionForce { get => projectileExplosionForce; set => projectileExplosionForce = value; }
+
+    // Радиус взрыва
+    [SerializeField] private float projectileExplosionRadius;
+    public float ProjectileExplosionRadius { get => projectileExplosionRadius; set => projectileExplosionRadius = value; }
 
     #endregion
 
@@ -169,8 +184,15 @@ public class AbilityDataEditor : Editor
                 Data.ContainerMesh = Resources.Load<GameObject>("Prefabs/AbilityPickups/AbilityProjectile");
                 Data.ProjectileDamage = EditorGUILayout.FloatField("Damage", Data.ProjectileDamage);
                 Data.ProjectileSpeed = EditorGUILayout.FloatField("Speed", Data.ProjectileSpeed);
+                Data.ProjectileLifetime = EditorGUILayout.FloatField("Lifetime", Data.ProjectileLifetime);
                 Data.ProjectileScatter = EditorGUILayout.FloatField("Scatter", Data.ProjectileScatter);
                 Data.ProjectilesCount = EditorGUILayout.FloatField("Projectiles count", Data.ProjectilesCount);
+
+                Data.ProjectileIsExplosive = EditorGUILayout.BeginToggleGroup("Explosive?", Data.ProjectileIsExplosive);
+                    Data.ProjectileExplosionForce = EditorGUILayout.FloatField("Force", Data.ProjectileExplosionForce);
+                    Data.ProjectileExplosionRadius = EditorGUILayout.FloatField("Radius", Data.ProjectileExplosionRadius);
+                EditorGUILayout.EndToggleGroup();
+
                 EditorUtility.SetDirty(target);
                 break;
 

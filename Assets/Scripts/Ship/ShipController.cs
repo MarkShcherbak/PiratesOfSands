@@ -48,23 +48,27 @@ public class ShipController
     /// <param name="tag"></param>
     private void HandleTriggerIN(object sender, string tag)
     {
-        if (tag.Equals("SlowPoint"))
+        if (shipMV.ShieldSlot.childCount == 0)
         {
-            shipMV.Rigidbody.drag = rbStartDrag * 100;
-        }
-
-        if (tag.Equals("Tornado"))
-        {
-            shipMV.Rigidbody.AddForce(Vector3.up * 500, ForceMode.Acceleration);
-        }
-        
-
-        if (tag.Equals("SlipperyPoint"))
-        {
-            switch (UnityEngine.Random.Range(0, 2))
+            if (tag.Equals("SlowPoint"))
             {
-                case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, -1000f, 0), ForceMode.Impulse); break;
-                case 1: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, 1000f, 0), ForceMode.Impulse); break;
+                shipMV.Rigidbody.velocity *= 0.25f;
+            }
+
+            if (tag.Equals("SlipperyPoint"))
+            {
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, -1000f, 0), ForceMode.Impulse); break;
+                    case 1: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, 1000f, 0), ForceMode.Impulse); break;
+                }
+            }
+
+            if (tag.Equals("Tornado"))
+            {
+                shipMV.Rigidbody.AddForce(Vector3.up * 250f, ForceMode.Impulse);
+                shipMV.Rigidbody.AddRelativeTorque(Vector3.up * UnityEngine.Random.Range(-1000f, 1000f), ForceMode.Impulse);
+
             }
         }
     }
@@ -76,10 +80,10 @@ public class ShipController
     /// <param name="tag"></param>
     private void HandleTriggerOUT(object sender, string tag)
     {
-        if (tag.Equals("SlowPoint"))
-        {
-            shipMV.Rigidbody.drag = rbStartDrag;
-        }
+        //if (tag.Equals("SlowPoint"))
+        //{
+        //    shipMV.Rigidbody.drag = rbStartDrag;
+        //}
     }
 
     /// <summary>
@@ -137,28 +141,24 @@ public class ShipController
     /// <param name="amount"></param>
     private void HandleRecieveDamage(object sender, float amount)
     {
-        //if (shipHPMV != null)
-        //{
-        //    shipMV.Health -= amount;
-        //    Debug.Log($"{shipMV.name} was damaged for {amount} damage! {shipMV.Health} hp left!");
+        if (shipHPMV != null)
+        {
+            shipMV.Health -= amount;
+            Debug.Log($"{shipMV.name} was damaged for {amount} damage! {shipMV.Health} hp left!");
 
-        //    shipHPMV.GreenBarFill = shipMV.Health / 100;
-        //    shipHPMV.HPAmount.text = $"{shipMV.Health}%";
+            shipHPMV.GreenBarFill = shipMV.Health / 100;
+            shipHPMV.HPAmount.text = $"{shipMV.Health}%";
 
-        //    if (shipMV.Health <= 0)
-        //    {
-        //        shipMV.IsAlive = false;
-        //        shipHPMV.HPAmount.text = $"X_X";
-        //        Debug.Log($"{shipMV.name} was destroyed!");
+            if (shipMV.Health <= 0)
+            {
+                shipMV.IsAlive = false;
+                shipHPMV.HPAmount.text = $"X_X";
+                Debug.Log($"{shipMV.name} was destroyed!");
 
-        //        //TODO переделать
-        //        //shipMV.DetachPilot();
-        //    }
-        //}
-
-        shipMV.Rigidbody.velocity = Vector3.zero;
-        shipMV.Rigidbody.AddForce(Vector3.up * 1500, ForceMode.Acceleration);
-
+                //TODO переделать
+                //shipMV.DetachPilot();
+            }
+        }
     }
 
     /// <summary>
@@ -182,13 +182,11 @@ public class ShipController
         dotZ = Vector3.Dot(shipMV.transform.up, Vector3.down);
         dotX = Mathf.Abs(Vector3.Dot(shipMV.transform.right, Vector3.down));
 
-        if (flipping == false)
+        if (flipping == false && shipMV.IsAlive)
         {
-            if (Physics.Raycast(shipMV.transform.position, Vector3.down, 1f))
+            if (dotZ > -0.25f || dotX > 0.8f)
             {
-                flipCooldown = Time.time + 3.0f;
-
-                if (dotZ > -0.1f)
+                if (Physics.Raycast(shipMV.transform.position, Vector3.down, 3f, 1 << LayerMask.NameToLayer("Ground")))
                 {
                     FlipShip(shipMV.transform.forward);
                 }
@@ -198,11 +196,11 @@ public class ShipController
 
     private void FlipShip(Vector3 direction)
     {
+        flipCooldown = Time.time + 3.0f;
+
         shipMV.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         shipMV.transform.position += Vector3.up * 0.5f;
         shipMV.Rigidbody.velocity = Vector3.zero;
         shipMV.Rigidbody.angularVelocity = Vector3.zero;
     }
-
-
 }

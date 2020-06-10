@@ -110,7 +110,6 @@ public class BigBombModelView : MonoBehaviour
             if (Time.time > destroyTime)
             {
                 Explode();
-                
             }
         }
     }
@@ -148,8 +147,6 @@ public class BigBombModelView : MonoBehaviour
                         calculatedDamage *= damage;
 
                         ((IDamageable)mb).RecieveDamage(Mathf.Round(calculatedDamage));
-
-                        
                     }
                 }
             }

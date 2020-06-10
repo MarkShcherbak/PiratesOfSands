@@ -17,10 +17,14 @@ MonoBehaviour:
   containerMesh: {fileID: 3942922782657709613, guid: 2938d5017647668488d4b6353ad503fd,
     type: 3}
   prefab: {fileID: 4396129762280923121, guid: 3b055fb8d8510ae4892b83727e209a68, type: 3}
-  projectileDamage: 5
-  projectileSpeed: 80
-  projectileScatter: 10
+  projectileDamage: 10
+  projectileSpeed: 120
+  projectileLifetime: 2
+  projectileScatter: 15
   projectilesCount: 5
+  projectileIsExplosive: 0
+  projectileExplosionForce: 0
+  projectileExplosionRadius: 0
   hazardDamage: 0
   hazardSpeed: 0
   hazardLifetime: 0

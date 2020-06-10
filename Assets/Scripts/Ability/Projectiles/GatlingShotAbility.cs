@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 
-public class GatilngShotAbility : IAbility, IPrimary
+public class GatlingShotAbility : IAbility, IPrimary
 {
     public Color AbilityColor { get; set; }
     public AbilityData Data { get; set; }
 
-    public GatilngShotAbility()
+    public GatlingShotAbility()
     {
         AbilityColor = Color.red;
         Data = Resources.Load<AbilityData>("AbilityData/Projectiles/Gatling");
     }
     public IAbility Add(IAbility ability)
     {
-        if (ability is CannonballShotAbility) return this;
+        if (ability is CannonballShotAbility) return new SeaMineShotAbility();
         else return ability;
     }
 
