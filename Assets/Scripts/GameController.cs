@@ -106,7 +106,14 @@ public class GameController
         // создаем окно оповещений
         alertsModelView = UIFactory.CreateAlertsModelView(canvas);
         objectsInGame.Add(alertsModelView.gameObject);
-        
+
+
+        //Создаём окно позиции в гонке:
+        TrackPositionModelView trackposMenuModel = UIFactory.CreateTrackPositionModelView(canvas);
+        trackposMenuModel.trackPath = checkpointsPath;
+        objectsInGame.Add(trackposMenuModel.gameObject);
+
+
     }
 
         

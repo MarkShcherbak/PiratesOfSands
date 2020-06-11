@@ -42,6 +42,15 @@ public class UIFactory
             .GetComponent<TrackFinishMenuModelView>();
         return modelView;
     }
+    public static TrackPositionModelView CreateTrackPositionModelView(Canvas canvas)
+    {
+        GameObject trackPosMenuPrefab = Resources.Load<GameObject>("Prefabs/UI/TrackPositionHUD");
+        TrackPositionModelView modelView = UnityEngine.Object.Instantiate(trackPosMenuPrefab, canvas.transform)
+            .GetComponent<TrackPositionModelView>();
+        return modelView;
+    }
+
+
 
     public static AlertsModelView CreateAlertsModelView(Canvas canvas)
     {

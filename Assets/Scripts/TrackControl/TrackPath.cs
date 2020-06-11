@@ -65,6 +65,8 @@ public class TrackPath : MonoBehaviour
 
     private DateTime startTime;
 
+    Dictionary<Transform, float> shipsAndDistance;
+
     private void Awake()
     {
         if (trackPoints.Count > 1)
@@ -96,6 +98,9 @@ public class TrackPath : MonoBehaviour
 
         enemiesShipModelView = new List<ShipModelView>();
         startTime = DateTime.Now;
+
+        shipsAndDistance = new Dictionary<Transform, float>();
+
     }
 
     private void Start()
@@ -363,8 +368,13 @@ public class TrackPath : MonoBehaviour
 
         pilotsAndCurrentGatePoint.Add(pilot, 0);
         hasPilotFinished.Add(pilot, false);
+        shipsAndDistance.Add(pilot, 0f);
 
         MakeHighLightNextGate(pilot);
+
+        
+
+
     }
 
     /// <summary>
@@ -459,7 +469,6 @@ public class TrackPath : MonoBehaviour
     /// Добавляет объект на трек, для слежения за его прохождением
     /// </summary>
     /// <param name="pilotTransform">объект для слежения</param>
-    /// <param name="setNearestPoint">вместо стартовой позиции следующей точкой укаазать ближашую</param>
     public void SetObjPosition(Transform pilotTransform, ShipModelView shipModelView, bool setStartPoint = false, bool isPlayer = false)
     {
         if (isPlayer)
@@ -481,6 +490,7 @@ public class TrackPath : MonoBehaviour
         {
             TrackPositionData.SetCurrentPointToObject(pilotTransform, GetNearCheckPointPosition(pilotTransform));
         }
+
 
         
     }
@@ -595,10 +605,17 @@ public class TrackPath : MonoBehaviour
             {
                 checkPointHightLightInstce = Instantiate(checkPointHightLight);
             }
-            StartCoroutine(TranslateGateHighLight(GetNextGatePoint(pilot).position));
+            checkPointHightLightInstce.transform.position = GetNextGatePoint(pilot).position;
+
+            //StartCoroutine(TranslateGateHighLight(GetNextGatePoint(pilot).position));
         }
     }
     
+    /// <summary>
+    /// перемещает светлячок над воротами к следующей точке
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
     private IEnumerator TranslateGateHighLight(Vector3 position)
     {
         Vector3 startPosition = checkPointHightLightInstce.transform.position;
@@ -620,7 +637,11 @@ public class TrackPath : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// корутина добавляет буст отстающим противникам
+    /// </summary>
+    /// <param name="timerToBoost"></param>
+    /// <returns></returns>
     IEnumerator TrackEnemyHelperCorut(float timerToBoost = 5f)
     {
         while (true)
@@ -631,6 +652,9 @@ public class TrackPath : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// добавляет буст для отстающих врагов
+    /// </summary>
     private void TrackEnemyHelper()
     {
         int curPointPlayer = pilotsAndCurrentGatePoint[player];
@@ -648,9 +672,54 @@ public class TrackPath : MonoBehaviour
                 && playerEnemyDistance > distToAutoBoost ))                                         // и дистация между игроком и врагом больше чем указанная
             {
                 enemy.SecondaryAbility = new SuperMegaWTFSpeedAbility();
-                Debug.Log(enemy.transform.name + " add: speedBostHack");
+                //Debug.Log(enemy.transform.name + " add: speedBostHack");
             }
         }
+        
+    }
+
+    /// <summary>
+    /// установка прохождения расстояния пилотом с начала гонки в словарь соответствий
+    /// </summary>
+    private void SetShipPositionTable()
+    {
+        foreach (KeyValuePair<Transform, int> item in pilotsAndCurrentGatePoint)
+        {
+            float pos = GetDistanceFromStart(gatePointsFollow[item.Value]); 
+            pos += Vector3.Distance(gatePointsFollow[item.Value].position, item.Key.position);
+            shipsAndDistance[item.Key] = pos;
+            Debug.Log(item.Key.ToString() + ": " + pos.ToString());
+        }
+                      
     }
     
+    /// <summary>
+    /// Возвращает список гоночных кораблей в порядке лидирования на трассе.
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetShipPositionTable()
+    {
+        List<string> leaderListString = new List<string>();
+        List<KeyValuePair<Transform, float>> posList = new List<KeyValuePair<Transform, float>>();
+        
+        foreach (KeyValuePair<Transform, int> item in pilotsAndCurrentGatePoint)
+        {
+            float pos = GetDistanceFromStart(gatePointsFollow[item.Value]);
+            pos += Vector3.Distance(gatePointsFollow[item.Value].position, item.Key.position);
+            posList.Add(new KeyValuePair<Transform, float>(item.Key, pos));
+        }
+
+        posList.Sort((x, y) => (y.Value.CompareTo(x.Value)));
+
+        int i = 1;
+        foreach (KeyValuePair<Transform, float> item in posList)
+        {
+            leaderListString.Add(i.ToString() + ": " + item.Key.name);
+            i++;
+        }
+
+        return leaderListString;
+    }
+
+
 }
