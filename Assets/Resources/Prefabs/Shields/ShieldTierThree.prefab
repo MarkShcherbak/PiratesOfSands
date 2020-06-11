@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5770404826558310993}
   - component: {fileID: 5770404826558310990}
   - component: {fileID: -5665492248512219263}
+  - component: {fileID: 6851770308555981278}
   - component: {fileID: 3994014014590250396}
   m_Layer: 9
   m_Name: ShieldTierThree
@@ -112,6 +113,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &6851770308555981278
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5770404826558310988}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9ff6b13cf9a5e245bbac30726e80dd8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3994014014590250396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,5 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c264fa14e0aef6248bb75f7d4ee816d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 6851770308555981278}
   duration: 0
   durability: 0

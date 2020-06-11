@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShieldTierTwoModelView : MonoBehaviour, IDamageable
 {
+    [SerializeField] private Animator animator;
+
     [SerializeField] private float duration;
     [SerializeField] private float durability;
 
@@ -44,7 +46,10 @@ public class ShieldTierTwoModelView : MonoBehaviour, IDamageable
         if (destroyTime != 0)
         {
             if (Time.time > destroyTime)
-                Destroy(gameObject);
+            {
+                animator.SetTrigger("Discharge");
+                Destroy(gameObject, 1);
+            }
         }
     }
 
@@ -56,7 +61,8 @@ public class ShieldTierTwoModelView : MonoBehaviour, IDamageable
         if (durability <= 0)
         {
             Debug.Log($"{gameObject.name} was destroyed!");
-            Destroy(gameObject);
+            animator.SetTrigger("Discharge");
+            Destroy(gameObject, 1);
         }
     }
 }

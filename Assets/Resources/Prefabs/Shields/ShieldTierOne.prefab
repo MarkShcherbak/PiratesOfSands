@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8148907935147830942}
   - component: {fileID: 8148907935147830913}
   - component: {fileID: 7643920450911895129}
+  - component: {fileID: 842653676946134233}
   - component: {fileID: 5443846531408432255}
   m_Layer: 9
   m_Name: ShieldTierOne
@@ -112,6 +113,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &842653676946134233
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148907935147830915}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9ff6b13cf9a5e245bbac30726e80dd8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5443846531408432255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79100c18f349b0344a48382db16937dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 842653676946134233}
   duration: 0
   durability: 0
-  damage: 0

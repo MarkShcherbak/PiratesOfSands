@@ -112,13 +112,13 @@ public class GatlingShotModelView : MonoBehaviour
                 ((IDamageable)mb).RecieveDamage(damage);
                 Debug.Log($"{collision.collider.name} takes {damage} damage! from {name}");
 
+                mb.TryGetComponent<Rigidbody>(out Rigidbody rb);
+                rb.AddExplosionForce(75f, transform.position, 3f, 10f, ForceMode.Impulse);
+                rb.AddRelativeTorque(Vector3.up * Random.Range(-1000f, 1000f), ForceMode.Impulse);
+                rb.velocity /= 2f;
+
                 if (mb.tag.Equals("Ship"))
                 {
-                    mb.TryGetComponent<Rigidbody>(out Rigidbody rb);
-                    rb.AddExplosionForce(50f, transform.position, 3f, 10f, ForceMode.Impulse);
-                    rb.AddRelativeTorque(Vector3.up * Random.Range(-1000f, 1000f), ForceMode.Impulse);
-                    rb.velocity /= 2f;
-
                     ParticleFactory.CreateShipCollision(transform);
                 }
             }

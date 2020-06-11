@@ -21,7 +21,7 @@ public class HazardFactory
         {
             GameObject hazard = data.Prefab;
             OilModelView modelView = UnityEngine.Object.Instantiate
-                (hazard, origin.position + origin.forward * 2.5f, origin.rotation * Quaternion.Euler(-30f, currentSpawnRotation, 0f)).GetComponent<OilModelView>();
+                (hazard, origin.position + origin.forward * 3.5f, origin.rotation * Quaternion.Euler(-30f, currentSpawnRotation, 0f)).GetComponent<OilModelView>();
 
             modelView.Damage = data.HazardDamage;
             modelView.Speed = data.HazardSpeed;
@@ -48,7 +48,7 @@ public class HazardFactory
         {
             GameObject hazard = data.Prefab;
             SpikeModelView modelView = UnityEngine.Object.Instantiate
-                (hazard, origin.position + origin.forward * 2.5f, origin.rotation * Quaternion.Euler(-30f, currentSpawnRotation, 0f))
+                (hazard, origin.position + origin.forward * 3.5f, origin.rotation * Quaternion.Euler(-30f, currentSpawnRotation, 0f))
                 .GetComponent<SpikeModelView>();
 
             modelView.Damage = data.HazardDamage;
@@ -76,7 +76,7 @@ public class HazardFactory
         {
             GameObject hazard = data.Prefab;
             LandMineModelView modelView = UnityEngine.Object.Instantiate
-                (hazard, origin.position + origin.forward * 2.5f, origin.rotation * Quaternion.Euler(-15f, currentSpawnRotation, 0f))
+                (hazard, origin.position + origin.forward * 4f, origin.rotation * Quaternion.Euler(-15f, currentSpawnRotation, 0f))
                 .GetComponent<LandMineModelView>();
 
             modelView.Damage = data.HazardDamage;
@@ -106,7 +106,7 @@ public class HazardFactory
         {
             GameObject hazard = data.Prefab;
             BigBombModelView modelView = UnityEngine.Object.Instantiate
-                (hazard, origin.position + origin.forward * 2.5f, origin.rotation * Quaternion.Euler(-15f, currentSpawnRotation, 0f))
+                (hazard, origin.position + origin.forward * 4f, origin.rotation * Quaternion.Euler(-30f, currentSpawnRotation, 0f))
                 .GetComponent<BigBombModelView>();
 
             modelView.Damage = data.HazardDamage;
