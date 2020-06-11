@@ -110,11 +110,14 @@ public class SeaMineShotModelView : MonoBehaviour
     {
         if (destroyTime != 0)
         {
-            affectedColliders = Physics.OverlapSphere(transform.position, radius);
-
             if (Time.time > destroyTime)
             {
                 Explode();
+            }
+
+            else
+            {
+                affectedColliders = Physics.OverlapSphere(transform.position, radius);
             }
         }
 
@@ -147,7 +150,7 @@ public class SeaMineShotModelView : MonoBehaviour
         {
             foreach (Collider collider in affectedColliders)
             {
-                if (collider && affectedObjects.Contains(collider.gameObject) == false)
+                if (!affectedObjects.Contains(collider.gameObject))
                 {
                     affectedObjects.Add(collider.gameObject);
                 }
@@ -161,6 +164,8 @@ public class SeaMineShotModelView : MonoBehaviour
                     {
                         mb.TryGetComponent<Rigidbody>(out Rigidbody rb);
                         rb.AddExplosionForce(force, transform.position, radius, 10f, ForceMode.Impulse);
+                        rb.AddRelativeTorque(Vector3.up * Random.Range(-1000f, 1000f), ForceMode.Impulse);
+                        rb.velocity /= 2f;
 
                         Vector3 closestPoint = rb.ClosestPointOnBounds(transform.position);
                         float distance = Vector3.Distance(closestPoint, transform.position);
@@ -169,13 +174,13 @@ public class SeaMineShotModelView : MonoBehaviour
                         calculatedDamage *= damage;
 
                         ((IDamageable)mb).RecieveDamage(Mathf.Round(calculatedDamage));
+                        Debug.Log($"{obj.name} takes {calculatedDamage} damage! from {name}");
                     }
                 }
             }
         }
-
-        ParticleFactory.CreateBigExplosion(transform);
         Destroy(gameObject);
+        ParticleFactory.CreateBigExplosion(transform);
     }
 
     private IEnumerator DelayedDestroy(float delay)
@@ -190,17 +195,10 @@ public class SeaMineShotModelView : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<MonoBehaviour>(out MonoBehaviour mb))
         {
-            if (mb is IDamageable)
-            {
-                if (mb.tag.Equals("Ship"))
-                {
-                    ParticleFactory.CreateShipCollision(mb.transform);
-                    Explode();
-                }
-            }
+            destroyTime = Time.time;
         }
 
-        else if (collision.collider.tag.Equals("Ground"))
+        if (collision.collider.tag.Equals("Ground"))
             ParticleFactory.CreateSandExplosion(transform);
 
         isFloating = false;

@@ -116,24 +116,6 @@ public class LandMineModelView : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.tag.Equals("Ship"))
-        {
-            if (isArmed)
-            {
-                Explode();
-            }
-        }
-
-        else if (collision.collider.tag.Equals("Ground"))
-        {
-            isArmed = true;
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-    }
-
     private void LaunchHazard()
     {
         rb.AddRelativeForce(Vector3.forward * speed, ForceMode.Impulse);
@@ -157,15 +139,43 @@ public class LandMineModelView : MonoBehaviour
                 {
                     if (mb is IDamageable)
                     {
-                        ((IDamageable)mb).RecieveDamage(damage);
+                        mb.TryGetComponent<Rigidbody>(out Rigidbody rb);
+                        rb.AddExplosionForce(force, transform.position, radius, 10f, ForceMode.Impulse);
+                        rb.AddRelativeTorque(Vector3.up * Random.Range(-500f, 500f), ForceMode.Impulse);
+                        rb.velocity /= 2f;
 
-                        mb.GetComponent<Rigidbody>().AddExplosionForce(force, transform.position, radius, 10f, ForceMode.Impulse);
+                        ((IDamageable)mb).RecieveDamage(damage);
+                        Debug.Log($"{obj.name} takes {damage} damage! from {name}");
+
+                        if (mb.tag.Equals("Ship"))
+                        {
+                            ParticleFactory.CreateShipCollision(transform);
+                        }
                     }
                 }
             }
+            Destroy(gameObject);
+        }
+        ParticleFactory.CreateSmallExplosion(transform);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag.Equals("Ship"))
+        {
+            if (isArmed)
+            {
+                Explode();
+            }
         }
 
-        ParticleFactory.CreateSmallExplosion(transform);
-        Destroy(gameObject);
+        else if (collision.collider.tag.Equals("Ground"))
+        {
+            isArmed = true;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            ParticleFactory.CreateSandExplosion(transform);
+        }
     }
 }

@@ -31,6 +31,8 @@ public class ShipModelView : MonoBehaviour, IDamageable
     // Shield spot on center of the ship
     [SerializeField] private Transform shieldSlot;
 
+    [SerializeField] private ParticleSystem dustTrail;
+
     //ShipAbility
     private IAbility primaryAbilitySlot;
     private IAbility secondaryAbilitySlot;
@@ -110,6 +112,11 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 rb.rotation = value;
             }
         }
+    }
+
+    public ParticleSystem DustTrail
+    {
+        get => dustTrail;
     }
 
     public Rigidbody Rigidbody { get => rb; }
