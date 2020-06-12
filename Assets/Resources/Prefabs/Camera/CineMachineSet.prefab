@@ -1091,6 +1091,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6886233657576684813}
   - component: {fileID: 5870564116111609641}
+  - component: {fileID: -4389797792396831207}
   m_Layer: 0
   m_Name: CineMachineSet
   m_TagString: Untagged
@@ -1140,3 +1141,11 @@ MonoBehaviour:
   trackDolly: {fileID: 9042100688132649337}
   trackDollyCamera: {fileID: 1309315639259796050}
   timeline: {fileID: 4552736627677656794}
+--- !u!81 &-4389797792396831207
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105965866682998238}
+  m_Enabled: 1
