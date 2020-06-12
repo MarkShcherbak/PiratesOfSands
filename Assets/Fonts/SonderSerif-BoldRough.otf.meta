@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: c2f2bcdf78d70414e9acfcc3261d0cbd
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Sonder Serif
+  fontNames:
+  - Sonder Serif
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 70288ea47c45f4d20945c1ff3002ed76, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
