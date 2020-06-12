@@ -52,4 +52,10 @@ using UnityEngine;
                 .GetComponent<StartPlacerModelView>();
             return modelView;
         }
+
+        public static GameObject CreateMainMenuTrack(string resourceString)
+        {
+            GameObject trackPrefab = Resources.Load<GameObject>(resourceString);
+            return UnityEngine.Object.Instantiate(trackPrefab);
+        }
     }

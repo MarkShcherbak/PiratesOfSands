@@ -10,6 +10,8 @@ public class Main : MonoBehaviour
     public Camera mainCamera;
     public GameStats gameStats;
 
+    private GameObject menuTrackScene = null;
+
     // точка входа в приложение
     void Start()
     {
@@ -20,6 +22,7 @@ public class Main : MonoBehaviour
 
     private void CreateMainMenu()
     {
+        menuTrackScene = TrackFactory.CreateMainMenuTrack(gameStats.testMainMenuTrackScene);
        MainMenuModelView menuModelView = UIFactory.CreateMainMenuModelView(canvas);
        menuModelView.OnStart += HandleGameCreation;
        menuModelView.OnExit += HandleExitGame;
@@ -27,6 +30,7 @@ public class Main : MonoBehaviour
 
     private void HandleGameCreation(object sender, EventArgs e)
     {
+        if(menuTrackScene != null) Destroy(menuTrackScene);
         Destroy(((MonoBehaviour)sender).gameObject);  // удаляем sender, т.е в нашем случае это объект со скриптом menuModelView ( но можно было его кэшировать и не приводить тип sender'а)
         StartGame();
     }
