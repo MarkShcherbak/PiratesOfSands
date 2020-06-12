@@ -15,6 +15,7 @@ public class InputControl : Singleton<InputControl>
     const string downFire   = "downFire";
     const string speedUp    = "speedUp";
     const string speedDown  = "speedDown";
+    const string backView   = "backView";
 
     public event EventHandler<Vector3> OnActionInput = (sender, e) => { };
 
@@ -68,7 +69,14 @@ public class InputControl : Singleton<InputControl>
             TimeFollowController.Instance.SpeedDown();
         }
 
-
+        if ((Input.GetButtonDown(backView)))
+        {
+            cinemachineModelView.BackViewOn();
+        }
+        if ((Input.GetButtonUp(backView)))
+        {
+            cinemachineModelView.BackViewOff();
+        }
 
     }
 
@@ -101,6 +109,8 @@ public class InputControl : Singleton<InputControl>
         {
             OnActionInput(this, Vector3.back);
         }
+        
+        
     }
 
     /// <summary>
@@ -124,6 +134,7 @@ public static class InputParams
     private static bool leftFireButtonDown;
     private static bool rightFireButtonDown;
     private static bool downFireButtonDown;
+
 
     public static float ZAxis { get => zAxis; set => zAxis = value; }
     public static float XAxis { get => xAxis; set => xAxis = value; }

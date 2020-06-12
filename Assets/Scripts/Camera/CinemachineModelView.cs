@@ -18,7 +18,11 @@ public class CinemachineModelView : Singleton<CinemachineModelView>
     [SerializeField] private CinemachineVirtualCamera trackDollyCamera;
     [SerializeField] private PlayableDirector timeline;
 
+    [SerializeField] private CinemachineVirtualCamera backCam;
+
     private int currCam = 0;
+
+    float defaultBlendTime = 0f;
 
     private void Start()
     {
@@ -42,7 +46,9 @@ public class CinemachineModelView : Singleton<CinemachineModelView>
 
         trackDollyCamera.LookAt = targetPosition;
 
-
+        backCam.LookAt = targetPosition;
+        backCam.Follow = targetPosition;
+        defaultBlendTime = cinemachineBrain.m_DefaultBlend.m_Time;
     }
 
     public void NextCam()
@@ -86,5 +92,22 @@ public class CinemachineModelView : Singleton<CinemachineModelView>
         SetCurrentCamera();
         TimeFollowController.Instance.ResumeMove();
 
+    }
+
+    public void BackViewOn()
+    {
+        cinemachineBrain.m_DefaultBlend.m_Time = 0f;
+        backCam.Priority = 10;
+    }
+    public void BackViewOff()
+    {
+        StartCoroutine(BackCamOfCorut());
+    }
+
+    IEnumerator BackCamOfCorut()
+    {
+        backCam.Priority = -1;
+        yield return null;
+        cinemachineBrain.m_DefaultBlend.m_Time = defaultBlendTime;
     }
 }
