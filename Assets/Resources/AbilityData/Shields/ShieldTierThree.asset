@@ -33,7 +33,7 @@ MonoBehaviour:
   hazardIsExplosive: 0
   hazardExplosionForce: 0
   hazardExplosionRadius: 0
-  shieldDuration: 120
+  shieldDuration: 18
   shieldDurability: 40
   speedUpDuration: 0
   speedUpIntensity: 0
