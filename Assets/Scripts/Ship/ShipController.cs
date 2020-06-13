@@ -149,20 +149,22 @@ public class ShipController
     {
         if (shipHPMV != null)
         {
-            shipMV.Health -= amount;
-            Debug.Log($"{shipMV.name} was damaged for {amount} damage! {shipMV.Health} hp left!");
-
-            shipHPMV.GreenBarFill = shipMV.Health / 100;
-            shipHPMV.HPAmount.text = $"{shipMV.Health}%";
-
-            if (shipMV.Health <= 0)
+            if(shipMV.ShieldSlot.childCount == 0)
             {
-                shipMV.IsAlive = false;
-                shipHPMV.HPAmount.text = $"X_X";
-                Debug.Log($"{shipMV.name} was destroyed!");
+                shipMV.Health -= amount;
 
-                //TODO переделать
-                //shipMV.DetachPilot();
+                shipHPMV.GreenBarFill = shipMV.Health / 100;
+                shipHPMV.HPAmount.text = $"{shipMV.Health}%";
+
+                if (shipMV.Health <= 0)
+                {
+                    shipMV.IsAlive = false;
+                    shipHPMV.HPAmount.text = $"X_X";
+                    Debug.Log($"{shipMV.name} was destroyed!");
+
+                    //TODO переделать
+                    //shipMV.DetachPilot();
+                }
             }
         }
     }
@@ -186,16 +188,20 @@ public class ShipController
 
         // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
         dotZ = Vector3.Dot(shipMV.transform.up, Vector3.down);
-        dotX = Mathf.Abs(Vector3.Dot(shipMV.transform.right, Vector3.down));
+        dotX = Vector3.Dot(shipMV.transform.forward, Vector3.down);
 
         if (flipping == false && shipMV.IsAlive)
         {
-            if (dotZ > -0.25f || dotX > 0.8f)
+            if (Physics.Raycast(shipMV.transform.position, Vector3.down, 5f, 1 << LayerMask.NameToLayer("Ground")))
             {
-                if (Physics.Raycast(shipMV.transform.position, Vector3.down, 3f, 1 << LayerMask.NameToLayer("Ground")))
-                {
+                if (dotZ > -0.1f)
                     FlipShip(shipMV.transform.forward);
-                }
+
+                if (dotX > 0.7f)
+                        FlipShip(shipMV.transform.up);
+
+                if (dotX < -0.7f)
+                        FlipShip(-shipMV.transform.up);
             }
         }
     }

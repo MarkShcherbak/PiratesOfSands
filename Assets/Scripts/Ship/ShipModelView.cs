@@ -293,8 +293,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     public void RecieveDamage(float amount)
     {
         if (isAlive)
-            if (!shieldSlot.GetComponentInChildren(typeof(IShield)))
-                OnDamageRecieved(this, amount);
+            OnDamageRecieved(this, amount);
     }
 
     /// <summary>
