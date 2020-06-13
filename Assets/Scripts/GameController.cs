@@ -19,7 +19,7 @@ public class GameController
     public GameStats gameStats;
 
 
-    public GameController(Canvas mainCanvas, Camera mainCam, GameStats gameStat) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
+    public GameController(Canvas mainCanvas, Camera mainCam, GameStats gameStat, int lapsCount, int shipCount) // конструктор игры, можно сделать несколько конструкторов(например сколько противников, какая сложность, какая трасса)
     {
         mainCamera = mainCam;
         objectsInGame = new List<GameObject>();
@@ -32,7 +32,7 @@ public class GameController
         objectsInGame.Add(trackMV.gameObject);
         
         //создаем сеть чекпоинтов
-        checkpointsPath = TrackFactory.CreateBigTrackPath(gameStats.testTrackPathPrefab);
+        checkpointsPath = TrackFactory.CreateBigTrackPath(gameStats.testTrackPathPrefab, lapsCount);
         checkpointsPath.OnFinish += HandleTrackFinish; 
         objectsInGame.Add(checkpointsPath.gameObject);
             
@@ -59,7 +59,7 @@ public class GameController
         UIFactory.AddMinimapPointToPlayer(playerPilotMV.transform);
 
 
-        for (int i = 1; i < 6; i++) //TODO поменять на бесконечное колво игроков? => изменить объект размещения
+        for (int i = 1; i < shipCount; i++)
         {
             // создаем корабль противника
             ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(i));
