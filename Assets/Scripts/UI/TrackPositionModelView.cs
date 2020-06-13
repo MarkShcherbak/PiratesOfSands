@@ -11,15 +11,19 @@ public class TrackPositionModelView : MonoBehaviour
 {
     public TrackPath trackPath;
     public TextMeshProUGUI textMeshPro;
+    public TextMeshProUGUI place;
 
     private void Update()
     {
         System.Text.StringBuilder strb = new System.Text.StringBuilder();
- 
-        foreach (string rawLeader in trackPath.GetShipPositionTable())
+
+        int position;
+        foreach (string rawLeader in trackPath.GetShipPositionTable(out position))
         {
             strb.AppendLine(rawLeader);
         }
         textMeshPro.SetText(strb);
+
+        place.SetText(position.ToString());
     }
 }

@@ -697,7 +697,7 @@ public class TrackPath : MonoBehaviour
     /// Возвращает список гоночных кораблей в порядке лидирования на трассе.
     /// </summary>
     /// <returns></returns>
-    public List<string> GetShipPositionTable()
+    public List<string> GetShipPositionTable(out int position)
     {
         List<string> leaderListString = new List<string>();
         List<KeyValuePair<Transform, float>> posList = new List<KeyValuePair<Transform, float>>();
@@ -711,11 +711,51 @@ public class TrackPath : MonoBehaviour
 
         posList.Sort((x, y) => (y.Value.CompareTo(x.Value)));
 
-        int i = 1;
-        foreach (KeyValuePair<Transform, float> item in posList)
+        position = 0;
+
+        if (posList.Count <= 3)
         {
-            leaderListString.Add(i.ToString() + ": " + item.Key.name);
-            i++;
+            for (int j = 0; j < posList.Count; j++)
+            {
+                if (posList[j].Key == player)
+                {
+                    leaderListString.Add((j+1).ToString() + ": " + posList[j+1].Key.name);
+                    position = j + 1;
+                }
+            }
+            
+        }
+        else
+        {
+            int i;
+            for (i = 0; i < posList.Count; i++)
+            {
+                if (posList[i].Key == player)
+                {
+                    break;
+                }
+            }
+            position = i + 1;
+
+            if (i == 0)
+            {
+                leaderListString.Add("1: " + posList[i].Key.name);
+                leaderListString.Add("2: " + posList[i + 1].Key.name);
+                leaderListString.Add("3: " + posList[i + 2].Key.name);
+            }
+            else if (i == posList.Count-1)
+            {
+                leaderListString.Add((i-1).ToString() + ": " + posList[i-2].Key.name);
+                leaderListString.Add((i).ToString() + ": " + posList[i-1].Key.name);
+                leaderListString.Add((i+1).ToString() + ": " + posList[i].Key.name);
+            }
+            else
+            {
+                leaderListString.Add((i).ToString() + ": " + posList[i-1].Key.name);
+                leaderListString.Add((i+1).ToString() + ": " + posList[i].Key.name);
+                leaderListString.Add((i+2).ToString() + ": " + posList[i+1].Key.name);
+            }
+
         }
 
         return leaderListString;
