@@ -28,11 +28,11 @@ public class Main : MonoBehaviour
        menuModelView.OnExit += HandleExitGame;
     }
 
-    private void HandleGameCreation(object sender, EventArgs e)
+    private void HandleGameCreation(object sender, NewGameEventArgs e)
     {
         if(menuTrackScene != null) Destroy(menuTrackScene);
         Destroy(((MonoBehaviour)sender).gameObject);  // удаляем sender, т.е в нашем случае это объект со скриптом menuModelView ( но можно было его кэшировать и не приводить тип sender'а)
-        StartGame();
+        StartGame(e.LapsCount, e.ShipCount);
     }
 
     private void HandleExitGame(object sender, EventArgs e)
@@ -40,9 +40,9 @@ public class Main : MonoBehaviour
         Debug.Log("Exitting Game!");
     }
 
-    private void StartGame()
+    private void StartGame(int lapsCount, int shipCount)
     {
-        GameController game = new GameController(canvas, mainCamera, gameStats);
+        GameController game = new GameController(canvas, mainCamera, gameStats, lapsCount, shipCount);
         game.CountdownPause();
         game.OnDestroyGame += HandleOnGameDestroy;
     }

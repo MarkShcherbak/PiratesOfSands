@@ -29,9 +29,10 @@ using UnityEngine;
             return modelView;
         }
 
-        public static TrackPath CreateBigTrackPath(string resourceString)
+        public static TrackPath CreateBigTrackPath(string resourceString, int lapsCount)
         {
             GameObject testTrackPathPrefab = Resources.Load<GameObject>(resourceString);
+            testTrackPathPrefab.GetComponent<TrackPath>().countOfLaps = lapsCount;
             TrackPath path = UnityEngine.Object.Instantiate(testTrackPathPrefab)
                 .GetComponent<TrackPath>();
             return path;

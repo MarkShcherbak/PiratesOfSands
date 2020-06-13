@@ -3,6 +3,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public class NewGameEventArgs : EventArgs
+{
+    public int LapsCount { get; set; }
+    public int ShipCount { get; set; }
+}
     
     // панель главного меню - скрипт висит на префабре в папке Resources
     public class MainMenuModelView : MonoBehaviour
@@ -16,7 +21,7 @@ using UnityEngine.UI;
         public Text shipsCountText;
         public Text shipsCountOutlineText;
 
-        public event EventHandler OnStart = (sender, e) => { };
+        public event EventHandler<NewGameEventArgs> OnStart = (sender, e) => { };
         public event EventHandler OnExit = (sender, e) => { };
 
         private int lapsCount = 1;
@@ -25,7 +30,11 @@ using UnityEngine.UI;
         {
             startButton.onClick.AddListener(delegate
             {
-                OnStart(this, EventArgs.Empty);
+                NewGameEventArgs newGameArgs = new NewGameEventArgs();
+                newGameArgs.LapsCount = lapsCount;
+                newGameArgs.ShipCount = shipsCount;
+                
+                OnStart(this, newGameArgs);
             });
             exitButton.onClick.AddListener(delegate
             {
