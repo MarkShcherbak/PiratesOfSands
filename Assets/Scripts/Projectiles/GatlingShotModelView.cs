@@ -115,10 +115,10 @@ public class GatlingShotModelView : MonoBehaviour
                 mb.TryGetComponent<Rigidbody>(out Rigidbody rb);
                 rb.AddExplosionForce(75f, transform.position, 3f, 10f, ForceMode.Impulse);
                 rb.AddRelativeTorque(Vector3.up * Random.Range(-1000f, 1000f), ForceMode.Impulse);
-                rb.velocity /= 2f;
 
                 if (mb.tag.Equals("Ship"))
                 {
+                    Destroy(gameObject);
                     ParticleFactory.CreateShipCollision(transform);
                 }
             }

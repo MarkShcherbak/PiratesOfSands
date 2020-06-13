@@ -18,7 +18,7 @@ public class PilotFactory
     public static EnemyPilotModelView CreateEnemyPilotModelView(Transform parentShip)
     {
         GameObject testEnemyPilotPrefab = Resources.Load<GameObject>("Prefabs/Pilot/TestEnemy");
-        EnemyPilotModelView modelView = UnityEngine.Object.Instantiate(testEnemyPilotPrefab,parentShip)
+        EnemyPilotModelView modelView = UnityEngine.Object.Instantiate(testEnemyPilotPrefab,parentShip.position + Vector3.up * 2f, Quaternion.identity, parentShip.transform)
             .GetComponent<EnemyPilotModelView>();
         return modelView;
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpeedFlyingBoost
   m_EditorClassIdentifier: 
   abilityType: 3
-  icon: {fileID: 21300000, guid: e747b2848945d439a9a2c405b5732cb8, type: 3}
+  icon: {fileID: 21300000, guid: 9c2dc70319f34104a9926c5401de4d10, type: 3}
   containerMesh: {fileID: 3942922782657709613, guid: f88e3a92782e7184aa3e214454d64051,
     type: 3}
   prefab: {fileID: 13268683738046763, guid: a2fa31ca727a42845b19558b8ae0440f, type: 3}
