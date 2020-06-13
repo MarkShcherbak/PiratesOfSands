@@ -56,8 +56,9 @@ public class GameController
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV, checkpointsPath);
         objectsInGame.Add(playerPilotMV.gameObject);
+        UIFactory.AddMinimapPointToPlayer(playerPilotMV.transform);
 
-        
+
         for (int i = 1; i < 6; i++) //TODO поменять на бесконечное колво игроков? => изменить объект размещения
         {
             // создаем корабль противника
@@ -79,6 +80,8 @@ public class GameController
             EnemyPilotController enemyPilotController =
                 PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
             objectsInGame.Add(enemyPilotMV.gameObject);
+
+            UIFactory.AddMinimapPointToEnemy(enemyPilotMV.transform);
         }
 
         // TODO создаем HUD отображение способностей (ТЕСТОВОЕ!!!)
@@ -113,6 +116,12 @@ public class GameController
         trackposMenuModel.trackPath = checkpointsPath;
         objectsInGame.Add(trackposMenuModel.gameObject);
 
+        // создаем миникарту
+        GameObject minimapCamera = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Prefabs/MinimapCamera"));
+        objectsInGame.Add(minimapCamera);
+        GameObject miniMap = UIFactory.CreateMinimapObj(canvas);
+        objectsInGame.Add(miniMap);
+        
 
     }
 
