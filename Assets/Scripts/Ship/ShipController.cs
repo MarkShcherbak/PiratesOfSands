@@ -115,7 +115,8 @@ public class ShipController
 
         Ray ray = new Ray(shipMV.transform.position, Vector3.down);
         shipMV.transform.Rotate(0f, input.x * shipMV.shipDriveParams.RotateCoef * Time.fixedDeltaTime, 0f, Space.Self);
-        if (Physics.Raycast(ray, shipMV.shipDriveParams.distance))
+        shipMV.isOnGround = Physics.Raycast(ray, shipMV.shipDriveParams.distance);
+        if (shipMV.isOnGround)
         {
             shipMV.Rigidbody.angularDrag = previousAngularDrag;
 

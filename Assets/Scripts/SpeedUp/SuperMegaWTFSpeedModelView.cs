@@ -10,6 +10,7 @@ public class SuperMegaWTFSpeedModelView : MonoBehaviour, ISpeedUp
 
     [SerializeField] private FixedJoint joint;
     [SerializeField] private Rigidbody rb;
+    private ShipModelView shipModelView;
 
     public float Duration
     {
@@ -51,7 +52,8 @@ public class SuperMegaWTFSpeedModelView : MonoBehaviour, ISpeedUp
 
     private void Start()
     {
-        joint.connectedBody = GetComponentInParent<ShipModelView>().Rigidbody;
+        shipModelView = GetComponentInParent<ShipModelView>();
+        joint.connectedBody = shipModelView.Rigidbody;
 
         //rb.AddRelativeForce(Vector3.back * intensity * 1000 * Time.fixedDeltaTime, ForceMode.Impulse);
 
@@ -67,7 +69,7 @@ public class SuperMegaWTFSpeedModelView : MonoBehaviour, ISpeedUp
                 Destroy(gameObject);
         }
 
-        if (rb.velocity.magnitude < maxSpeed)
+        if (rb.velocity.magnitude < maxSpeed && shipModelView.isOnGround)
         {
             rb.AddRelativeForce(Vector3.back * intensity * 1000 * Time.fixedDeltaTime, ForceMode.Acceleration);
         }

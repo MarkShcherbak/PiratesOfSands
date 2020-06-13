@@ -123,6 +123,9 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     public ShipDriveParams shipDriveParams;
 
+    public bool isOnGround;
+
+
     #endregion
 
     private void OnDrawGizmosSelected()
