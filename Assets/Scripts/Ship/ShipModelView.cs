@@ -49,6 +49,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     [SerializeField] AudioSource pickUpSound;
     [SerializeField] AudioSource slipperySound;
     [SerializeField] AudioSource checkInSound;
+    [SerializeField] AudioSource hitSound;
 
 
     ////TODO переделать
@@ -411,5 +412,11 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         checkInSound.Play();
     }
+    public void HitSound()
+    {
+        hitSound.Play();
+    }
+
+
     #endregion
 }

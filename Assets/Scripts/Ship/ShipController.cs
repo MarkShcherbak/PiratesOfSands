@@ -165,6 +165,7 @@ public class ShipController
     {
         if (shipHPMV != null)
         {
+            shipMV.HitSound();
             if (shipMV.ShieldSlot.childCount == 0)
             {
                 shipMV.Health -= amount;
