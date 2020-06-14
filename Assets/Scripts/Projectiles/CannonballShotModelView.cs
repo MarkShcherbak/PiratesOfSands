@@ -119,6 +119,7 @@ public class CannonballShotModelView : MonoBehaviour
 
                 if (mb.tag.Equals("Ship"))
                 {
+                    Destroy(gameObject);
                     ParticleFactory.CreateShipCollision(transform);
                 }
             }

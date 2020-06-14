@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: ShieldTierTwo
   m_EditorClassIdentifier: 
   abilityType: 2
-  icon: {fileID: 21300000, guid: bca3fcbed06d440ef9d1e158c45c1032, type: 3}
+  icon: {fileID: 21300000, guid: 19ea07d055d7370469e51270cc075c53, type: 3}
   containerMesh: {fileID: 3942922782657709613, guid: f9ec83ba1c5605b4e9d043648c6cdbb2,
     type: 3}
   prefab: {fileID: 5286096636083429726, guid: 37da47e3150c5864f90890dc22b1b8b6, type: 3}
   projectileDamage: 0
   projectileSpeed: 0
+  projectileLifetime: 0
   projectileScatter: 0
   projectilesCount: 0
+  projectileIsExplosive: 0
+  projectileExplosionForce: 0
+  projectileExplosionRadius: 0
   hazardDamage: 0
   hazardSpeed: 0
   hazardLifetime: 0
@@ -29,7 +33,7 @@ MonoBehaviour:
   hazardIsExplosive: 0
   hazardExplosionForce: 0
   hazardExplosionRadius: 0
-  shieldDuration: 15
+  shieldDuration: 12
   shieldDurability: 30
   speedUpDuration: 0
   speedUpIntensity: 0
