@@ -12,12 +12,13 @@ public class ShipController
     private float dotZ;
     private float dotX;
 
-    private bool flipping = false;
-    private float flipCooldown = 0f;
+    // Таймер до флипа
+    private float flipDelay = 0;
+    private float flipTime = 0;
 
     private float previousAngularDrag;
 
-    private bool isMooving = false;
+    private bool isMoving = false;
 
     /// <summary>
     /// Конструктор корабля
@@ -134,22 +135,23 @@ public class ShipController
         {
             shipMV.Rigidbody.angularDrag = 3f;
 
-            if(shipMV.DustTrail.isPlaying)
+            if (shipMV.DustTrail.isPlaying)
                 shipMV.DustTrail.Stop(true);
-            
+
         }
 
         shipMV.Rigidbody.velocity = down + forward + right;
 
-       if (isMooving == false && input.z!=0)
+        if (isMoving == false && input.z != 0)
         {
             shipMV.AccecelerationSoundOn();
-            isMooving = true;
+            isMoving = true;
         }
+
         else if (input.z == 0)
         {
             shipMV.AccecelerationSoundOff();
-            isMooving = false;
+            isMoving = false;
         }
     }
 
@@ -162,7 +164,7 @@ public class ShipController
     {
         if (shipHPMV != null)
         {
-            if(shipMV.ShieldSlot.childCount == 0)
+            if (shipMV.ShieldSlot.childCount == 0)
             {
                 shipMV.Health -= amount;
 
@@ -189,43 +191,44 @@ public class ShipController
     /// <param name="e"></param>
     private void HandleFixedUpdate(object sender, EventArgs e)
     {
-        if (Time.time < flipCooldown)
-        {
-            flipping = true;
-        }
-
-        else
-        {
-            flipping = false;
-        }
-
         // Получаем скалярное произведение y+ и y- векторов корабля для того, чтобы получить уровень его наклона
         dotZ = Vector3.Dot(shipMV.transform.up, Vector3.down);
         dotX = Vector3.Dot(shipMV.transform.forward, Vector3.down);
 
-        if (flipping == false && shipMV.IsAlive)
+        if (shipMV.IsAlive)
         {
             if (Physics.Raycast(shipMV.transform.position, Vector3.down, 5f, 1 << LayerMask.NameToLayer("Ground")))
             {
                 if (dotZ > -0.1f)
                     FlipShip(shipMV.transform.forward);
 
-                if (dotX > 0.7f)
-                        FlipShip(shipMV.transform.up);
+                else if (dotX > 0.7f)
+                    FlipShip(shipMV.transform.up);
 
-                if (dotX < -0.7f)
-                        FlipShip(-shipMV.transform.up);
+                else if (dotX < -0.7f)
+                    FlipShip(-shipMV.transform.up);
+
+                else
+                    flipDelay = 0;
             }
         }
     }
 
     private void FlipShip(Vector3 direction)
     {
-        flipCooldown = Time.time + 3.0f;
+        if(flipDelay == 0)
+        {
+            flipDelay = Time.time + 3.0f;
+            flipTime = Time.time + 3.0f;
+            //Debug.Log($"Flip will be initiated in {flipTime}");
+        }
 
-        shipMV.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
-        shipMV.transform.position += Vector3.up * 0.5f;
-        shipMV.Rigidbody.velocity = Vector3.zero;
-        shipMV.Rigidbody.angularVelocity = Vector3.zero;
+        if(Time.time > flipTime)
+        {
+            shipMV.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+            shipMV.transform.position += Vector3.up * 0.5f;
+            shipMV.Rigidbody.velocity = Vector3.zero;
+            shipMV.Rigidbody.angularVelocity = Vector3.zero;
+        }
     }
 }
