@@ -16,7 +16,9 @@ public class TrackPositionModelView : MonoBehaviour
     public TextMeshProUGUI place;
     public float timeToRenew = 1f;
     public Text listText;
+    public Text listTextOutline;
     public Text posText;
+    public Text posTextOutline;
     private void Start()
     {
         StartCoroutine(RenewCorut());
@@ -36,8 +38,10 @@ public class TrackPositionModelView : MonoBehaviour
             }
 
             listText.text = textList;
+            listTextOutline.text = textList;
 
             posText.text = position.ToString();
+            posTextOutline.text = position.ToString();
         }
     }
 }
