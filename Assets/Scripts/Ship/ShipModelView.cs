@@ -40,6 +40,16 @@ public class ShipModelView : MonoBehaviour, IDamageable
     private float health = 100;
     private bool isAlive = true;
 
+    [SerializeField] AudioSource accelerationSound;
+    [SerializeField] AudioSource engineSound;
+    [SerializeField] AudioSource shootSound;
+    [SerializeField] AudioSource shieldSound;
+    [SerializeField] AudioSource speedBoostSound;
+    [SerializeField] AudioSource pickUpSound;
+    [SerializeField] AudioSource slipperySound;
+    [SerializeField] AudioSource checkInSound;
+
+
     ////TODO переделать
     //[SerializeField] private GameObject pirate;
 
@@ -70,9 +80,13 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 primaryAbilitySlot = primaryAbilitySlot.Add(value);
             else primaryAbilitySlot = value;
 
-            if (primaryAbilitySlot != null)
-                OnPrimaryAbilityChanged(this, primaryAbilitySlot.Data.Icon);
+            if (primaryAbilitySlot != null) 
+            {
+                OnPrimaryAbilityChanged(this, primaryAbilitySlot.Data.Icon); 
+                PickUpSound(); 
+            }
             else OnPrimaryAbilityChanged(this, null);
+            
         }
     }
     public IAbility SecondaryAbility
@@ -87,7 +101,10 @@ public class ShipModelView : MonoBehaviour, IDamageable
             else secondaryAbilitySlot = value;
 
             if (secondaryAbilitySlot != null)
+            {
                 OnSecondaryAbilityChanged(this, secondaryAbilitySlot.Data.Icon);
+                PickUpSound();
+            }
             else OnSecondaryAbilityChanged(this, null);
         }
     }
@@ -155,7 +172,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
         // Устанавливаем центр тяжести корабля
         Rigidbody.centerOfMass = centerOfMass;
 
-        
+        StartCoroutine(StartEngine());
     }
 
     /// <summary>
@@ -241,6 +258,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
             }
 
             PrimaryAbility = null; // TODO: включить
+            ShootSound();
         }
     }
 
@@ -261,6 +279,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 }
 
                 SecondaryAbility.Execute(shieldSlot);
+                ShieldSoundSound();
             }
 
             if (SecondaryAbility is ISpeedUp)
@@ -274,6 +293,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
                     }
 
                     SecondaryAbility.Execute(slot);
+                    SpeedBoostSound();
                 }
             }
 
@@ -283,9 +303,12 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 {
                     SecondaryAbility.Execute(slot);
                 }
+                ShootSound();
             }
 
             SecondaryAbility = null; // TODO: включить
+
+            
         }
     }
 
@@ -325,4 +348,56 @@ public class ShipModelView : MonoBehaviour, IDamageable
         OnTriggerOUT(this, other.tag);
     }
 
+    #region Audio
+    public void AccecelerationSoundOn()
+    {
+        accelerationSound.Play();
+    }
+    public void AccecelerationSoundOff()
+    {
+        accelerationSound.Stop();
+    }
+
+    public void ShootSound()
+    {
+        shootSound.Play();
+    }
+    public void ShieldSoundSound()
+    {
+        shieldSound.Play();
+    }
+    public void SpeedBoostSound()
+    {
+        speedBoostSound.Play();
+    }
+    public void PickUpSound()
+    {
+        pickUpSound.Play();
+    }
+    public void SlipperySound()
+    {
+        slipperySound.Play();
+    }
+
+    public void EngineSoundOn()
+    {
+        engineSound.volume = 1f;
+    }
+
+    public void EngineSoundOff()
+    {
+        engineSound.volume = 0.4f;
+    }
+
+    System.Collections.IEnumerator StartEngine()
+    {
+        yield return new WaitForSecondsRealtime( UnityEngine.Random.Range(0f, 1f));
+        engineSound.Play();
+    }
+
+    public void CheckInSound()
+    {
+        checkInSound.Play();
+    }
+    #endregion
 }

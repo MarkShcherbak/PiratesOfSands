@@ -59,6 +59,7 @@ public class TrackPath : MonoBehaviour
     private float heightOfHighLight = 5f;
 
     Transform player;
+    private ShipModelView playerShMV;
     List<ShipModelView> enemiesShipModelView;
     [SerializeField] private float distToAutoBoost = 10f;
     [SerializeField] private float timerForBoostCorutine = 5f;
@@ -474,6 +475,7 @@ public class TrackPath : MonoBehaviour
         if (isPlayer)
         {
             player = pilotTransform;
+            playerShMV = shipModelView;
         }
         else
         {
@@ -606,6 +608,8 @@ public class TrackPath : MonoBehaviour
                 checkPointHightLightInstce = Instantiate(checkPointHightLight);
             }
             checkPointHightLightInstce.transform.position = GetNextGatePoint(pilot).position;
+
+            playerShMV.CheckInSound();
 
             //StartCoroutine(TranslateGateHighLight(GetNextGatePoint(pilot).position));
         }

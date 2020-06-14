@@ -878,7 +878,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5863179327842752379}
-  m_LocalRotation: {x: -0.2167554, y: 0.67033976, z: -0.21481337, w: -0.67640007}
+  m_LocalRotation: {x: -0.21675536, y: 0.6703398, z: -0.21481337, w: -0.6764}
   m_LocalPosition: {x: -12.455722, y: 8.839448, z: 12.911982}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1297,7 +1297,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6886233657576684813}
   - component: {fileID: 5870564116111609641}
-  - component: {fileID: -4389797792396831207}
   m_Layer: 0
   m_Name: CineMachineSet
   m_TagString: Untagged
@@ -1349,11 +1348,3 @@ MonoBehaviour:
   trackDollyCamera: {fileID: 1309315639259796050}
   timeline: {fileID: 4552736627677656794}
   backCam: {fileID: 717076143310626946}
---- !u!81 &-4389797792396831207
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9105965866682998238}
-  m_Enabled: 1

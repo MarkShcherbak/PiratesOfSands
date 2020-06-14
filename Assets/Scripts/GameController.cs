@@ -42,6 +42,7 @@ public class GameController
         // создаем корабль игрока
         ShipModelView playerShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(0));
         ShipController shipController = ShipFactory.CreateShipController(playerShipMV, null);
+        playerShipMV.gameObject.AddComponent<AudioListener>();
         objectsInGame.Add(playerShipMV.gameObject);
 
         playerShipMV.name = "Player";

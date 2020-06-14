@@ -17,6 +17,8 @@ public class ShipController
 
     private float previousAngularDrag;
 
+    private bool isMooving = false;
+
     /// <summary>
     /// Конструктор корабля
     /// </summary>
@@ -57,7 +59,7 @@ public class ShipController
 
             if (tag.Equals("SlipperyPoint"))
             {
-                
+                shipMV.SlipperySound();
                 switch (UnityEngine.Random.Range(0, 2))
                 {
                     case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, -1000f, 0), ForceMode.Impulse); break;
@@ -139,6 +141,16 @@ public class ShipController
 
         shipMV.Rigidbody.velocity = down + forward + right;
 
+       if (isMooving == false && input.z!=0)
+        {
+            shipMV.AccecelerationSoundOn();
+            isMooving = true;
+        }
+        else if (input.z == 0)
+        {
+            shipMV.AccecelerationSoundOff();
+            isMooving = false;
+        }
     }
 
     /// <summary>
