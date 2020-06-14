@@ -16,7 +16,7 @@ using UnityEngine;
                 Vector3 direction = CheckpointDirection.position - ShipDirection.position;
                 //float arrowAngle = Vector3.SignedAngle(ShipDirection.forward, direction, Vector3.up);
                 float arrowAngle = AngleSigned(ShipDirection.forward, direction, Vector3.up);
-                this.transform.rotation = Quaternion.Euler(0, 0, arrowAngle);
+                this.transform.rotation = Quaternion.Euler(0, 0, -arrowAngle);
             }
         }
         
