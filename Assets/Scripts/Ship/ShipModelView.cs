@@ -403,7 +403,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     System.Collections.IEnumerator StartEngine()
     {
-        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0f, 1f));
+        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(3f, 5f));
         engineSound.Play();
     }
 

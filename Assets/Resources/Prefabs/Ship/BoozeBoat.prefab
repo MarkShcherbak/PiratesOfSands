@@ -1899,7 +1899,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 200
   DopplerLevel: 1
   MinDistance: 0
   MaxDistance: 60
@@ -1921,8 +1921,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.14646089
-      value: 0.7094691
+      time: 0.13547075
+      value: 0.23495889
       inSlope: 0.0832733
       outSlope: 0.0832733
       tangentMode: 0
@@ -1930,8 +1930,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.31159937
     - serializedVersion: 3
-      time: 0.6786816
-      value: 0.06609226
+      time: 0.517503
+      value: 0.20090365
       inSlope: -0.080855854
       outSlope: -0.080855854
       tangentMode: 0
