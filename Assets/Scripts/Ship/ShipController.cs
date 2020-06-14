@@ -97,7 +97,8 @@ public class ShipController
     /// <param name="direction"></param>
     private void HandleAction(object sender, Vector3 direction)
     {
-        if (direction != Vector3.back)
+        //if (direction != Vector3.back)
+            if (direction == Vector3.forward)
             shipMV.PrimaryAction(direction);
 
         else
