@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
@@ -9,7 +9,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     //Events
     public event EventHandler<Vector3> OnInput = (sender, e) => { };
-    public event EventHandler<Vector3> OnAction = (sender, e) => { }; 
+    public event EventHandler<Vector3> OnAction = (sender, e) => { };
     public event EventHandler<Sprite> OnPrimaryAbilityChanged = (sender, e) => { };
     public event EventHandler<Sprite> OnSecondaryAbilityChanged = (sender, e) => { };
     public event EventHandler<float> OnDamageRecieved = (sender, e) => { };
@@ -19,7 +19,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
 
     #endregion
-    
+
     #region fields
     //Ship data
     [SerializeField] private Rigidbody rb;
@@ -43,6 +43,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     [SerializeField] AudioSource accelerationSound;
     [SerializeField] AudioSource engineSound;
     [SerializeField] AudioSource shootSound;
+    [SerializeField] AudioSource hazardDropSound;
     [SerializeField] AudioSource shieldSound;
     [SerializeField] AudioSource speedBoostSound;
     [SerializeField] AudioSource pickUpSound;
@@ -80,13 +81,13 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 primaryAbilitySlot = primaryAbilitySlot.Add(value);
             else primaryAbilitySlot = value;
 
-            if (primaryAbilitySlot != null) 
+            if (primaryAbilitySlot != null)
             {
-                OnPrimaryAbilityChanged(this, primaryAbilitySlot.Data.Icon); 
-                PickUpSound(); 
+                OnPrimaryAbilityChanged(this, primaryAbilitySlot.Data.Icon);
+                PickUpSound();
             }
             else OnPrimaryAbilityChanged(this, null);
-            
+
         }
     }
     public IAbility SecondaryAbility
@@ -181,8 +182,8 @@ public class ShipModelView : MonoBehaviour, IDamageable
     /// <param name="input"></param>
     public void SteeringInput(Vector3 input)
     {
-        if(isAlive)
-        OnInput(this, input);
+        if (isAlive)
+            OnInput(this, input);
     }
 
     /// <summary>
@@ -215,7 +216,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
         rightCannons = new ICannonModelView[rightSlots.Count];
         for (int i = 0; i < rightSlots.Count; i++)
             rightCannons[i] = CannonFactory.CreateCannonModelView(rightSlots[i]);
-        
+
     }
 
     //TODO переделать
@@ -231,7 +232,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     //    pirate.transform.parent = null;
     //}
-    
+
     /// <summary>
     /// Действие ModelView при активации первичной способности. Вызывается из контроллера!
     /// </summary>
@@ -279,7 +280,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 }
 
                 SecondaryAbility.Execute(shieldSlot);
-                ShieldSoundSound();
+                ShieldSound();
             }
 
             if (SecondaryAbility is ISpeedUp)
@@ -303,12 +304,13 @@ public class ShipModelView : MonoBehaviour, IDamageable
                 {
                     SecondaryAbility.Execute(slot);
                 }
-                ShootSound();
+
+                HazardDropSound();
             }
 
             SecondaryAbility = null; // TODO: включить
 
-            
+
         }
     }
 
@@ -338,7 +340,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         OnTriggerIN(this, other.tag);
     }
-    
+
     /// <summary>
     /// Вызывает событие обработки выходного триггера(которое передает тег в качестве параметра)
     /// </summary>
@@ -353,6 +355,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         accelerationSound.Play();
     }
+
     public void AccecelerationSoundOff()
     {
         accelerationSound.Stop();
@@ -362,18 +365,27 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         shootSound.Play();
     }
-    public void ShieldSoundSound()
+
+    public void HazardDropSound()
+    {
+        hazardDropSound.Play();
+    }
+
+    public void ShieldSound()
     {
         shieldSound.Play();
     }
+
     public void SpeedBoostSound()
     {
         speedBoostSound.Play();
     }
+
     public void PickUpSound()
     {
         pickUpSound.Play();
     }
+
     public void SlipperySound()
     {
         slipperySound.Play();
@@ -391,7 +403,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     System.Collections.IEnumerator StartEngine()
     {
-        yield return new WaitForSecondsRealtime( UnityEngine.Random.Range(0f, 1f));
+        yield return new WaitForSecondsRealtime(UnityEngine.Random.Range(0f, 1f));
         engineSound.Play();
     }
 
