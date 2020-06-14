@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,18 +14,30 @@ public class TrackPositionModelView : MonoBehaviour
     public TrackPath trackPath;
     public TextMeshProUGUI textMeshPro;
     public TextMeshProUGUI place;
-
-    private void Update()
+    public float timeToRenew = 1f;
+    public Text listText;
+    public Text posText;
+    private void Start()
     {
-        System.Text.StringBuilder strb = new System.Text.StringBuilder();
+        StartCoroutine(RenewCorut());
+    }
 
-        int position;
-        foreach (string rawLeader in trackPath.GetShipPositionTable(out position))
+
+    IEnumerator RenewCorut()
+    {
+        while (true)
         {
-            strb.AppendLine(rawLeader);
-        }
-        textMeshPro.SetText(strb);
+            yield return new WaitForSeconds(timeToRenew);
+            string textList = "";
+            int position;
+            foreach (string rawLeader in trackPath.GetShipPositionTable(out position))
+            {
+                textList += rawLeader + "\n";
+            }
 
-        place.SetText(position.ToString());
+            listText.text = textList;
+
+            posText.text = position.ToString();
+        }
     }
 }

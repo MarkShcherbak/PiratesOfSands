@@ -721,11 +721,9 @@ public class TrackPath : MonoBehaviour
         {
             for (int j = 0; j < posList.Count; j++)
             {
-                if (posList[j].Key == player)
-                {
-                    leaderListString.Add((j+1).ToString() + ": " + posList[j+1].Key.name);
-                    position = j + 1;
-                }
+                
+                leaderListString.Add((j+1).ToString() + ": " + posList[j].Key.name);
+                position = j + 1;
             }
             
         }

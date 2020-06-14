@@ -70,10 +70,12 @@ public class CinemachineModelView : Singleton<CinemachineModelView>
 
             if (i == camNum)
             {
+                virtCameras[i].gameObject.SetActive(true);
                 virtCameras[i].Priority = 1;
             }
             else
             {
+                virtCameras[i].gameObject.SetActive(false);
                 virtCameras[i].Priority = 0;
             }
         }
@@ -86,16 +88,19 @@ public class CinemachineModelView : Singleton<CinemachineModelView>
 
     private IEnumerator StartTrackCorutine(int timeInSec)
     {
+        trackDollyCamera.gameObject.SetActive(true);
         timeline.Play();
         TimeFollowController.Instance.PauseMove();
         yield return new WaitForSecondsRealtime(timeInSec);
         SetCurrentCamera();
         TimeFollowController.Instance.ResumeMove();
+        trackDollyCamera.gameObject.SetActive(false);
 
     }
 
     public void BackViewOn()
     {
+        backCam.gameObject.SetActive(true);
         cinemachineBrain.m_DefaultBlend.m_Time = 0f;
         backCam.Priority = 10;
     }
@@ -109,5 +114,6 @@ public class CinemachineModelView : Singleton<CinemachineModelView>
         backCam.Priority = -1;
         yield return null;
         cinemachineBrain.m_DefaultBlend.m_Time = defaultBlendTime;
+        backCam.gameObject.SetActive(false);
     }
 }
