@@ -10,9 +10,9 @@ public class PilotFactory
         return modelView;
     }
 
-    public static PlayerPilotController CreatePlayerPilotController(PlayerPilotModelView playerMV, ShipModelView shipMV, TrackPath checkpoints)
+    public static PlayerPilotController CreatePlayerPilotController(PlayerPilotModelView playerMV, ShipModelView shipMV, TrackPath checkpoints, DirectionArrowModelView dirArrowHUD)
     {
-        return new PlayerPilotController(playerMV, shipMV, checkpoints);
+        return new PlayerPilotController(playerMV, shipMV, checkpoints, dirArrowHUD);
     }
 
     public static EnemyPilotModelView CreateEnemyPilotModelView(Transform parentShip)

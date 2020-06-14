@@ -52,10 +52,12 @@ public class GameController
         effectModelView.transform.parent = playerShipMV.transform;
         effectModelView.transform.position = playerShipMV.transform.position;
 
-
+        // создаем HUD стрелку направления
+        DirectionArrowModelView HUDarrowMV = UIFactory.CreateDirectionArrow(canvas);
+        
         // создаем пилота игрока
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
-        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV, checkpointsPath);
+        PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV, checkpointsPath, HUDarrowMV);
         objectsInGame.Add(playerPilotMV.gameObject);
         UIFactory.AddMinimapPointToPlayer(playerPilotMV.transform);
 
