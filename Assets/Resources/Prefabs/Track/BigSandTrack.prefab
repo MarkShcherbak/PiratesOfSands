@@ -427,7 +427,7 @@ MonoBehaviour:
   isWin: 0
   checkPointHightLight: {fileID: 5359795418257256080, guid: 53aeddc5110eca24190f21bdfa73c2de,
     type: 3}
-  distToAutoBoost: 20
+  distToAutoBoost: 40
   timerForBoostCorutine: 10
 --- !u!114 &7069335761444896222
 MonoBehaviour:
