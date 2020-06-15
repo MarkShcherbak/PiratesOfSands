@@ -53,7 +53,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
 
     ////TODO переделать
-    //[SerializeField] private GameObject pirate;
+    [SerializeField] private Transform pilotSlot;
 
     //Collider[] pirateColliders;
     //Rigidbody[] pirateRigidbodies;
@@ -113,6 +113,9 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     //Shield slot accessor
     public Transform ShieldSlot { get => shieldSlot; }
+
+    // Pirate slot accessor
+    public Transform PirateSlot { get => pilotSlot; }
 
     //Cannons accessor
     public ICannonModelView[] FrontCannons { get => frontCannons; }

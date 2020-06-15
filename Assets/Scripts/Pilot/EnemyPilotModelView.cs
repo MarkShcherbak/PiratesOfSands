@@ -13,7 +13,9 @@ public class EnemyPilotModelView : MonoBehaviour
     private Vector3 actionDirection;
     
     public Vector3 ChechpointTarget { get; set; }
-    
+
+    [SerializeField] private SkinnedMeshRenderer pirateRenderer;
+    public SkinnedMeshRenderer PirateRenderer { get => pirateRenderer; }
 
     private void FixedUpdate()
     {

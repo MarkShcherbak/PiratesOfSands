@@ -1,12 +1,23 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
+
 public class PilotFactory
 {
+    static List<Color> colorList = Resources.Load<PilotColors>("Pilot/Pilot Color Table").colorList;
+
     public static PlayerPilotModelView CreatePlayerPilotModelView(Transform parentShip)
     {
         GameObject testPlayerPilotPrefab = Resources.Load<GameObject>("Prefabs/Pilot/TestPlayer");
-        PlayerPilotModelView modelView = UnityEngine.Object.Instantiate(testPlayerPilotPrefab, parentShip)
+        parentShip.TryGetComponent<ShipModelView>(out ShipModelView shipMV);
+
+        PlayerPilotModelView modelView = UnityEngine.Object.Instantiate(testPlayerPilotPrefab, shipMV.PirateSlot.transform)
             .GetComponent<PlayerPilotModelView>();
+
+        //Material[] m = modelView.PirateRenderer.materials;
+        //m[0].color = colorList[UnityEngine.Random.Range(0, colorList.Count)];
+        //m[2].color = colorList[UnityEngine.Random.Range(0, colorList.Count)];
+
         return modelView;
     }
 
@@ -18,8 +29,15 @@ public class PilotFactory
     public static EnemyPilotModelView CreateEnemyPilotModelView(Transform parentShip)
     {
         GameObject testEnemyPilotPrefab = Resources.Load<GameObject>("Prefabs/Pilot/TestEnemy");
-        EnemyPilotModelView modelView = UnityEngine.Object.Instantiate(testEnemyPilotPrefab,parentShip.position + Vector3.up * 2f, Quaternion.identity, parentShip.transform)
+        parentShip.TryGetComponent<ShipModelView>(out ShipModelView shipMV);
+
+        EnemyPilotModelView modelView = UnityEngine.Object.Instantiate(testEnemyPilotPrefab, shipMV.PirateSlot.transform)
             .GetComponent<EnemyPilotModelView>();
+
+        Material[] m = modelView.PirateRenderer.materials;
+        m[0].color = colorList[UnityEngine.Random.Range(0, colorList.Count)];
+        m[2].color = colorList[UnityEngine.Random.Range(0, colorList.Count)];
+
         return modelView;
     }
     
