@@ -25,7 +25,7 @@ MonoBehaviour:
   projectileIsExplosive: 0
   projectileExplosionForce: 0
   projectileExplosionRadius: 0
-  hazardDamage: 75
+  hazardDamage: 60
   hazardSpeed: 100
   hazardLifetime: 2
   hazardScatter: 0

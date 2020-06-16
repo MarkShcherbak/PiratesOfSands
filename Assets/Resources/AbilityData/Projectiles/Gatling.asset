@@ -21,7 +21,7 @@ MonoBehaviour:
   projectileSpeed: 120
   projectileLifetime: 2
   projectileScatter: 15
-  projectilesCount: 5
+  projectilesCount: 6
   projectileIsExplosive: 0
   projectileExplosionForce: 0
   projectileExplosionRadius: 0

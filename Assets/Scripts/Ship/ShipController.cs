@@ -55,7 +55,8 @@ public class ShipController
         {
             if (tag.Equals("SlowPoint"))
             {
-                shipMV.Rigidbody.velocity *= 0.25f;
+                shipMV.Rigidbody.velocity = Vector3.zero;
+                shipMV.Rigidbody.AddRelativeForce(2000f * Vector3.back, ForceMode.Impulse);
             }
 
             if (tag.Equals("SlipperyPoint"))
@@ -70,9 +71,13 @@ public class ShipController
 
             if (tag.Equals("Tornado"))
             {
-                shipMV.Rigidbody.AddForce(Vector3.up * 250f, ForceMode.Impulse);
-                shipMV.Rigidbody.AddRelativeTorque(Vector3.up * UnityEngine.Random.Range(-1000f, 1000f), ForceMode.Impulse);
+                shipMV.Rigidbody.AddForce(Vector3.up * 500f, ForceMode.Impulse);
 
+                switch (UnityEngine.Random.Range(0, 2))
+                {
+                    case 0: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, -1000f, 0), ForceMode.Impulse); break;
+                    case 1: shipMV.Rigidbody.AddRelativeTorque(new Vector3(0, 1000f, 0), ForceMode.Impulse); break;
+                }
             }
         }
     }

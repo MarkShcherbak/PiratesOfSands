@@ -181,6 +181,7 @@ public class SeaMineShotModelView : MonoBehaviour
         }
         Destroy(gameObject);
         ParticleFactory.CreateBigExplosion(transform);
+        AudioSourceFactory.CreateLargeRangeSource(transform, Resources.Load<AudioClip>("SFX/Explosion/ExplosionBig"));
     }
 
     private IEnumerator DelayedDestroy(float delay)

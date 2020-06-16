@@ -12,7 +12,7 @@ public class GatlingShotAbility : IAbility, IPrimary
     }
     public IAbility Add(IAbility ability)
     {
-        if (ability is CannonballShotAbility) return new SeaMineShotAbility();
+        if (ability is CannonballShotAbility) return this;
         else return ability;
     }
 

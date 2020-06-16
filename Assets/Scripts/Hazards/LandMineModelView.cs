@@ -157,6 +157,7 @@ public class LandMineModelView : MonoBehaviour
             Destroy(gameObject);
         }
         ParticleFactory.CreateSmallExplosion(transform);
+        AudioSourceFactory.CreateMediumRangeSource(transform, Resources.Load<AudioClip>("SFX/Explosion/ExplosionSmall_02"));
     }
 
     private void OnCollisionEnter(Collision collision)

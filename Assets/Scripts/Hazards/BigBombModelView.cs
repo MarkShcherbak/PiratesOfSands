@@ -114,6 +114,11 @@ public class BigBombModelView : MonoBehaviour
             {
                 affectedColliders = Physics.OverlapSphere(transform.position, radius);
             }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                destroyTime = Time.time;
+            }
         }
     }
 
@@ -159,6 +164,7 @@ public class BigBombModelView : MonoBehaviour
         }
         Destroy(gameObject);
         ParticleFactory.CreateBigExplosion(transform);
+        AudioSourceFactory.CreateLargeRangeSource(transform, Resources.Load<AudioClip>("SFX/Explosion/ExplosionMedium"));
     }
 
     private void OnCollisionEnter(Collision collision)

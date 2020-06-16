@@ -20,6 +20,14 @@ public class ParticleFactory
         UnityEngine.Object.Instantiate(particle, origin.position, Quaternion.identity);
     }
 
+    // Камушки от валуна при столкновении
+
+    public static void CreateRockCollision(Transform origin)
+    {
+        ParticleSystem particle = Resources.Load<ParticleSystem>("Particles/RockCollision");
+        UnityEngine.Object.Instantiate(particle, origin.position, Quaternion.identity);
+    }
+
     //Дым из пушки
 
     public static void CreateShotSmoke(Transform origin)
