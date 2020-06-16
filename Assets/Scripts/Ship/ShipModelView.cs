@@ -144,11 +144,14 @@ public class ShipModelView : MonoBehaviour, IDamageable
     public Rigidbody Rigidbody { get => rb; }
 
     public ShipDriveParams shipDriveParams;
-
     public bool isOnGround;
+
+    public bool autoBoostHelper = false;
 
 
     #endregion
+
+    public EnemyPilotController enemyPilotController;
 
     private void OnDrawGizmosSelected()
     {

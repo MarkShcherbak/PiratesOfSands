@@ -428,7 +428,12 @@ MonoBehaviour:
   checkPointHightLight: {fileID: 5359795418257256080, guid: 53aeddc5110eca24190f21bdfa73c2de,
     type: 3}
   distToAutoBoost: 40
-  timerForBoostCorutine: 10
+  aimHelperInterest: 1.2
+  aimOfsetCoef: 0
+  timerForBoostCorutine: 1
+  basicShipDriveParams: {fileID: 11400000, guid: cc81c5418edc0904bb39d0118de88ccb,
+    type: 2}
+  boostDriveParams: {fileID: 11400000, guid: 6c7124f161cc7e14aa6a62e7c191bff3, type: 2}
 --- !u!114 &7069335761444896222
 MonoBehaviour:
   m_ObjectHideFlags: 0

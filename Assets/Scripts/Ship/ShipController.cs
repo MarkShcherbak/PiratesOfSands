@@ -51,7 +51,7 @@ public class ShipController
     /// <param name="tag"></param>
     private void HandleTriggerIN(object sender, string tag)
     {
-        if (shipMV.ShieldSlot.childCount == 0)
+        if (shipMV.ShieldSlot.childCount == 0 && shipMV.autoBoostHelper == false)
         {
             if (tag.Equals("SlowPoint"))
             {
@@ -122,9 +122,19 @@ public class ShipController
         Vector3 forward = Vector3.Project(shipMV.Rigidbody.velocity, -shipMV.transform.forward);
 
 
-        Ray ray = new Ray(shipMV.transform.position, Vector3.down);
         shipMV.transform.Rotate(0f, input.x * shipMV.shipDriveParams.RotateCoef * Time.fixedDeltaTime, 0f, Space.Self);
-        shipMV.isOnGround = Physics.Raycast(ray, shipMV.shipDriveParams.distance);
+
+        Ray ray = new Ray(shipMV.transform.position, Vector3.down);
+        bool wasHit = Physics.Raycast(ray, out RaycastHit raycastHit, shipMV.shipDriveParams.distance * 10f);
+        if (wasHit && raycastHit.distance <= shipMV.shipDriveParams.distance)
+        {
+            shipMV.isOnGround = true;
+        }
+        else
+        {
+            shipMV.isOnGround = false;
+        }
+
         if (shipMV.isOnGround)
         {
             shipMV.Rigidbody.angularDrag = previousAngularDrag;
@@ -137,13 +147,20 @@ public class ShipController
             if (shipMV.DustTrail.isStopped)
                 shipMV.DustTrail.Play(true);
         }
+        else if (shipMV.autoBoostHelper)
+        {
+            shipMV.Rigidbody.angularDrag = 3f;
+            if (wasHit && !shipMV.isOnGround)
+            {
+                shipMV.Rigidbody.AddForce(Vector3.down, ForceMode.Acceleration);
+            }
+        }
         else
         {
             shipMV.Rigidbody.angularDrag = 3f;
 
             if (shipMV.DustTrail.isPlaying)
                 shipMV.DustTrail.Stop(true);
-
         }
 
         shipMV.Rigidbody.velocity = down + forward + right;

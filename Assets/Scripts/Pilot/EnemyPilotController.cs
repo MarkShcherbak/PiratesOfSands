@@ -15,6 +15,7 @@ public class EnemyPilotController
     private Vector3 aimOffset;
 
     // "Шум" скорости передвижения
+    public float aimInterestCoef = 1.0f;
     private float aimInterest = 1.0f;
     
      private int runOutDirection = 2; // TODO переделать этот костыль
@@ -60,10 +61,19 @@ public class EnemyPilotController
         BoxCollider collider = currentAim.GetComponentInChildren<BoxCollider>();
 
         // Получаем случайную точку исходя из размеров коллайдера
-        aimOffset = new Vector3(
-            x: UnityEngine.Random.Range(collider.bounds.min.x, collider.bounds.max.x),
-            y: collider.bounds.max.y,
-            z: UnityEngine.Random.Range(collider.bounds.min.z, collider.bounds.max.z));
+        if (shipModelView.autoBoostHelper)
+        {
+            aimOffset = collider.transform.position;
+        }
+        else
+        {
+            aimOffset = new Vector3(
+              x: UnityEngine.Random.Range(collider.bounds.min.x, collider.bounds.max.x),
+              y: collider.bounds.max.y,
+              z: UnityEngine.Random.Range(collider.bounds.min.z, collider.bounds.max.z));
+
+        }
+       
 
         // и размещаем эту точку внутри коллайдера (т.е. возвращаем ближайшую соответствующую полученным координатам точку в пространстве коллайдера)
         aimOffset = collider.ClosestPoint(aimOffset);
@@ -71,7 +81,7 @@ public class EnemyPilotController
         pilotModelView.ChechpointTarget = aimOffset;
 
         // Получаем множитель скорости движения к следующей цели
-        aimInterest = UnityEngine.Random.Range(0.9f, 1.18f);
+        aimInterest = UnityEngine.Random.Range(0.9f, 1.18f) * aimInterestCoef;
     }
 
 
@@ -109,6 +119,7 @@ public class EnemyPilotController
             //forward cast
             bool isLandCast = Physics.Raycast(pilotModelView.transform.position + (checkpointDirection + Vector3.up).normalized * 20,
                 Vector3.down, out hit, maxDistance, groundMask);
+            isLandCast = true;
             if (isLandCast)
             {
                 // находим расстояние до рейкаста до земли
@@ -148,7 +159,7 @@ public class EnemyPilotController
             
             // создание вектора движения и поворота
             float moveH;
-            if (isObstacleOnMyWay)
+            if (isObstacleOnMyWay && shipModelView.autoBoostHelper == false)
             {
                 if(isRightHit == false)
                 {

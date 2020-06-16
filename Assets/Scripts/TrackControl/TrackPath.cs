@@ -62,11 +62,17 @@ public class TrackPath : MonoBehaviour
     private ShipModelView playerShMV;
     List<ShipModelView> enemiesShipModelView;
     [SerializeField] private float distToAutoBoost = 10f;
+    [SerializeField] private float aimHelperInterest = 2f;
+    [SerializeField] private float aimOfsetCoef = 0.5f;
     [SerializeField] private float timerForBoostCorutine = 5f;
 
     private DateTime startTime;
 
     Dictionary<Transform, float> shipsAndDistance;
+
+    [SerializeField] private ShipDriveParams basicShipDriveParams;
+    [SerializeField] private ShipDriveParams boostDriveParams;
+    
 
     private void Awake()
     {
@@ -675,8 +681,16 @@ public class TrackPath : MonoBehaviour
                 && enemyNextGatePosDistance > playerNextGatePosDistance                             // расстояние до сл. чекпоинта больше чем у игрока
                 && playerEnemyDistance > distToAutoBoost ))                                         // и дистация между игроком и врагом больше чем указанная
             {
-                enemy.SecondaryAbility = new SuperMegaWTFSpeedAbility();
-                //Debug.Log(enemy.transform.name + " add: speedBostHack");
+                
+                enemy.enemyPilotController.aimInterestCoef = aimHelperInterest;
+                enemy.autoBoostHelper = true;
+                Debug.Log(enemy.transform.name + "Set enemy coef interest " + aimHelperInterest.ToString());
+            }
+            else
+            {
+                enemy.enemyPilotController.aimInterestCoef = 1f;
+                enemy.autoBoostHelper = false;
+                Debug.Log(enemy.transform.name + "Set enemy coef interest X1.0");
             }
         }
         

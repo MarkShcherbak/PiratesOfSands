@@ -82,6 +82,7 @@ public class GameController
             EnemyPilotModelView enemyPilotMV = PilotFactory.CreateEnemyPilotModelView(enemyShipMV.transform);
             EnemyPilotController enemyPilotController =
                 PilotFactory.CreateEnemyPilotController(enemyPilotMV, enemyShipMV, checkpointsPath);
+            enemyShipMV.enemyPilotController = enemyPilotController;
             objectsInGame.Add(enemyPilotMV.gameObject);
 
             UIFactory.AddMinimapPointToEnemy(enemyPilotMV.transform);
