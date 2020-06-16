@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 06696564cc2d93a4b927d5c59568c239
+guid: 1bf97a2f571d91d46ae93368f0b648d7
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -8,6 +8,11 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Metal01
+    second: {fileID: 2100000, guid: 29be5cbca49ee2540949148a268a7555, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal02
     second: {fileID: 2100000, guid: 13a4c8c8820a7c740b05bade801da5b4, type: 2}
   materials:
     materialImportMode: 1
@@ -39,7 +44,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.75
+    globalScale: 1.25
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -73,7 +78,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
@@ -85,14 +90,14 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0075
+    globalScale: 0.012499999
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   avatarSetup: 0
   additionalBone: 0

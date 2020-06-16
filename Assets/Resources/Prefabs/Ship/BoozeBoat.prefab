@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 8674399705523645171}
   m_Layer: 30
   m_Name: Slot_Shield
-  m_TagString: Ship
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
