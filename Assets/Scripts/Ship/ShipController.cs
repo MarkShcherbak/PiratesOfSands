@@ -41,7 +41,6 @@ public class ShipController
         shipMV.OnFixedUpdate += HandleFixedUpdate;
 
         previousAngularDrag = shipMV.Rigidbody.angularDrag;
-
     }
 
     /// <summary>
@@ -176,6 +175,8 @@ public class ShipController
             shipMV.AccecelerationSoundOff();
             isMoving = false;
         }
+
+        shipMV.AnimatorVentBlade.SetFloat("RotationSpeed", shipMV.Rigidbody.velocity.z);
     }
 
     /// <summary>

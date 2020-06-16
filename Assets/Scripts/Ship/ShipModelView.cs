@@ -33,6 +33,8 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     [SerializeField] private ParticleSystem dustTrail;
 
+    [SerializeField] private Animator animatorVentBlade;
+
     //ShipAbility
     private IAbility primaryAbilitySlot;
     private IAbility secondaryAbilitySlot;
@@ -139,6 +141,11 @@ public class ShipModelView : MonoBehaviour, IDamageable
     public ParticleSystem DustTrail
     {
         get => dustTrail;
+    }
+
+    public Animator AnimatorVentBlade
+    {
+        get => animatorVentBlade;
     }
 
     public Rigidbody Rigidbody { get => rb; }

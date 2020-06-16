@@ -1373,6 +1373,7 @@ MonoBehaviour:
   rightSlots: []
   shieldSlot: {fileID: 8674399705523645171}
   dustTrail: {fileID: 5537527665852814295}
+  animatorVentBlade: {fileID: 5920585031245933279}
   accelerationSound: {fileID: 956394277612413720}
   engineSound: {fileID: 3336780872398647068}
   shootSound: {fileID: 1334627248131124015}
@@ -1387,6 +1388,7 @@ MonoBehaviour:
   centerOfMass: {x: 0, y: 1, z: 0}
   shipDriveParams: {fileID: 11400000, guid: cc81c5418edc0904bb39d0118de88ccb, type: 2}
   isOnGround: 0
+  autoBoostHelper: 0
 --- !u!215 &8352497770520668103
 ReflectionProbe:
   m_ObjectHideFlags: 0
