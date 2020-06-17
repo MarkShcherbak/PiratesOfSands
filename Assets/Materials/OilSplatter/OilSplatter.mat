@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OilSplatter
-  m_Shader: {fileID: 4800000, guid: 01a668cc78047034a8a0c5ca2d24c6f7, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: a224c1975fc59414580c566dbda70cf3, type: 3}
+  m_ShaderKeywords: _UnityFogEnable
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -36,16 +36,28 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c8fd863db3f3d4f4fb88798c457c9f73, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
         m_Texture: {fileID: 2800000, guid: 8c809d7b444c839469c8fe8164555974, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - _Cull: 2
+    - _DstBlend: 10
+    - _FracUVEnable: 0
+    - _MulAlphaToRGB: 0
+    - _ProjectionAngleDiscardEnable: 0
+    - _ProjectionAngleDiscardThreshold: 1
+    - _SrcBlend: 5
+    - _StencilComp: 0
+    - _StencilRef: 0
+    - _UnityFogEnable: 1
+    - _ZTest: 0
     m_Colors:
     - BumpMapScale: {r: 1, g: 1, b: 1, a: 1}
+    - _AlphaRemap: {r: 1, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ProjectorClip_0: {r: -0.015438232, g: -0.025866693, b: 0.14460614, a: 0.29360974}
     - _ProjectorClip_1: {r: 0.0047582523, g: 0.14523815, b: 0.026487738, a: 0.0030641258}

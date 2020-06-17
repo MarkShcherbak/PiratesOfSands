@@ -143,7 +143,6 @@ public class ShipController
             forward *= shipMV.shipDriveParams.inertialCoef;
             right *= shipMV.shipDriveParams.inertialCoef;
 
-            if (shipMV.DustTrail.isStopped)
                 shipMV.DustTrail.Play(true);
         }
         else if (shipMV.autoBoostHelper)
@@ -158,7 +157,6 @@ public class ShipController
         {
             shipMV.Rigidbody.angularDrag = 3f;
 
-            if (shipMV.DustTrail.isPlaying)
                 shipMV.DustTrail.Stop(true);
         }
 

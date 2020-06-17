@@ -122,7 +122,17 @@ public class HazardFactory
     // Масляное пятно
     public static GameObject CreateOilSplatter(Transform origin)
     {
-        GameObject splatter = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Prefabs/Hazard/OilSplatter"), origin.position, Quaternion.Euler(0, UnityEngine.Random.Range(0, 359f), 0));
-        return splatter;
+        Ray ray = new Ray(origin.transform.position + Vector3.up * 10.0f, Vector3.down);
+        RaycastHit hit = new RaycastHit();
+        Quaternion newRot;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            origin.rotation = Quaternion.FromToRotation(origin.transform.up, hit.normal) * origin.transform.rotation;
+        }
+
+        GameObject splatter = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Prefabs/Hazard/OilSplatter"), origin.position, origin.rotation);
+
+            return splatter;
     }
 }
