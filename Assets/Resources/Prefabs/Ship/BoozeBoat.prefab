@@ -1372,7 +1372,6 @@ MonoBehaviour:
   leftSlots: []
   rightSlots: []
   shieldSlot: {fileID: 8674399705523645171}
-  dustTrail: {fileID: 5537527665852814295}
   animatorVentBlade: {fileID: 5920585031245933279}
   accelerationSound: {fileID: 956394277612413720}
   engineSound: {fileID: 3336780872398647068}
@@ -2248,6 +2247,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DustTrailL
       objectReference: {fileID: 0}
+    - target: {fileID: 4805779062653042943, guid: fce33e8664996874a8d1569f22af9638,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5955181728268075926, guid: fce33e8664996874a8d1569f22af9638,
         type: 3}
       propertyPath: cullingMode
@@ -2313,12 +2317,6 @@ PrefabInstance:
 --- !u!4 &4656956968716715830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6835509411880703863, guid: fce33e8664996874a8d1569f22af9638,
-    type: 3}
-  m_PrefabInstance: {fileID: 2196716653824102465}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &5537527665852814295 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5955181728268075926, guid: fce33e8664996874a8d1569f22af9638,
     type: 3}
   m_PrefabInstance: {fileID: 2196716653824102465}
   m_PrefabAsset: {fileID: 0}

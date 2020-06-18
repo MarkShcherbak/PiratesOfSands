@@ -124,7 +124,6 @@ public class HazardFactory
     {
         Ray ray = new Ray(origin.transform.position + Vector3.up * 10.0f, Vector3.down);
         RaycastHit hit = new RaycastHit();
-        Quaternion newRot;
 
         if (Physics.Raycast(ray, out hit))
         {

@@ -39,8 +39,11 @@ public class ShipController
         shipMV.OnTriggerOUT += HandleTriggerOUT;
         shipMV.OnDamageRecieved += HandleRecieveDamage;
         shipMV.OnFixedUpdate += HandleFixedUpdate;
+        shipMV.OnRespawn += HandleRespawn;
 
         previousAngularDrag = shipMV.Rigidbody.angularDrag;
+
+        shipMV.Health = shipMV.shipDriveParams.health;
     }
 
     /// <summary>
@@ -125,10 +128,12 @@ public class ShipController
 
         Ray ray = new Ray(shipMV.transform.position, Vector3.down);
         bool wasHit = Physics.Raycast(ray, out RaycastHit raycastHit, shipMV.shipDriveParams.distance * 10f);
+
         if (wasHit && raycastHit.distance <= shipMV.shipDriveParams.distance)
         {
             shipMV.isOnGround = true;
         }
+
         else
         {
             shipMV.isOnGround = false;
@@ -136,6 +141,9 @@ public class ShipController
 
         if (shipMV.isOnGround)
         {
+            //if (shipMV.DustTrail.isPlaying == false)
+            //    shipMV.DustTrail.Play(true);
+
             shipMV.Rigidbody.angularDrag = previousAngularDrag;
 
             Vector3 direction = Vector3.ProjectOnPlane(shipMV.transform.forward, Vector3.up);
@@ -143,7 +151,7 @@ public class ShipController
             forward *= shipMV.shipDriveParams.inertialCoef;
             right *= shipMV.shipDriveParams.inertialCoef;
 
-                shipMV.DustTrail.Play(true);
+
         }
         else if (shipMV.autoBoostHelper)
         {
@@ -155,9 +163,10 @@ public class ShipController
         }
         else
         {
-            shipMV.Rigidbody.angularDrag = 3f;
+            //if (shipMV.DustTrail.isPlaying)
+            //    shipMV.DustTrail.Stop(true);
 
-                shipMV.DustTrail.Stop(true);
+            shipMV.Rigidbody.angularDrag = 3f;
         }
 
         shipMV.Rigidbody.velocity = down + forward + right;
@@ -191,8 +200,10 @@ public class ShipController
             {
                 shipMV.Health -= amount;
 
-                shipHPMV.GreenBarFill = shipMV.Health / 100;
-                shipHPMV.HPAmount.text = $"{shipMV.Health}%";
+                float percentageConst = 100 / shipMV.StartHealth;
+
+                shipHPMV.GreenBarFill = shipMV.Health / shipMV.StartHealth;
+                shipHPMV.HPAmount.text = $"{shipMV.Health * percentageConst}%";
 
                 if (shipMV.Health <= 0)
                 {
@@ -202,9 +213,25 @@ public class ShipController
 
                     //TODO переделать
                     //shipMV.DetachPilot();
+
+                    shipMV.StartCoroutine(shipMV.RespawnShip(shipMV.shipDriveParams.respawnTime));
                 }
             }
         }
+    }
+
+    private void HandleRespawn(object sender, float startHealth)
+    {
+        shipMV.Health = startHealth;
+        shipMV.IsAlive = true;
+
+        shipMV.PrimaryAbility = null;
+        shipMV.SecondaryAbility = null;
+
+        float percentageConst = 100 / shipMV.StartHealth;
+
+        shipHPMV.GreenBarFill = shipMV.Health / shipMV.StartHealth;
+        shipHPMV.HPAmount.text = $"{shipMV.Health * percentageConst}%";
     }
 
     /// <summary>
@@ -243,7 +270,6 @@ public class ShipController
         {
             flipDelay = Time.time + 3.0f;
             flipTime = Time.time + 3.0f;
-            //Debug.Log($"Flip will be initiated in {flipTime}");
         }
 
         if(Time.time > flipTime)

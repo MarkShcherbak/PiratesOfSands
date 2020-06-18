@@ -10,7 +10,7 @@ public class HitpointsCanvasModelView : MonoBehaviour
 
     [SerializeField] private Camera cam;
 
-    public Text HPAmount {get => hpText;set => hpText = value;}
+    public Text HPAmount {get => hpText; set => hpText = value;}
     public float GreenBarFill { get => greenBar.fillAmount; set => greenBar.fillAmount = value; }
 
     private void Start()

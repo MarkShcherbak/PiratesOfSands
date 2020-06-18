@@ -13,6 +13,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     public event EventHandler<Sprite> OnPrimaryAbilityChanged = (sender, e) => { };
     public event EventHandler<Sprite> OnSecondaryAbilityChanged = (sender, e) => { };
     public event EventHandler<float> OnDamageRecieved = (sender, e) => { };
+    public event EventHandler<float> OnRespawn = (sender, e) => { };
     public event EventHandler<string> OnTriggerIN = (sender, tag) => { };
     public event EventHandler<string> OnTriggerOUT = (sender, tag) => { };
     public event EventHandler OnFixedUpdate = (sender, e) => { };
@@ -31,7 +32,7 @@ public class ShipModelView : MonoBehaviour, IDamageable
     // Shield spot on center of the ship
     [SerializeField] private Transform shieldSlot;
 
-    [SerializeField] private ParticleSystem dustTrail;
+    //[SerializeField] private ParticleSystem dustTrail;
 
     [SerializeField] private Animator animatorVentBlade;
 
@@ -39,7 +40,8 @@ public class ShipModelView : MonoBehaviour, IDamageable
     private IAbility primaryAbilitySlot;
     private IAbility secondaryAbilitySlot;
 
-    private float health = 100;
+    private float health;
+    private float startHealth;
     private bool isAlive = true;
 
     [SerializeField] AudioSource accelerationSound;
@@ -72,6 +74,12 @@ public class ShipModelView : MonoBehaviour, IDamageable
     {
         get => health; set => health = value;
     }
+
+    public float StartHealth
+    {
+        get => startHealth;
+    }
+
     //Ability Accessor
     public IAbility PrimaryAbility
     {
@@ -138,10 +146,10 @@ public class ShipModelView : MonoBehaviour, IDamageable
         }
     }
 
-    public ParticleSystem DustTrail
-    {
-        get => dustTrail;
-    }
+    //public ParticleSystem DustTrail
+    //{
+    //    get => dustTrail;
+    //}
 
     public Animator AnimatorVentBlade
     {
@@ -188,6 +196,9 @@ public class ShipModelView : MonoBehaviour, IDamageable
         Rigidbody.centerOfMass = centerOfMass;
 
         StartCoroutine(StartEngine());
+
+        health = shipDriveParams.health;
+        startHealth = health;
     }
 
     /// <summary>
@@ -430,6 +441,16 @@ public class ShipModelView : MonoBehaviour, IDamageable
         hitSound.Play();
     }
 
+    public System.Collections.IEnumerator RespawnShip(float delay)
+    {
+        GameObject smoke = ParticleFactory.CreateShipDestroyedSmoke(transform);
+
+        yield return new WaitForSeconds(delay);
+        OnRespawn(this, startHealth);
+        smoke.GetComponent<ParticleSystem>().Stop();
+
+        Destroy(smoke, 3f);
+    }
 
     #endregion
 }

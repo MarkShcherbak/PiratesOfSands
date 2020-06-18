@@ -16,3 +16,5 @@ MonoBehaviour:
   acceleration: 70
   distance: 1
   inertialCoef: 0.97
+  health: 50
+  respawnTime: 10

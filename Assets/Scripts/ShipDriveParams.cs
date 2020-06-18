@@ -27,4 +27,14 @@ public class ShipDriveParams : ScriptableObject
     ///  при изменении коффициента надо вносить обратную поправку в коэффециент максимальной скорости
     /// </summary>
     public float inertialCoef = 0.97f;
+
+    /// <summary>
+    /// Здоровье корабля
+    /// </summary>
+    public float health = 50;
+
+    /// <summary>
+    /// Время восстановления корабля
+    /// </summary>
+    public float respawnTime = 7f;
 }

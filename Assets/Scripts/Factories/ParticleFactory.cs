@@ -49,4 +49,11 @@ public class ParticleFactory
         GameObject explosion = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Particles/Explosions/BigExplosion"), origin.position, Quaternion.identity);
         return explosion;
     }
+
+    public static GameObject CreateShipDestroyedSmoke(Transform origin)
+    {
+        GameObject smoke = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Particles/ShipDestroyedSmoke"), origin.position + origin.forward * -3f + origin.up * 3f, Quaternion.identity, origin);
+        return smoke;
+
+    }
 }
