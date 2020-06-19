@@ -310,7 +310,7 @@ MonoBehaviour:
     count: 10
     distFromGround: 0.5
     typeOfCreation: 1
-    radius: 40
+    radius: 25
 --- !u!1 &1134588251401287064
 GameObject:
   m_ObjectHideFlags: 0
