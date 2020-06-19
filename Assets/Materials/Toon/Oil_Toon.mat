@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Oil_Toon
-  m_Shader: {fileID: -6465566751694194690, guid: 4aa46d33b0afb5e49bb0703218e42e0e,
+  m_Shader: {fileID: -6465566751694194690, guid: eaddb7fee1e7ccc458355848ad299c97,
     type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
@@ -67,7 +67,7 @@ Material:
     m_Floats:
     - Vector1_38BD3441: 0.4
     - Vector1_CF8B0D8D: 4
-    - Vector1_ED5ABFD9: 0.044
+    - Vector1_ED5ABFD9: 0.078
     - Vector1_F3F6B787: 0.14
     - _AlphaClip: 0
     - _Blend: 0
@@ -95,9 +95,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_28180829: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
-    - Color_57D43A16: {r: 0.7176471, g: 0.7176471, b: 0.7176471, a: 0}
-    - Color_F689E8B9: {r: 0, g: 0, b: 0, a: 1}
+    - Color_28180829: {r: 0, g: 0, b: 0, a: 1}
+    - Color_57D43A16: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}
+    - Color_F689E8B9: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
     - _BaseColor: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 1}
     - _Color: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 1}
     - _EmissionColor: {r: 0.07036011, g: 0.07036011, b: 0.07036011, a: 1}

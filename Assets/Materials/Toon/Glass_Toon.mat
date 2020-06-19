@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Glass_Toon
-  m_Shader: {fileID: -6465566751694194690, guid: 4aa46d33b0afb5e49bb0703218e42e0e,
+  m_Shader: {fileID: -6465566751694194690, guid: eaddb7fee1e7ccc458355848ad299c97,
     type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
