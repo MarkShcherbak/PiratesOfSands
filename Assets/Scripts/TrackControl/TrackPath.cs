@@ -405,6 +405,7 @@ public class TrackPath : MonoBehaviour
                 SetWin();
                 OnFinish(this, EventArgs.Empty);
             }
+            pilot.GetComponent<ShipModelView>().IsAlive = false;
         }
         
         TrackLeaderTableStruct trackLeaderTableStruct = new TrackLeaderTableStruct

@@ -13,8 +13,8 @@ using UnityEngine;
         {
             if (CheckpointDirection != null && ShipDirection != null)
             {
-                Vector3 direction = CheckpointDirection.position - ShipDirection.position;
-                //float arrowAngle = Vector3.SignedAngle(ShipDirection.forward, direction, Vector3.up);
+                Vector3 direction = CheckpointDirection.position - 
+                CinemachineModelView.Instance.CineCamera.ActiveVirtualCamera.VirtualCameraGameObject.transform.position;
                 float arrowAngle = AngleSigned(ShipDirection.forward, direction, Vector3.up);
                 ArrowTransform.rotation = Quaternion.Euler(0, 0, -arrowAngle);
 				ArrowOutlineTransform.rotation = Quaternion.Euler(0, 0, -arrowAngle);
