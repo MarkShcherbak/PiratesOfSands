@@ -41,6 +41,12 @@ public class GameController
 
         // создаем корабль игрока
         ShipModelView playerShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(0));
+
+        HitpointsCanvasModelView playerHp = UIFactory.CreateShipHealthBar(playerShipMV.transform);
+            if (playerHp == null) Debug.Log("HP NOT CREATED!!");
+            objectsInGame.Add(playerHp.gameObject);
+
+        //создаем контроллер корабля игрока
         ShipController shipController = ShipFactory.CreateShipController(playerShipMV, null);
         playerShipMV.gameObject.AddComponent<AudioListener>();
         objectsInGame.Add(playerShipMV.gameObject);
@@ -54,6 +60,7 @@ public class GameController
 
         // создаем HUD стрелку направления
         DirectionArrowModelView HUDarrowMV = UIFactory.CreateDirectionArrow(canvas);
+        objectsInGame.Add(HUDarrowMV.gameObject);
         
         // создаем пилота игрока
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
@@ -154,6 +161,7 @@ public class GameController
     {
         trackFinishMenuModel = UIFactory.CreateTrackFinishMenuModelView(canvas);
         trackFinishMenuModel.trackPath = checkpointsPath;
+        trackFinishMenuModel.OnExitToMainMenu += HandleExitToMenu;
         objectsInGame.Add(trackFinishMenuModel.gameObject);
         CinemachineModelView.Instance.CountdownPause();
     }

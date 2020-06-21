@@ -43,6 +43,14 @@ public class UIFactory
         return modelView;
     }
 
+    public static HitpointsCanvasModelView CreatePlayerShipHealthBar(Transform shipTransform)
+    {
+        GameObject hpCanvasPrefab = Resources.Load<GameObject>("Prefabs/UI/PlayerHitpointsCanvas");
+        HitpointsCanvasModelView modelView = UnityEngine.Object.Instantiate(hpCanvasPrefab, shipTransform)
+            .GetComponent<HitpointsCanvasModelView>();
+        return modelView;
+    }
+
     public static TrackFinishMenuModelView CreateTrackFinishMenuModelView(Canvas canvas)
     {
         GameObject trackFinishMenuPrefab = Resources.Load<GameObject>("Prefabs/UI/TrackFinishMenu");

@@ -37,7 +37,7 @@ public class Main : MonoBehaviour
 
     private void HandleExitGame(object sender, EventArgs e)
     {
-        Debug.Log("Exitting Game!");
+        Application.Quit();
     }
 
     private void StartGame(int lapsCount, int shipCount)

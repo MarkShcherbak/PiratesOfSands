@@ -10,8 +10,18 @@ using UnityEngine.UI;
 public class TrackFinishMenuModelView : MonoBehaviour
 {
     public TrackPath trackPath;
-    public TextMeshProUGUI textMeshPro;
+    public Text text;
+    public Button exitButton;
 
+    public event EventHandler OnExitToMainMenu = (sender, e) => { };
+
+    private void Start()
+    {
+        exitButton.onClick.AddListener(delegate
+            {
+                OnExitToMainMenu(this, EventArgs.Empty);
+            });
+    }
     private void Update()
     {
         System.Text.StringBuilder strb = new System.Text.StringBuilder();
@@ -27,6 +37,6 @@ public class TrackFinishMenuModelView : MonoBehaviour
         {
             strb.AppendLine(rawLeader);
         }
-        textMeshPro.SetText(strb);
+        text.text = strb.ToString();
     }
 }
