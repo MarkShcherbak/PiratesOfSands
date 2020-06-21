@@ -27,7 +27,7 @@ MonoBehaviour:
   projectileExplosionRadius: 0
   hazardDamage: 20
   hazardSpeed: 75
-  hazardLifetime: 30
+  hazardLifetime: 120
   hazardScatter: 135
   hazardsCount: 3
   hazardIsExplosive: 1

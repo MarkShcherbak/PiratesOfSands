@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEditor;
 using System;
-using UnityEditor.SceneManagement;
 
 [Serializable]
 //Вспомогательный класс для создания трека и его чекпоинтов

@@ -88,7 +88,7 @@ public class UIFactory
     {
         GameObject minimapPref = Resources.Load<GameObject>("Prefabs/UI/Minimap/PlayerIconMinimap");
         GameObject minimapPoint = UnityEngine.Object.Instantiate(minimapPref);
-        minimapPoint.transform.parent = parenTransform;
+        minimapPoint.transform.SetParent(parenTransform);
         minimapPoint.transform.position = parenTransform.position;
     }
 
@@ -96,7 +96,7 @@ public class UIFactory
     {
         GameObject minimapPref = Resources.Load<GameObject>("Prefabs/UI/Minimap/EnemyIconMinimap");
         GameObject minimapPoint = UnityEngine.Object.Instantiate(minimapPref);
-        minimapPoint.transform.parent = parenTransform;
+        minimapPoint.transform.SetParent(parenTransform);
         minimapPoint.transform.position = parenTransform.position;
     }
 
