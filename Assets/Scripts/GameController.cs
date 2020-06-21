@@ -48,7 +48,7 @@ public class GameController
             objectsInGame.Add(playerHp.gameObject);
 
         //создаем контроллер корабля игрока
-        ShipController shipController = ShipFactory.CreateShipController(playerShipMV, null);
+        ShipController shipController = ShipFactory.CreateShipController(playerShipMV, playerHp);
         playerShipMV.gameObject.AddComponent<AudioListener>();
         objectsInGame.Add(playerShipMV.gameObject);
 
@@ -62,6 +62,7 @@ public class GameController
         // создаем HUD стрелку направления
         DirectionArrowModelView HUDarrowMV = UIFactory.CreateDirectionArrow(canvas);
         objectsInGame.Add(HUDarrowMV.gameObject);
+
         // создаем пилота игрока
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV, checkpointsPath, HUDarrowMV);
