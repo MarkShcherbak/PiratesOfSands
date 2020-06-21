@@ -62,11 +62,6 @@ public class GameController
         // создаем HUD стрелку направления
         DirectionArrowModelView HUDarrowMV = UIFactory.CreateDirectionArrow(canvas);
         objectsInGame.Add(HUDarrowMV.gameObject);
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 27d2101192ce8e4208b6f3512f7ea4b9c7f32324
         // создаем пилота игрока
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV, checkpointsPath, HUDarrowMV);
