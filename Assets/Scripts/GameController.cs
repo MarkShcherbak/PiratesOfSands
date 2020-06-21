@@ -38,6 +38,7 @@ public class GameController
             
         // создаем объект размещения кораблей на трассе
         StartPlacerModelView placerMV = TrackFactory.CreateStartPlacer(checkpointsPath.GetStartPosition(), gameStats.placerPrefab);
+        objectsInGame.Add(placerMV.gameObject);
 
         // создаем корабль игрока
         ShipModelView playerShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(0));
@@ -54,7 +55,8 @@ public class GameController
 
         // создаем HUD стрелку направления
         DirectionArrowModelView HUDarrowMV = UIFactory.CreateDirectionArrow(canvas);
-        
+        objectsInGame.Add(HUDarrowMV.gameObject);
+
         // создаем пилота игрока
         PlayerPilotModelView playerPilotMV = PilotFactory.CreatePlayerPilotModelView(playerShipMV.transform);
         PlayerPilotController playerController = PilotFactory.CreatePlayerPilotController(playerPilotMV, playerShipMV, checkpointsPath, HUDarrowMV);
