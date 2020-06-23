@@ -26,4 +26,19 @@ public class HitpointsCanvasModelView : MonoBehaviour
         transform.LookAt(transform.position + cam.transform.rotation * Vector3.forward,
             cam.transform.rotation * Vector3.up);
     }
+
+    public IEnumerator ShowHideHp(float delay)
+    {
+        gameObject.TryGetComponent<Canvas>(out Canvas canvas);
+
+        canvas.enabled = true;
+        yield return new WaitForSeconds(delay);
+        canvas.enabled = false;
+    }
+
+    public void ShowHp()
+    {
+        gameObject.TryGetComponent<Canvas>(out Canvas canvas);
+        canvas.enabled = true;
+    }
 }

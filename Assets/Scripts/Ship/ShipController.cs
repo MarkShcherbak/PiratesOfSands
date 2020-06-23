@@ -216,6 +216,16 @@ public class ShipController
 
                     shipMV.StartCoroutine(shipMV.RespawnShip(shipMV.shipDriveParams.respawnTime));
                 }
+
+                if(shipMV.Health > shipMV.StartHealth * 0.33f)
+                {
+                    shipHPMV.StartCoroutine(shipHPMV.ShowHideHp(3f));
+                }
+
+                else
+                {
+                    shipHPMV.ShowHp();
+                }
             }
         }
     }
@@ -232,6 +242,8 @@ public class ShipController
 
         shipHPMV.GreenBarFill = shipMV.Health / shipMV.StartHealth;
         shipHPMV.HPAmount.text = $"{shipMV.Health * percentageConst}%";
+
+        shipHPMV.StartCoroutine(shipHPMV.ShowHideHp(3f));
     }
 
     /// <summary>
