@@ -43,6 +43,12 @@ public class UIFactory
         return modelView;
     }
 
+    public static void CreatePlayerPointer(Transform shipTransform)
+    {
+        GameObject playerPointerPrefab = Resources.Load<GameObject>("Prefabs/UI/PlayerPointerCanvas");
+        UnityEngine.Object.Instantiate(playerPointerPrefab, shipTransform);
+    }
+
     public static HitpointsCanvasModelView CreatePlayerShipHealthBar(Transform shipTransform)
     {
         GameObject hpCanvasPrefab = Resources.Load<GameObject>("Prefabs/UI/PlayerHitpointsCanvas");

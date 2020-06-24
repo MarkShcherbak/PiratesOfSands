@@ -46,8 +46,9 @@ public class GameController
         HitpointsCanvasModelView playerHp = UIFactory.CreateShipHealthBar(playerShipMV.transform);
             if (playerHp == null) Debug.Log("HP NOT CREATED!!");
 
-            playerHp.StartCoroutine(playerHp.ShowHideHp(3f));
             objectsInGame.Add(playerHp.gameObject);
+
+        UIFactory.CreatePlayerPointer(playerShipMV.transform);
 
         //создаем контроллер корабля игрока
         ShipController shipController = ShipFactory.CreateShipController(playerShipMV, playerHp);
@@ -84,7 +85,6 @@ public class GameController
             HitpointsCanvasModelView enemyHp = UIFactory.CreateShipHealthBar(enemyShipMV.transform);
             if (enemyHp == null) Debug.Log("HP NOT CREATED!!");
 
-            enemyHp.StartCoroutine(enemyHp.ShowHideHp(3f));
             objectsInGame.Add(enemyHp.gameObject);
 
             // создаем контроллер корабля противника

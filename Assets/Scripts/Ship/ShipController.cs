@@ -104,12 +104,15 @@ public class ShipController
     /// <param name="direction"></param>
     private void HandleAction(object sender, Vector3 direction)
     {
-        //if (direction != Vector3.back)
+        if(Time.timeScale != 0)
+        {
+            //if (direction != Vector3.back)
             if (direction == Vector3.forward)
-            shipMV.PrimaryAction(direction);
+                shipMV.PrimaryAction(direction);
 
-        else
-            shipMV.SecondaryAction();
+            else
+                shipMV.SecondaryAction();
+        }
     }
 
     /// <summary>
@@ -219,7 +222,7 @@ public class ShipController
 
                 if(shipMV.Health > shipMV.StartHealth * 0.33f)
                 {
-                    shipHPMV.StartCoroutine(shipHPMV.ShowHideHp(3f));
+                    shipHPMV.StartCoroutine(shipHPMV.ShowHideHp(5f));
                 }
 
                 else

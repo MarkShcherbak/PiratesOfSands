@@ -19,6 +19,8 @@ public class HitpointsCanvasModelView : MonoBehaviour
 
         hpText.text = "100%";
         greenBar.fillAmount = 1;
+
+        StartCoroutine(ShowHideHp(5f));
     }
 
     private void Update()
