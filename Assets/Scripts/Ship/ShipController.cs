@@ -228,13 +228,9 @@ public class ShipController
 
                 else
                 {
+                    shipHPMV.StopAllCoroutines();
                     shipHPMV.ShowHp();
                 }
-            }
-
-            else
-            {
-                AudioSourceFactory.CreateMediumRangeSource(shipMV.transform, Resources.Load<AudioClip>("SFX/Collision/Shield"));
             }
         }
     }

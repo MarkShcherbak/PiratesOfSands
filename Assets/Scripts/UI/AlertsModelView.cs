@@ -49,12 +49,16 @@ public class AlertsModelView : MonoBehaviour
 
     private IEnumerator ShowCountDownCorut(int timeInSec)
     {
-        for (int i = timeInSec; i >= 0; i--)
+        for (int i = timeInSec; i > 0; i--)
         {
             textMeshPro.SetText(i.ToString());
             yield return new WaitForSecondsRealtime(1);
         }
-        textMeshPro.SetText("");
+
+        textMeshPro.SetText("GO!");
+
+        yield return new WaitForSecondsRealtime(1);
+
         gameObject.SetActive(false);
     }
 }

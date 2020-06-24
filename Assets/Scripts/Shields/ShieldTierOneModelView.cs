@@ -55,6 +55,8 @@ public class ShieldTierOneModelView : MonoBehaviour, IDamageable
 
     public void RecieveDamage(float amount)
     {
+        AudioSourceFactory.CreateMediumRangeSource(transform, Resources.Load<AudioClip>("SFX/Collision/Shield"));
+
         durability -= amount;
         Debug.Log($"{gameObject.name} was damaged for {amount}. {durability} durability left");
 
