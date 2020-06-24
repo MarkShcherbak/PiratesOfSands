@@ -93,7 +93,10 @@ public class TrackPath : MonoBehaviour
         MakeGateFollow();
 
         checkPointHightLightInstce = Instantiate(checkPointHightLight);
-        
+
+        checkPointHightLightInstce.transform.parent = this.transform;
+
+
         if (gatePointsFollow.Count>0)
         {
             checkPointHightLightInstce.transform.position = gatePointsFollow[0].position;
