@@ -14394,7 +14394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8948107755681408336}
   - component: {fileID: 9125567244401543509}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: TornadoSlowPointPrefab
   m_TagString: Tornado
   m_Icon: {fileID: 0}

@@ -564,7 +564,7 @@ public class TrackPath : MonoBehaviour
         List<string> leaderListString = new List<string>();
         foreach (KeyValuePair<string, DateTime> item in leaderList)
         {
-            leaderListString.Add(item.Key +"; " + (item.Value- startTime).ToString(@"mm\:ss\:fff"));
+            leaderListString.Add(item.Key +": " + (item.Value- startTime).ToString(@"mm\:ss\:fff"));
         }
         
 
