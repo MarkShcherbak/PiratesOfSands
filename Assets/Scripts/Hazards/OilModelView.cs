@@ -96,7 +96,14 @@ public class OilModelView : MonoBehaviour
                 rb.isKinematic = true;
                 
                 splatter = HazardFactory.CreateOilSplatter(transform);
-                AudioSourceFactory.CreateSmallRangeSource(transform, Resources.Load<AudioClip>("SFX/Explosion/OilBombDrop"));
+
+                int sound = Random.Range(0, 2);
+
+                switch (sound)
+                {
+                    case 0: AudioSourceFactory.CreateSmallRangeSource(transform, Resources.Load<AudioClip>("SFX/Explosion/OilBombDrop_01")); break;
+                    case 1: AudioSourceFactory.CreateSmallRangeSource(transform, Resources.Load<AudioClip>("SFX/Explosion/OilBombDrop_02")); break;
+                }
             }
     }
 }

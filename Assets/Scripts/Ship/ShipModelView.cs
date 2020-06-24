@@ -413,7 +413,8 @@ public class ShipModelView : MonoBehaviour, IDamageable
 
     public void SlipperySound()
     {
-        slipperySound.Play();
+        if(slipperySound.isPlaying == false)
+            slipperySound.Play();
     }
 
     public void EngineSoundOn()

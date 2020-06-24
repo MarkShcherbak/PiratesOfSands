@@ -198,9 +198,10 @@ public class ShipController
     {
         if (shipHPMV != null)
         {
-            shipMV.HitSound();
             if (shipMV.ShieldSlot.childCount == 0)
             {
+                shipMV.HitSound();
+
                 shipMV.Health -= amount;
 
                 float percentageConst = 100 / shipMV.StartHealth;
@@ -229,6 +230,11 @@ public class ShipController
                 {
                     shipHPMV.ShowHp();
                 }
+            }
+
+            else
+            {
+                AudioSourceFactory.CreateMediumRangeSource(shipMV.transform, Resources.Load<AudioClip>("SFX/Collision/Shield"));
             }
         }
     }
