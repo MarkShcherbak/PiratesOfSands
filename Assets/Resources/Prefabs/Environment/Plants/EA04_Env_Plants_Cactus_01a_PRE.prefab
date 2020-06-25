@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4460545689578954}
   - component: {fileID: 205225001068797102}
-  - component: {fileID: 8998999187996029755}
-  m_Layer: 0
+  - component: {fileID: 1895423511953951982}
+  m_Layer: 10
   m_Name: EA04_Env_Plants_Cactus_01a_PRE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,18 +62,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23383680970845358}
   m_Enabled: 0
---- !u!65 &8998999187996029755
-BoxCollider:
+--- !u!136 &1895423511953951982
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400938507355842}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 85cca45197a50414fbeff61b72c9da33, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4, y: 8, z: 4}
+  m_Radius: 3
+  m_Height: 8
+  m_Direction: 1
   m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &1460970260015776
 GameObject:
@@ -86,7 +87,7 @@ GameObject:
   - component: {fileID: 4688761266165980}
   - component: {fileID: 33382757699010048}
   - component: {fileID: 23383680970845358}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EA04_Env_Plants_Cactus_01a_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +166,7 @@ GameObject:
   - component: {fileID: 4844552840736958}
   - component: {fileID: 33476831538158746}
   - component: {fileID: 23265436666399562}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EA04_Env_Plants_Cactus_01a_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +245,7 @@ GameObject:
   - component: {fileID: 4243068312439366}
   - component: {fileID: 33058558140569404}
   - component: {fileID: 23571950840441200}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EA04_Env_Plants_Cactus_01a_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
