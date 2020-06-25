@@ -32,7 +32,7 @@ public class AlertsModelView : MonoBehaviour
     {
         gameObject.SetActive(true);
         textMeshPro.SetText(textToShow);
-        yield return new WaitForSecondsRealtime(timeToShow);
+        yield return new WaitForSeconds(timeToShow);
         textMeshPro.SetText("");
         gameObject.SetActive(false);
     }
@@ -49,6 +49,8 @@ public class AlertsModelView : MonoBehaviour
 
     private IEnumerator ShowCountDownCorut(int timeInSec)
     {
+        InputParams.canPause = false;
+
         for (int i = timeInSec; i > 0; i--)
         {
             textMeshPro.SetText(i.ToString());
@@ -58,6 +60,8 @@ public class AlertsModelView : MonoBehaviour
         textMeshPro.SetText("GO!");
 
         yield return new WaitForSecondsRealtime(1);
+
+        InputParams.canPause = true;
 
         gameObject.SetActive(false);
     }

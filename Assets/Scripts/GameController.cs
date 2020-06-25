@@ -110,8 +110,6 @@ public class GameController
         mainCamera.gameObject.SetActive(false);  // отключаем основную камеру после появления рига
         objectsInGame.Add(cameraMV.gameObject);
         
-       
-
         //Создание синглтона Ввода данных от пользователя
         GameObject inputController = new GameObject();
         inputController.AddComponent<InputControl>();
@@ -144,16 +142,19 @@ public class GameController
         
     private void HandleGamePause(object sender, EventArgs e) // обрабатываем нажатие Escape во время игры (в апдейте трека - пока прикрутил туда)
     {
-        if (Time.timeScale != 0.0f)
+        if (InputParams.canPause == true)
         {
-            pauseMV = UIFactory.CreatePauseMenuModelView(canvas); // создаем менюшку паузы
-            Time.timeScale = 0.0f;
+            if (Time.timeScale != 0.0f)
+            {
+                pauseMV = UIFactory.CreatePauseMenuModelView(canvas); // создаем менюшку паузы
+                Time.timeScale = 0.0f;
 
-            pauseMV.OnResume += HandleResumeGame; // подписываем обработчик продолжения игры на событие OnResume
-            pauseMV.OnExitToMainMenu += HandleExitToMenu;
+                pauseMV.OnResume += HandleResumeGame; // подписываем обработчик продолжения игры на событие OnResume
+                pauseMV.OnExitToMainMenu += HandleExitToMenu;
+            }
+
+            else HandleResumeGame(null, EventArgs.Empty); // позволяет отключить меню паузы, нажав esc еще раз
         }
-        else HandleResumeGame(null, EventArgs.Empty); // позволяет отключить меню паузы, нажав esc еще раз
-            
     }
 
 

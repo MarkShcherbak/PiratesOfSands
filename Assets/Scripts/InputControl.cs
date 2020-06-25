@@ -104,6 +104,7 @@ public class InputControl : Singleton<InputControl>
 public static class InputParams
 {
     public static float moveTimeScale;
+    public static bool canPause;
     private static float zAxis;
     private static float xAxis;
     private static bool changeCamButtonDown;
