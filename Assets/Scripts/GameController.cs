@@ -55,7 +55,7 @@ public class GameController
         playerShipMV.gameObject.AddComponent<AudioListener>();
         objectsInGame.Add(playerShipMV.gameObject);
 
-        playerShipMV.name = "Player";
+        playerShipMV.name = "YOU";
 
         ///Создаем эффект песчаной бури и привязываем к игроку 
         EffectModelView effectModelView = EffectsFactory.CreateSandstormEffect(gameStats.sandStormPrefab);
@@ -79,7 +79,7 @@ public class GameController
             ShipModelView enemyShipMV = ShipFactory.CreateShipModelView(placerMV.GetSpawnPoint(i));
             objectsInGame.Add(enemyShipMV.gameObject);
 
-            enemyShipMV.name = $"Enemy {i}";
+            enemyShipMV.name = NameFactory.GetRandomName();
 
             // создаем показатель хитпоинтов корабля противника
             HitpointsCanvasModelView enemyHp = UIFactory.CreateShipHealthBar(enemyShipMV.transform);
