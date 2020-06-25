@@ -126,8 +126,7 @@ public class ShipController
         Vector3 right = Vector3.Project(shipMV.Rigidbody.velocity, -shipMV.transform.right);
         Vector3 forward = Vector3.Project(shipMV.Rigidbody.velocity, -shipMV.transform.forward);
 
-
-        shipMV.transform.Rotate(0f, input.x * shipMV.shipDriveParams.RotateCoef * Time.fixedDeltaTime, 0f, Space.Self);
+        shipMV.transform.Rotate(0f, input.x * shipMV.shipDriveParams.RotateCoef * InputParams.moveTimeScale * Time.fixedDeltaTime, 0f, Space.Self);
 
         Ray ray = new Ray(shipMV.transform.position, Vector3.down);
         bool wasHit = Physics.Raycast(ray, out RaycastHit raycastHit, shipMV.shipDriveParams.distance * 10f);
